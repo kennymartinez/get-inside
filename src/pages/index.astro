@@ -33,19 +33,26 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     <div class="absolute inset-0 w-full h-full object-cover bg-gray-800/80">
     </div>
     <Container class:list={"relative z-10"}>
-      <Heading class:list={"prose-invert max-w-4xl"}>
-        <h1 slot="heading-title" class="mb-0 lg:text-7xl text-balance">
-          Discover the Magic of Colombia with Trusted Local Experts
-        </h1>
-        <p slot="heading-content">
-          Experience Colombia's breathtaking diversity through our carefully
-          crafted travel packages. From the Caribbean coast to the Amazon
-          rainforest, we offer authentic, safe, and responsible tourism
-          experiences that showcase the best of our beautiful country. Book with
-          confidence knowing you're traveling with certified local experts.
-        </p>
-      </Heading>
-      <WidgetSearch />
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+        <div>
+          <Heading class:list={"prose-invert"}>
+            <h1 slot="heading-title" class="mb-0 lg:text-6xl text-balance">
+              Discover the Magic of Colombia with Trusted Local Experts
+            </h1>
+            <p slot="heading-content">
+              Experience Colombia's breathtaking diversity through our carefully
+              crafted travel packages. From the Caribbean coast to the Amazon
+              rainforest, we offer authentic, safe, and responsible tourism
+              experiences that showcase the best of our beautiful country. Book
+              with confidence knowing you're traveling with certified local
+              experts.
+            </p>
+          </Heading>
+        </div>
+        <div class="flex justify-center lg:justify-end">
+          <WidgetSearch />
+        </div>
+      </div>
     </Container>
   </Section>
 

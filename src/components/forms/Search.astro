@@ -1,26 +1,16 @@
 ---
 import { getDestinations, getTourTypes } from "~/utils/tourism-helpers";
-import { difficultyLevels } from "~/content.config";
 import Icon from "~/components/Icon.astro";
 
 const destinations = await getDestinations();
 const tourTypes = await getTourTypes();
-
-// Duration options for quick filtering
-const durationOptions = [
-  { value: "1", label: "1 Day" },
-  { value: "2-3", label: "2-3 Days" },
-  { value: "4-7", label: "4-7 Days" },
-  { value: "8-14", label: "1-2 Weeks" },
-  { value: "15+", label: "2+ Weeks" },
-];
 ---
 
 <form
   id="form-widget-search"
   action="/tours/1"
   method="get"
-  class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4"
+  class="grid grid-cols-1 lg:grid-cols-2 gap-4"
   data-destinations={JSON.stringify(destinations)}
   data-tour-types={JSON.stringify(tourTypes)}
 >
@@ -32,7 +22,7 @@ const durationOptions = [
         id="destination"
         class="appearance-none col-start-1 row-start-1"
       >
-        <option value="all">Choose destination</option>
+        <option value="all">Destination</option>
         {
           destinations.map((destination) => (
             <option value={destination}>{destination}</option>
@@ -50,57 +40,19 @@ const durationOptions = [
         id="tourType"
         class="appearance-none col-start-1 row-start-1"
       >
-        <option value="all">Choose tour type</option>
+        <option value="all">Tour type</option>
         {tourTypes.map((type) => <option value={type}>{type}</option>)}
       </select>
       <Icon name="chevron-down" class="icon-chevron-down" />
     </div>
   </div>
-  <div>
-    <label class="sr-only" for="difficulty">Difficulty</label>
-    <div class="grid grid-cols-1">
-      <select
-        name="difficulty"
-        id="difficulty"
-        class="appearance-none col-start-1 row-start-1"
-      >
-        <option value="all">Any difficulty</option>
-        {
-          difficultyLevels.map((level) => (
-            <option value={level}>{level}</option>
-          ))
-        }
-      </select>
-      <Icon name="chevron-down" class="icon-chevron-down" />
-    </div>
-  </div>
-
-  <div>
-    <label class="sr-only" for="duration">Duration</label>
-    <div class="grid grid-cols-1">
-      <select
-        name="duration"
-        id="duration"
-        class="appearance-none col-start-1 row-start-1"
-      >
-        <option value="all">Any duration</option>
-        {
-          durationOptions.map((option) => (
-            <option value={option.value}>{option.label}</option>
-          ))
-        }
-      </select>
-      <Icon name="chevron-down" class="icon-chevron-down" />
-    </div>
-  </div>
-
-  <div class="lg:col-span-2 xl:col-span-4">
+  <div class="lg:col-span-2">
     <button
       type="submit"
       class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition flex items-center justify-center gap-2"
     >
       <Icon name="search" class="size-5" />
-      <span>Find Colombia Tours</span>
+      <span>Find Tours</span>
     </button>
   </div>
 </form>
