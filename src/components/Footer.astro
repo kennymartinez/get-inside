@@ -1,6 +1,11 @@
 ---
 import { siteName } from "~/data/config";
-import { menuNavigation, menuMisc, menuService, menuLegal } from "~/data/menus";
+import {
+  menuNavigation,
+  menuDestinations,
+  menuService,
+  menuLegal,
+} from "~/data/menus";
 import NewsletterFooter from "./forms/NewsletterFooter.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
@@ -11,7 +16,7 @@ const year = new Date().getFullYear();
 // Ensure all menu objects have an items array, even if empty
 const navigation = menuNavigation?.items || [];
 const service = menuService?.items || [];
-const misc = menuMisc?.items || [];
+const destinations = menuDestinations?.items || [];
 const legal = menuLegal?.items || [];
 ---
 
@@ -83,17 +88,17 @@ const legal = menuLegal?.items || [];
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-8">
           {
-            misc.length > 0 && (
+            destinations.length > 0 && (
               <div>
                 <span class="text-base font-semibold">
                   <Icon
-                    name="tabler:file-text"
+                    name="tabler:map-pin"
                     class="size-5 inline-block mr-1"
                   />
-                  {menuMisc?.prettyName || "Resources"}
+                  {menuDestinations?.prettyName || "Destinations"}
                 </span>
                 <ul role="list" class="mt-6 space-y-4">
-                  {misc.map((item) => (
+                  {destinations.map((item) => (
                     <li>
                       <a
                         href={item.url}
