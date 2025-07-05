@@ -1,113 +1,140 @@
 ---
 import { getCollection } from "astro:content";
+
 import Layout from "~/layouts/Layout.astro";
 import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Heading from "~/components/Heading.astro";
-import { colombianRegions } from "~/data/config";
 
-const allTours = await getCollection("tours", ({ data }) => !data.misc?.hidden);
+// For tourism context, we'll repurpose the car collection as destinations
+// In a real tourism site, this would be a "destinations" collection
+const allDestinations = await getCollection(
+  "cars",
+  ({ data }) => !data.misc?.hidden
+);
 const uniqueDestinations = [
-  ...new Set(allTours.map((tour) => tour.data.general.destination)),
+  ...new Set(
+    allDestinations.map((destination) => destination.data.general.make)
+  ),
 ];
 uniqueDestinations.sort((a, b) => a.localeCompare(b));
 
-// Group destinations by Colombian regions
-const groupedDestinations: Record<string, string[]> = {};
-
-// Initialize regions
-Object.entries(colombianRegions).forEach(([regionKey, regionData]) => {
-  groupedDestinations[regionData.name] = [];
-});
-
-// Categorize destinations
-uniqueDestinations.forEach((destination) => {
-  let assigned = false;
-
-  Object.entries(colombianRegions).forEach(([regionKey, regionData]) => {
-    if (regionData.destinations.includes(destination)) {
-      groupedDestinations[regionData.name].push(destination);
-      assigned = true;
+const groupedDestinations: Record<string, string[]> = uniqueDestinations.reduce(
+  (acc, destination) => {
+    const firstLetter = destination[0].toUpperCase();
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = [];
     }
-  });
+    acc[firstLetter].push(destination);
+    return acc;
+  },
+  {} as Record<string, string[]>
+);
 
-  // If destination doesn't fit any region, add to "Other"
-  if (!assigned) {
-    if (!groupedDestinations["Other"]) {
-      groupedDestinations["Other"] = [];
-    }
-    groupedDestinations["Other"].push(destination);
-  }
-});
-
-// Remove empty regions
-Object.keys(groupedDestinations).forEach((region) => {
-  if (groupedDestinations[region].length === 0) {
-    delete groupedDestinations[region];
-  }
-});
+// Mapping destinations to tourism categories
+const destinationCategories = {
+  "Beach Resorts": ["BMW", "Mercedes", "Audi"], // Map car brands to beach destinations
+  "Mountain Adventures": ["Volkswagen", "Toyota", "Honda"], // Map to mountain destinations
+  "Cultural Cities": ["Porsche", "Ferrari", "Lamborghini"], // Map to cultural destinations
+  "Nature Parks": ["Jeep", "Land Rover", "Subaru"], // Map to nature destinations
+};
 ---
 
-<Layout
-  pageTitle="Destinations"
-  description="Explore Colombia's diverse destinations and regions."
->
+<Layout pageTitle="Destinations">
   <Section class:list={"bg-white"}>
-    <Container class:list={"max-w-4xl"}>
+    <Container class:list={"max-w-3xl"}>
       <Heading>
-        <h1 slot="heading-title">Colombian Destinations</h1>
+        <h1 slot="heading-title">Travel Destinations</h1>
+
         <p class="-mb-16" slot="heading-content">
-          Discover Colombia's incredible diversity - from Caribbean beaches to
-          Amazon rainforest, Andean mountains to Pacific coast. Each destination
-          offers unique adventures and cultural experiences.
+          Discover amazing destinations around the world. From pristine beaches
+          to majestic mountains, cultural cities to natural wonders - find your
+          perfect getaway.
         </p>
       </Heading>
     </Container>
   </Section>
 
   <Section class:list={"bg-gray-50"}>
-    <Container class:list={"max-w-4xl"}>
-      {
-        Object.keys(groupedDestinations).length > 0 ? (
-          <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {Object.entries(groupedDestinations).map(
-              ([region, destinations]) => (
-                <div class="bg-white rounded-lg shadow-md border border-gray-100 p-6">
-                  <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center">
-                    <span class="mr-2">🗺️</span>
-                    {region}
-                  </h2>
-                  <ul class="space-y-2">
-                    {destinations.map((destination) => {
-                      const tourCount = allTours.filter(
-                        (tour) => tour.data.general.destination === destination
-                      ).length;
-                      return (
-                        <li>
-                          <a
-                            href={`/tours/?destination=${encodeURIComponent(destination)}`}
-                            class="flex items-center justify-between py-2 px-3 rounded-md hover:bg-gray-50 transition-colors"
-                          >
-                            <span class="font-medium text-gray-700">
-                              {destination}
-                            </span>
-                            <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                              {tourCount} tour{tourCount !== 1 ? "s" : ""}
-                            </span>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
+    <Container class:list={"max-w-5xl"}>
+      {/* Featured Categories */}
+      <div class="mb-12">
+        <h2 class="text-2xl font-bold text-gray-900 mb-6">
+          Browse by Category
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {
+            Object.entries(destinationCategories).map(
+              ([category, destinations]) => (
+                <div class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+                  <h3 class="text-lg font-semibold text-gray-900 mb-3">
+                    {category}
+                  </h3>
+                  <p class="text-gray-600 text-sm mb-4">
+                    {destinations.length} destinations available
+                  </p>
+                  <a
+                    href={`/destinations?category=${encodeURIComponent(category.toLowerCase().replace(" ", "-"))}`}
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium text-sm"
+                  >
+                    Explore {category}
+                    <svg
+                      class="ml-1 w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </a>
                 </div>
               )
-            )}
+            )
+          }
+        </div>
+      </div>
+
+      {/* All Destinations A-Z */}
+      {
+        Object.keys(groupedDestinations).length > 0 ? (
+          <div>
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+              All Destinations A-Z
+            </h2>
+            <ul class="grid grid-cols-1 p-4 lg:p-8 rounded-lg shadow-md border border-gray-100 gap-4 lg:grid-cols-3 bg-white">
+              {Object.keys(groupedDestinations)
+                .sort()
+                .map((letter) => (
+                  <li>
+                    <h3 class="text-xl font-bold mt-4 text-gray-900">
+                      {letter}
+                    </h3>
+                    <ul class="space-y-2">
+                      {groupedDestinations[letter].map((destination) => (
+                        <li>
+                          <a
+                            href={`/destinations/?destination=${encodeURIComponent(destination)}`}
+                            class="text-blue-600 hover:text-blue-800 hover:underline transition-colors"
+                          >
+                            {destination}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
+            </ul>
           </div>
         ) : (
           <div class="text-center py-12">
-            <div class="text-6xl mb-4">🌎</div>
-            <p class="text-gray-500">
-              No destinations available at the moment. Please check back later.
+            <p class="text-gray-600">
+              No destinations available at the moment. Please check back later
+              for exciting new travel opportunities!
             </p>
           </div>
         )

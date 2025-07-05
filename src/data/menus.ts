@@ -7,24 +7,9 @@ export const menuMain: MainMenuItem[] = [
     url: "/",
   },
   {
-    id: "tours", // Changed from "cars"
-    label: "Tours",
-    url: "/tours",
-    submenu: [
-      { id: "all-tours", label: "All Tours", url: "/tours" },
-      { id: "destinations", label: "Destinations", url: "/destinations" },
-      {
-        id: "adventure",
-        label: "Adventure Tours",
-        url: "/tours?tourType=Adventure",
-      },
-      {
-        id: "cultural",
-        label: "Cultural Tours",
-        url: "/tours?tourType=Cultural",
-      },
-      { id: "nature", label: "Nature Tours", url: "/tours?tourType=Nature" },
-    ],
+    id: "destinations",
+    label: "Destinations",
+    url: "/destinations",
   },
   {
     id: "about",
@@ -36,7 +21,6 @@ export const menuMain: MainMenuItem[] = [
         label: "Testimonials",
         url: "/about-us/testimonials",
       },
-      { id: "our-team", label: "Our Team", url: "/about-us/team" },
     ],
   },
   {
@@ -44,25 +28,16 @@ export const menuMain: MainMenuItem[] = [
     label: "Services",
     url: "/services",
     submenu: [
-      {
-        id: "tour-planning",
-        label: "Tour Planning",
-        url: "/services/tour-planning",
-      },
-      {
-        id: "transportation",
-        label: "Transportation",
-        url: "/services/transportation",
-      },
+      { id: "tours", label: "Guided Tours", url: "/services/tours" },
       {
         id: "accommodation",
         label: "Accommodation",
         url: "/services/accommodation",
       },
       {
-        id: "travel-insurance",
-        label: "Travel Insurance",
-        url: "/services/travel-insurance",
+        id: "transportation",
+        label: "Transportation",
+        url: "/services/transportation",
       },
     ],
   },
@@ -81,11 +56,7 @@ export const menuNavigation: MenuNavigation = {
       url: "/",
     },
     {
-      name: "Tours", // Changed from "Cars"
-      url: "/tours",
-    },
-    {
-      name: "Destinations", // Changed from "Makes"
+      name: "Destinations",
       url: "/destinations",
     },
     {
@@ -107,28 +78,20 @@ export const menuService: MenuNavigation = {
   prettyName: "Services",
   items: [
     {
-      name: "Tour Planning",
-      url: "/services/tour-planning",
-    },
-    {
-      name: "Transportation",
-      url: "/services/transportation",
+      name: "Guided Tours",
+      url: "/services/tours",
     },
     {
       name: "Accommodation",
       url: "/services/accommodation",
     },
     {
-      name: "Travel Insurance",
-      url: "/services/travel-insurance",
+      name: "Transportation",
+      url: "/services/transportation",
     },
     {
-      name: "Group Bookings",
-      url: "/services/group-bookings",
-    },
-    {
-      name: "Custom Tours",
-      url: "/services/custom-tours",
+      name: "Travel Planning",
+      url: "/services/travel-planning",
     },
   ],
 };
@@ -137,89 +100,20 @@ export const menuDestinations: MenuNavigation = {
   prettyName: "Popular Destinations",
   items: [
     {
-      name: "Cartagena",
-      url: "/tours?destination=Cartagena",
+      name: "Beach Resorts",
+      url: "/destinations/beach-resorts",
     },
     {
-      name: "Medellín",
-      url: "/tours?destination=Medellín",
+      name: "Mountain Adventures",
+      url: "/destinations/mountains",
     },
     {
-      name: "Amazon",
-      url: "/tours?destination=Amazon",
+      name: "Cultural Cities",
+      url: "/destinations/cultural-cities",
     },
     {
-      name: "Coffee Region",
-      url: "/tours?destination=Coffee Region",
-    },
-    {
-      name: "Tayrona",
-      url: "/tours?destination=Tayrona",
-    },
-    {
-      name: "All Destinations",
-      url: "/destinations",
-    },
-  ],
-};
-
-export const menuTourTypes: MenuNavigation = {
-  prettyName: "Tour Types",
-  items: [
-    {
-      name: "Adventure Tours",
-      url: "/tours?tourType=Adventure",
-    },
-    {
-      name: "Cultural Tours",
-      url: "/tours?tourType=Cultural",
-    },
-    {
-      name: "Nature Tours",
-      url: "/tours?tourType=Nature",
-    },
-    {
-      name: "Beach Tours",
-      url: "/tours?tourType=Beach",
-    },
-    {
-      name: "City Tours",
-      url: "/tours?tourType=Urban",
-    },
-    {
-      name: "Food Tours",
-      url: "/tours?tourType=Gastronomic",
-    },
-  ],
-};
-
-// Legacy menus (keep for backward compatibility)
-export const menuMisc: MenuNavigation = {
-  prettyName: "Miscellaneous",
-  items: [
-    {
-      name: "Privacy Policy",
-      url: "/privacy",
-    },
-    {
-      name: "Terms of Service",
-      url: "/terms",
-    },
-    {
-      name: "Contact Us",
-      url: "/contact",
-    },
-    {
-      name: "FAQ",
-      url: "/faq",
-    },
-    {
-      name: "Travel Tips",
-      url: "/blog/category/tips",
-    },
-    {
-      name: "Safety Guidelines",
-      url: "/safety",
+      name: "Nature Parks",
+      url: "/destinations/nature-parks",
     },
   ],
 };
@@ -228,28 +122,20 @@ export const menuLegal: MenuNavigation = {
   prettyName: "Legal",
   items: [
     {
-      name: "Terms & Conditions",
-      url: "/terms",
+      name: "Terms of Service",
+      url: "/legal/terms",
     },
     {
       name: "Privacy Policy",
-      url: "/privacy",
+      url: "/legal/privacy",
     },
     {
-      name: "Cancellation Policy",
-      url: "/cancellation-policy",
-    },
-    {
-      name: "Booking Terms",
-      url: "/booking-terms",
+      name: "Booking Policy",
+      url: "/legal/booking-policy",
     },
     {
       name: "Travel Insurance",
-      url: "/travel-insurance",
-    },
-    {
-      name: "Safety Guidelines",
-      url: "/safety",
+      url: "/legal/travel-insurance",
     },
   ],
 };

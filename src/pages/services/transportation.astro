@@ -1,0 +1,439 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Heading from "~/components/Heading.astro";
+import Button from "~/components/Button.astro";
+---
+
+<Layout
+  pageTitle="Transportation Services | Travel Solutions"
+  title="Transportation Services"
+  description="Reliable transportation solutions for your travels. From airport transfers to private tours, we provide safe and comfortable transport options worldwide."
+>
+  <Section class:list={"bg-white"}>
+    <Container class:list={"max-w-4xl"}>
+      <Heading class:list={"text-center"}>
+        <h1 slot="heading-title">Transportation Services</h1>
+        <p slot="heading-content">
+          Travel with confidence using our reliable transportation solutions.
+          From the moment you land to your final destination, we ensure safe,
+          comfortable, and efficient transport options tailored to your needs.
+        </p>
+      </Heading>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">
+        Transportation Options
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-blue-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            Airport Transfers
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Reliable door-to-door service between airports and your
+            accommodation. Professional drivers, flight monitoring, and meet &
+            greet service.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Private & shared options</li>
+            <li>• Flight delay monitoring</li>
+            <li>• Professional drivers</li>
+            <li>• 24/7 availability</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-green-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            Private Transfers
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Comfortable private vehicles for point-to-point transfers, day
+            trips, or custom itineraries with experienced local drivers.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Luxury vehicle options</li>
+            <li>• Flexible scheduling</li>
+            <li>• Local driver knowledge</li>
+            <li>• Custom itineraries</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-purple-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2m0 0V1a1 1 0 011-1h2a1 1 0 011 1v3M7 4H5a1 1 0 00-1 1v3m0 0v8a1 1 0 001 1h3m12-9V5a1 1 0 00-1-1h-2M7 16h10"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            Group Transportation
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Comfortable coaches and minibuses for group travel, perfect for
+            families, corporate groups, or tour groups.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Various group sizes</li>
+            <li>• Air conditioning</li>
+            <li>• Luggage capacity</li>
+            <li>• Professional drivers</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-orange-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            Local Transportation
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Navigate cities like a local with our transportation guides, passes,
+            and recommendations for public transport systems.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• City transport passes</li>
+            <li>• Route planning</li>
+            <li>• Mobile tickets</li>
+            <li>• Local insights</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-red-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3a1 1 0 011-1h6a1 1 0 011 1v4m-6 9l6 2v7l-6-2v-7zm6-2a9 9 0 11-18 0 9 9 0 0118 0z"
+              ></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Car Rentals</h3>
+          <p class="text-gray-600 mb-4">
+            Self-drive options with competitive rates from trusted rental
+            companies. Economy to luxury vehicles available worldwide.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Competitive pricing</li>
+            <li>• Full insurance options</li>
+            <li>• GPS navigation</li>
+            <li>• 24/7 roadside assistance</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-6">
+          <div
+            class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4"
+          >
+            <svg
+              class="w-6 h-6 text-indigo-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">
+            Scheduled Transfers
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Regular scheduled services between popular destinations, offering
+            convenience and value for money with fixed schedules.
+          </p>
+          <ul class="text-sm text-gray-600 space-y-1">
+            <li>• Fixed schedules</li>
+            <li>• Popular routes</li>
+            <li>• Advance booking</li>
+            <li>• Cost-effective</li>
+          </ul>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-white"}>
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900 mb-6">
+            Why Choose Our Transportation Services?
+          </h2>
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Safety First
+                </h3>
+                <p class="text-gray-600">
+                  All vehicles are regularly maintained and inspected. Our
+                  drivers are licensed, insured, and background-checked
+                  professionals.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Punctual & Reliable
+                </h3>
+                <p class="text-gray-600">
+                  We track your flights and traffic conditions to ensure timely
+                  pickups and arrivals, every time.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Local Expertise
+                </h3>
+                <p class="text-gray-600">
+                  Our drivers know the best routes, local attractions, and can
+                  provide valuable travel tips and recommendations.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-green-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Transparent Pricing
+                </h3>
+                <p class="text-gray-600">
+                  No hidden fees or surprise charges. Our upfront pricing
+                  includes all costs, tolls, and gratuities.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-lg p-8"
+        >
+          <h3 class="text-2xl font-bold text-gray-900 mb-4">
+            Need Transportation?
+          </h3>
+          <p class="text-gray-600 mb-6">
+            Whether you need a simple airport transfer or comprehensive
+            transportation for your entire trip, we're here to help. Get a quote
+            today!
+          </p>
+          <div class="space-y-3">
+            <Button
+              href="/contact"
+              color="primary"
+              class:list={"w-full justify-center"}
+            >
+              Get Transportation Quote
+            </Button>
+            <Button
+              href="/destinations"
+              color="secondary"
+              class:list={"w-full justify-center"}
+            >
+              Plan Your Trip
+            </Button>
+          </div>
+
+          <div class="mt-6 pt-6 border-t border-blue-200">
+            <h4 class="font-semibold text-gray-900 mb-2">Quick Booking</h4>
+            <p class="text-sm text-gray-600 mb-3">
+              For urgent bookings, call us directly:
+            </p>
+            <a href="tel:+1234567890" class="text-lg font-bold text-blue-600"
+              >+1 (234) 567-8900</a
+            >
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8">
+          Popular Routes & Destinations
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <h3 class="font-semibold text-gray-900 mb-3">
+              Airport Connections
+            </h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• JFK ↔ Manhattan</li>
+              <li>• LAX ↔ Beverly Hills</li>
+              <li>• LHR ↔ Central London</li>
+              <li>• CDG ↔ Paris Center</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <h3 class="font-semibold text-gray-900 mb-3">City Tours</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Rome Historic Sites</li>
+              <li>• Paris Highlights</li>
+              <li>• Tokyo City Explorer</li>
+              <li>• Barcelona Beach & City</li>
+            </ul>
+          </div>
+
+          <div class="bg-white rounded-lg p-6 shadow-md">
+            <h3 class="font-semibold text-gray-900 mb-3">Day Trips</h3>
+            <ul class="text-sm text-gray-600 space-y-1">
+              <li>• Tuscany Wine Tours</li>
+              <li>• Swiss Alps Excursions</li>
+              <li>• Coastal Road Trips</li>
+              <li>• Castle & Countryside</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</Layout>

@@ -1,0 +1,245 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Heading from "~/components/Heading.astro";
+import Button from "~/components/Button.astro";
+---
+
+<Layout
+  pageTitle="Guided Tours | Travel Services"
+  title="Guided Tours"
+  description="Discover the world with our expert guided tours. Professional local guides, carefully planned itineraries, and unforgettable experiences."
+>
+  <Section class:list={"bg-white"}>
+    <Container class:list={"max-w-4xl"}>
+      <Heading class:list={"text-center"}>
+        <h1 slot="heading-title">Expert Guided Tours</h1>
+        <p slot="heading-content">
+          Explore the world's most incredible destinations with our professional
+          local guides. From cultural discoveries to adventure expeditions, we
+          create unforgettable experiences tailored to your interests.
+        </p>
+      </Heading>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+        <div>
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">
+            Why Choose Our Guided Tours?
+          </h2>
+          <div class="space-y-6">
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 13l4 4L19 7"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Expert Local Guides
+                </h3>
+                <p class="text-gray-600">
+                  Our certified local guides share insider knowledge and hidden
+                  gems you won't find in guidebooks.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  Small Group Experience
+                </h3>
+                <p class="text-gray-600">
+                  Intimate group sizes ensure personalized attention and
+                  authentic cultural interactions.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start space-x-4">
+              <div
+                class="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center"
+              >
+                <svg
+                  class="w-4 h-4 text-blue-600"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-2">
+                  All-Inclusive Packages
+                </h3>
+                <p class="text-gray-600">
+                  Everything is taken care of - transportation, entrance fees,
+                  and carefully planned itineraries.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-lg p-8">
+          <h2 class="text-2xl font-bold text-gray-900 mb-6">Tour Categories</h2>
+          <div class="space-y-4">
+            <div class="border-l-4 border-blue-500 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900">
+                Cultural Heritage Tours
+              </h3>
+              <p class="text-gray-600 text-sm">
+                Explore ancient sites, museums, and traditional neighborhoods
+                with expert historians.
+              </p>
+            </div>
+
+            <div class="border-l-4 border-green-500 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900">
+                Adventure & Nature Tours
+              </h3>
+              <p class="text-gray-600 text-sm">
+                Hiking, wildlife viewing, and outdoor adventures in breathtaking
+                natural settings.
+              </p>
+            </div>
+
+            <div class="border-l-4 border-purple-500 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900">
+                Food & Culinary Tours
+              </h3>
+              <p class="text-gray-600 text-sm">
+                Taste authentic local cuisine, visit markets, and learn
+                traditional cooking techniques.
+              </p>
+            </div>
+
+            <div class="border-l-4 border-orange-500 pl-4">
+              <h3 class="text-lg font-semibold text-gray-900">
+                Photography Tours
+              </h3>
+              <p class="text-gray-600 text-sm">
+                Capture stunning moments with guidance from professional
+                photography guides.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-white"}>
+    <Container>
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-6">Ready to Explore?</h2>
+        <p class="text-lg text-gray-600 mb-8">
+          Join thousands of satisfied travelers who have discovered the world
+          through our expert-guided tours. Create memories that will last a
+          lifetime.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/contact" color="primary" class:list={"px-8 py-3"}>
+            Book a Tour
+          </Button>
+          <Button
+            href="/destinations"
+            color="secondary"
+            class:list={"px-8 py-3"}
+          >
+            Browse Destinations
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-2xl font-bold text-gray-900 mb-8 text-center">
+          Frequently Asked Questions
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              How far in advance should I book?
+            </h3>
+            <p class="text-gray-600">
+              We recommend booking at least 2-4 weeks in advance, especially
+              during peak travel seasons.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              What's included in the tour price?
+            </h3>
+            <p class="text-gray-600">
+              All tours include professional guide, transportation, entrance
+              fees, and detailed itinerary. Meals may vary by tour.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              Can tours be customized?
+            </h3>
+            <p class="text-gray-600">
+              Yes! We offer private tours that can be fully customized to your
+              interests and schedule.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">
+              What if weather affects the tour?
+            </h3>
+            <p class="text-gray-600">
+              We have backup plans for all tours and will modify itineraries as
+              needed to ensure the best experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</Layout>
