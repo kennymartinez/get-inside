@@ -5,14 +5,14 @@ import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Article from "~/components/Article.astro";
 import { getCollection, render } from "astro:content";
-import IconArrowLeft from "~/assets/images/icons/arrow-left.svg";
+import Icon from "~/components/Icon.astro";
 
 export async function getStaticPaths() {
-	const posts = await getCollection("blog");
-	return posts.map((post) => ({
-		params: { slug: post.id },
-		props: { post },
-	}));
+  const posts = await getCollection("blog");
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
 }
 
 const { post } = Astro.props;
@@ -20,40 +20,40 @@ const { Content } = await render(post);
 ---
 
 <Layout>
-	<Section>
-		<Container>
-			<Article contain>
-				<a
-					href="/blog"
-					class="mb-8 inline-block text-base font-medium transition hover:text-gray-500 not-prose"
-				>
-					<IconArrowLeft class="size-5 inline-block mr-1" />
-					<span>Return to Blog</span>
-				</a>
+  <Section>
+    <Container>
+      <Article contain>
+        <a
+          href="/blog"
+          class="mb-8 inline-block text-base font-medium transition hover:text-gray-500 not-prose"
+        >
+          <Icon name="arrow-left" class="size-5 inline-block mr-1" />
+          <span>Return to Blog</span>
+        </a>
 
-				<h1 transition:name={`post-title-${post.id}`}>
-					{post.data.title}
-				</h1>
+        <h1 transition:name={`post-title-${post.id}`}>
+          {post.data.title}
+        </h1>
 
-				<time
-					class="text-base text-gray-600 italic"
-					datetime={post.data.publishDate.toISOString()}
-					transition:name={`post-date-${post.id}`}
-				>
-					Posted on: {post.data.publishDate.toLocaleDateString()}
-				</time>
+        <time
+          class="text-base text-gray-600 italic"
+          datetime={post.data.publishDate.toISOString()}
+          transition:name={`post-date-${post.id}`}
+        >
+          Posted on: {post.data.publishDate.toLocaleDateString()}
+        </time>
 
-				<Image
-					class:list={"rounded-lg"}
-					src={post.data.image}
-					alt={post.data.imageAlt}
-					loading={"eager"}
-					fetchpriority={"high"}
-					transition:name={`post-image-${post.id}`}
-				/>
+        <Image
+          class:list={"rounded-lg"}
+          src={post.data.image}
+          alt={post.data.imageAlt}
+          loading={"eager"}
+          fetchpriority={"high"}
+          transition:name={`post-image-${post.id}`}
+        />
 
-				<Content />
-			</Article>
-		</Container>
-	</Section>
+        <Content />
+      </Article>
+    </Container>
+  </Section>
 </Layout>

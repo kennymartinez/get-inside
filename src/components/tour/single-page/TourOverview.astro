@@ -1,11 +1,6 @@
 ---
 import type { Tour } from "~/types";
-import IconDuration from "~/assets/images/icons/calendar.svg";
-import IconGroup from "~/assets/images/icons/group.svg";
-import IconTransport from "~/assets/images/icons/transport.svg";
-import IconGuide from "~/assets/images/icons/guide.svg";
-import IconAccommodation from "~/assets/images/icons/accommodation.svg";
-import IconMeals from "~/assets/images/icons/meals.svg";
+import Icon from "~/components/Icon.astro";
 
 const { tour } = Astro.props as { tour: Tour };
 ---
@@ -14,7 +9,7 @@ const { tour } = Astro.props as { tour: Tour };
   <h3 class="font-semibold mb-4 text-lg">Tour Overview</h3>
   <dl class="grid grid-cols-2 sm:grid-cols-3 gap-4">
     <div class="flex items-start gap-x-2">
-      <IconDuration class="size-5 mt-0.5 text-blue-600" />
+      <Icon name="calendar" class="size-5 mt-0.5 text-blue-600" />
       <div>
         <dt class="text-gray-500">Duration</dt>
         <dd class="font-semibold">
@@ -30,7 +25,7 @@ const { tour } = Astro.props as { tour: Tour };
     </div>
 
     <div class="flex items-start gap-x-2">
-      <IconGroup class="size-5 mt-0.5 text-green-600" />
+      <Icon name="users" class="size-5 mt-0.5 text-green-600" />
       <div>
         <dt class="text-gray-500">Group Size</dt>
         <dd class="font-semibold">
@@ -40,7 +35,7 @@ const { tour } = Astro.props as { tour: Tour };
     </div>
 
     <div class="flex items-start gap-x-2">
-      <IconTransport class="size-5 mt-0.5 text-orange-600" />
+      <Icon name="car" class="size-5 mt-0.5 text-orange-600" />
       <div>
         <dt class="text-gray-500">Transportation</dt>
         <dd class="font-semibold">{tour.data.logistics.transportation}</dd>
@@ -48,7 +43,7 @@ const { tour } = Astro.props as { tour: Tour };
     </div>
 
     <div class="flex items-start gap-x-2">
-      <IconGuide class="size-5 mt-0.5 text-purple-600" />
+      <Icon name="user-check" class="size-5 mt-0.5 text-purple-600" />
       <div>
         <dt class="text-gray-500">Guide</dt>
         <dd class="font-semibold">{tour.data.experience.guideType}</dd>
@@ -56,7 +51,7 @@ const { tour } = Astro.props as { tour: Tour };
     </div>
 
     <div class="flex items-start gap-x-2">
-      <IconAccommodation class="size-5 mt-0.5 text-indigo-600" />
+      <Icon name="building" class="size-5 mt-0.5 text-indigo-600" />
       <div>
         <dt class="text-gray-500">Accommodation</dt>
         <dd class="font-semibold">{tour.data.logistics.accommodationType}</dd>
@@ -64,7 +59,7 @@ const { tour } = Astro.props as { tour: Tour };
     </div>
 
     <div class="flex items-start gap-x-2">
-      <IconMeals class="size-5 mt-0.5 text-red-600" />
+      <Icon name="utensils" class="size-5 mt-0.5 text-red-600" />
       <div>
         <dt class="text-gray-500">Meals</dt>
         <dd class="font-semibold">{tour.data.logistics.mealsIncluded}</dd>

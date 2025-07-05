@@ -8,7 +8,7 @@ import Layout from "~/layouts/Layout.astro";
 import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Article from "~/components/Article.astro";
-import IconLogo from "~/assets/images/icons/logo.svg";
+import Icon from "~/components/Icon.astro";
 
 // Tourism UI Components
 import Slider from "~/components/tour/single-page/Slider.astro";
@@ -100,7 +100,7 @@ const filteredRelatedTours = relatedTours
                 )
               ) : (
                 <div class="lg:absolute inset-0 text-gray-200 size-full bg-gray-50 flex flex-col gap-4 items-center justify-center">
-                  <IconLogo class="h-24" />
+                  <Icon name="brand-tabler" class="h-24" />
                   <span class="text-gray-400 select-none font-bold italic">
                     Coming Soon
                   </span>

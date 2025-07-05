@@ -1,8 +1,7 @@
 ---
 import { getDestinations, getTourTypes } from "~/utils/tourism-helpers";
 import { difficultyLevels } from "~/content.config";
-import IconSearch from "~/assets/images/icons/search.svg";
-import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+import Icon from "~/components/Icon.astro";
 
 const destinations = await getDestinations();
 const tourTypes = await getTourTypes();
@@ -31,7 +30,7 @@ const tourTypes = await getTourTypes();
           ))
         }
       </select>
-      <IconChevronDown class="icon-chevron-down" />
+      <Icon name="chevron-down" class="icon-chevron-down" />
     </div>
   </div>
   <div>
@@ -45,7 +44,7 @@ const tourTypes = await getTourTypes();
         <option value="all">Choose tour type</option>
         {tourTypes.map((type) => <option value={type}>{type}</option>)}
       </select>
-      <IconChevronDown class="icon-chevron-down" />
+      <Icon name="chevron-down" class="icon-chevron-down" />
     </div>
   </div>
   <div>
@@ -63,7 +62,7 @@ const tourTypes = await getTourTypes();
           ))
         }
       </select>
-      <IconChevronDown class="icon-chevron-down" />
+      <Icon name="chevron-down" class="icon-chevron-down" />
     </div>
   </div>
 
@@ -72,7 +71,7 @@ const tourTypes = await getTourTypes();
       type="submit"
       class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition"
     >
-      <IconSearch class="size-5 -mt-0.5 inline-block" />
+      <Icon name="search" class="size-5 -mt-0.5 inline-block" />
       <span>Search</span>
     </button>
   </div>

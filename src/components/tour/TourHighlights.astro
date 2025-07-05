@@ -1,10 +1,6 @@
 ---
 import type { Tour } from "~/types";
-import IconDuration from "~/assets/images/icons/calendar.svg";
-import IconDifficulty from "~/assets/images/icons/difficulty.svg";
-import IconGroup from "~/assets/images/icons/group.svg";
-import IconGuide from "~/assets/images/icons/guide.svg";
-import IconTransport from "~/assets/images/icons/transport.svg";
+import Icon from "~/components/Icon.astro";
 const { data } = Astro.props as { data: Tour["data"] };
 
 const duration = `${data.general.duration.days} day${data.general.duration.days > 1 ? "s" : ""}`;
@@ -27,29 +23,29 @@ const difficultyColors = {
   class="flex gap-x-2 sm:gap-x-4 items-center gap-y-2 mt-auto flex-wrap text-sm lg:text-base"
 >
   <li class={pillClasses}>
-    <IconDuration class="size-4 lg:size-5" />
+    <Icon name="calendar" class="size-4 lg:size-5" />
     <span>{duration}</span>
   </li>
 
   <li
     class={`flex items-center gap-x-1 rounded-full px-3 py-1 ring-1 ${difficultyColors[difficulty]}`}
   >
-    <IconDifficulty class="size-4 lg:size-5" />
+    <Icon name="trending-up" class="size-4 lg:size-5" />
     <span>{difficulty}</span>
   </li>
 
   <li class={pillClasses}>
-    <IconGroup class="size-4 lg:size-5" />
+    <Icon name="users" class="size-4 lg:size-5" />
     <span>{groupSize}</span>
   </li>
 
   <li class={pillClasses}>
-    <IconGuide class="size-4 lg:size-5" />
+    <Icon name="user-check" class="size-4 lg:size-5" />
     <span>{guideType}</span>
   </li>
 
   <li class={pillClasses}>
-    <IconTransport class="size-4 lg:size-5" />
+    <Icon name="car" class="size-4 lg:size-5" />
     <span>{transport}</span>
   </li>
 </ul>

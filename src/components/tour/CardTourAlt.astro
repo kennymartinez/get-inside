@@ -3,7 +3,7 @@ import type { Tour } from "~/types";
 import { Image } from "astro:assets";
 import TourHighlights from "~/components/tour/TourHighlights.astro";
 import CardPrice from "~/components/tour/CardPrice.astro";
-import IconLogo from "~/assets/images/icons/logo.svg";
+import Icon from "~/components/Icon.astro";
 const { tour } = Astro.props as { tour: Tour };
 ---
 
@@ -29,7 +29,7 @@ const { tour } = Astro.props as { tour: Tour };
           />
         ) : (
           <div class="absolute inset-0 text-gray-400 size-full bg-gray-100 flex flex-col gap-4 items-center justify-center">
-            <IconLogo class="h-24" />
+            <Icon name="brand-tabler" class="h-24" />
             <span class="text-gray-400 font-bold italic">Coming Soon</span>
           </div>
         )

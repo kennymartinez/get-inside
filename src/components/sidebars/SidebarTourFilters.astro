@@ -8,9 +8,7 @@ import {
 } from "~/content.config";
 import { getPrice } from "~/utils/helpers";
 import { durationSteps, groupSizeOptions } from "~/data/config";
-import IconReset from "~/assets/images/icons/reset.svg";
-import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
-import IconClose from "~/assets/images/icons/close.svg";
+import Icon from "~/components/Icon.astro";
 
 interface Props {
   data: {
@@ -40,7 +38,7 @@ const { data } = Astro.props;
       aria-label="Close filter modal"
     >
       <div class="flex justify-end">
-        <IconClose class="size-8 bg-gray-800 rounded-full p-1 text-white" />
+        <Icon name="x" class="size-8 bg-gray-800 rounded-full p-1 text-white" />
       </div>
     </button>
 
@@ -59,7 +57,8 @@ const { data } = Astro.props;
             >📍 Destination</label
           >
           <button id="clear-input-destination" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -77,7 +76,7 @@ const { data } = Astro.props;
               ))
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -88,7 +87,8 @@ const { data } = Astro.props;
             >🎯 Tour Type</label
           >
           <button id="clear-input-tourType" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -102,7 +102,7 @@ const { data } = Astro.props;
             <option value="all">All Types</option>
             {tourTypes.map((type) => <option value={type}>{type}</option>)}
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -113,7 +113,8 @@ const { data } = Astro.props;
             >🏷️ Category</label
           >
           <button id="clear-input-category" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -131,7 +132,7 @@ const { data } = Astro.props;
               ))
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -142,7 +143,8 @@ const { data } = Astro.props;
             >💰 Price Range</label
           >
           <button id="clear-input-price" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -175,7 +177,7 @@ const { data } = Astro.props;
               })
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -186,7 +188,8 @@ const { data } = Astro.props;
             >🕒 Duration</label
           >
           <button id="clear-input-duration" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -204,7 +207,7 @@ const { data } = Astro.props;
               ))
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -215,7 +218,8 @@ const { data } = Astro.props;
             >⛰️ Difficulty</label
           >
           <button id="clear-input-difficulty" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -233,7 +237,7 @@ const { data } = Astro.props;
               ))
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -244,7 +248,8 @@ const { data } = Astro.props;
             >👥 Group Size</label
           >
           <button id="clear-input-groupSize" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -262,7 +267,7 @@ const { data } = Astro.props;
               ))
             }
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 
@@ -273,7 +278,8 @@ const { data } = Astro.props;
             >✨ Special</label
           >
           <button id="clear-input-special" type="button" class="hidden">
-            <IconReset
+            <Icon
+              name="refresh"
               class="size-3 -mt-px text-gray-400 hover:text-gray-600"
             />
           </button>
@@ -291,7 +297,7 @@ const { data } = Astro.props;
             <option value="new">New Tours</option>
             <option value="sale">Special Offers</option>
           </select>
-          <IconChevronDown class="icon-chevron-down" />
+          <Icon name="chevron-down" class="icon-chevron-down" />
         </div>
       </div>
 

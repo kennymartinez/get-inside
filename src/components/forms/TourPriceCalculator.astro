@@ -2,8 +2,7 @@
 import type { Tour } from "~/types";
 import { getPrice, formatGroupSize } from "~/utils/helpers";
 import { SEASONAL_PRICING, GROUP_SIZE_CATEGORIES } from "~/utils/constants";
-import IconCalculator from "~/assets/images/icons/calculator.svg";
-import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+import Icon from "~/components/Icon.astro";
 
 interface Props {
   tour: Tour;
@@ -58,7 +57,7 @@ const currency = tour.data.pricing?.currency || "USD";
             ))
           }
         </select>
-        <IconChevronDown class="icon-chevron-down" />
+        <Icon name="chevron-down" class="icon-chevron-down" />
       </div>
       <p class="mt-1 text-xs text-gray-500">
         Tour capacity: {
@@ -90,7 +89,7 @@ const currency = tour.data.pricing?.currency || "USD";
               <option value="0.8">Low Season (20% discount)</option>
               <option value="1.3">High Season (30% premium)</option>
             </select>
-            <IconChevronDown class="icon-chevron-down" />
+            <Icon name="chevron-down" class="icon-chevron-down" />
           </div>
           <p class="mt-1 text-xs text-gray-500">
             Prices vary by season and availability
@@ -174,7 +173,7 @@ const currency = tour.data.pricing?.currency || "USD";
     {/* Calculate Button */}
     <div class="lg:col-span-2 flex items-center justify-center">
       <button type="submit" class="button button-yellow w-full lg:w-auto gap-2">
-        <IconCalculator class="size-4" />
+        <Icon name="calculator" class="size-4" />
         <span>Calculate Total Price</span>
       </button>
     </div>

@@ -1,6 +1,5 @@
 ---
-import IconWhatsApp from "~/assets/images/icons/whatsapp.svg";
-import IconMail from "~/assets/images/icons/mail.svg";
+import Icon from "~/components/Icon.astro";
 
 interface Props {
   tourTitle: string;
@@ -36,7 +35,7 @@ const emailUrl = `mailto:info@colombia-adventures.com?subject=${encodeURICompone
       rel="noopener noreferrer"
       class="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors w-full"
     >
-      <IconWhatsApp class="size-5" />
+      <Icon name="brand-whatsapp" class="size-5" />
       <span>WhatsApp Us - Instant Response</span>
     </a>
 
@@ -44,7 +43,7 @@ const emailUrl = `mailto:info@colombia-adventures.com?subject=${encodeURICompone
       href={emailUrl}
       class="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors w-full"
     >
-      <IconMail class="size-5" />
+      <Icon name="mail" class="size-5" />
       <span>Send Email Inquiry</span>
     </a>
   </div>

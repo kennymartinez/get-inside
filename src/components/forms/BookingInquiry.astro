@@ -1,8 +1,5 @@
 ---
-import IconPaperAirplane from "~/assets/images/icons/paper-airplane.svg";
-import IconCalendar from "~/assets/images/icons/calendar.svg";
-import IconGroup from "~/assets/images/icons/group.svg";
-import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+import Icon from "~/components/Icon.astro";
 
 interface Props {
   tourCode?: string;
@@ -132,7 +129,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
             class="block text-sm font-medium text-gray-700 mb-2"
           >
             <span class="flex items-center gap-2">
-              <IconCalendar class="size-4" />
+              <Icon name="calendar" class="size-4" />
               Preferred Travel Date *
             </span>
           </label>
@@ -155,7 +152,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
             class="block text-sm font-medium text-gray-700 mb-2"
           >
             <span class="flex items-center gap-2">
-              <IconGroup class="size-4" />
+              <Icon name="users" class="size-4" />
               Group Size *
             </span>
           </label>
@@ -179,7 +176,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
               <option value="10">10 people</option>
               <option value="more">More than 10 (specify in message)</option>
             </select>
-            <IconChevronDown class="icon-chevron-down" />
+            <Icon name="chevron-down" class="icon-chevron-down" />
           </div>
         </div>
       </div>
@@ -208,7 +205,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
               <option value="luxury">Luxury (5-star hotels)</option>
               <option value="unique">Unique (Eco-lodges, local stays)</option>
             </select>
-            <IconChevronDown class="icon-chevron-down" />
+            <Icon name="chevron-down" class="icon-chevron-down" />
           </div>
         </div>
 
@@ -236,7 +233,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
               <option value="5000+">$5,000+</option>
               <option value="flexible">Flexible</option>
             </select>
-            <IconChevronDown class="icon-chevron-down" />
+            <Icon name="chevron-down" class="icon-chevron-down" />
           </div>
         </div>
       </div>
@@ -343,7 +340,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
               <option value="previous-customer">Previous customer</option>
               <option value="other">Other</option>
             </select>
-            <IconChevronDown class="icon-chevron-down" />
+            <Icon name="chevron-down" class="icon-chevron-down" />
           </div>
         </div>
       </div>
@@ -352,7 +349,7 @@ const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
     {/* Submit Button */}
     <div class="border-t border-gray-200 pt-6">
       <button type="submit" class="button button-yellow gap-2 w-full lg:w-auto">
-        <IconPaperAirplane class="size-5 -rotate-45" />
+        <Icon name="send" class="size-5 -rotate-45" />
         <span class="text-lg">Send Booking Inquiry</span>
       </button>
 
