@@ -16,7 +16,7 @@ import Stats from "~/components/Stats.astro";
 
 // Images - These would need to be replaced with travel-themed images
 import ImageTravelAgent from "~/assets/images/pexels-shkrabaanthony-7144179.jpg";
-import ImageHeadingBackground from "~/assets/images/pexels-jeshoots-com-147458-451590.jpg";
+import ImageHeadingBackground from "~/assets/images/main-banner.jpg";
 import ShowDestinations from "~/components/ShowDestinations.astro"; // Updated import
 import ImageOne from "~/assets/images/pexels-leif-bergerson-99376750-9764731.webp";
 import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
@@ -35,12 +35,14 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     <Container class:list={"relative z-10"}>
       <Heading class:list={"prose-invert max-w-4xl"}>
         <h1 slot="heading-title" class="mb-0 lg:text-7xl text-balance">
-          Discover your next adventure in our exclusive destinations
+          Discover the Magic of Colombia with Trusted Local Experts
         </h1>
         <p slot="heading-content">
-          Search for your perfect getaway here. We offer amazing destinations
-          around the world. Browse through our collection and find the perfect
-          destination that suits your travel dreams and budget.
+          Experience Colombia's breathtaking diversity through our carefully
+          crafted travel packages. From the Caribbean coast to the Amazon
+          rainforest, we offer authentic, safe, and responsible tourism
+          experiences that showcase the best of our beautiful country. Book with
+          confidence knowing you're traveling with certified local experts.
         </p>
       </Heading>
       <WidgetSearch />
@@ -52,15 +54,24 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     <Container>
       <Hero>
         <div slot="hero-left" class="prose lg:max-w-2xl">
-          <h2>Welcome to our travel agency!</h2>
+          <h2>Your Gateway to Authentic Colombian Adventures</h2>
           <p>
-            Find your next adventure here. We have amazing destinations
-            worldwide. Browse through our collection and find the perfect
-            getaway that suits your travel style and budget.
+            Colombia is a land of extraordinary contrasts - from the snow-capped
+            peaks of the Andes to the pristine beaches of the Caribbean, from
+            vibrant colonial cities to untouched Amazon wilderness. As a
+            locally-owned and operated company, we're passionate about sharing
+            Colombia's hidden gems while ensuring your safety and supporting
+            local communities.
+          </p>
+          <p>
+            <strong>Why choose us?</strong> We're not just tour operators - we're
+            your Colombian friends who know every corner of this incredible country.
+            Our licensed guides, vetted accommodations, and 24/7 support ensure you
+            experience the real Colombia with complete peace of mind.
           </p>
 
           <Button href="/destinations" class:list={"mt-4"}
-            >View all destinations</Button
+            >Explore Colombia Tours</Button
           >
         </div>
         <div slot="hero-right">
@@ -82,21 +93,23 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
           As="a"
           xl
         >
-          <h2>Featured destinations</h2>
+          <h2>Colombia's Crown Jewels</h2>
           <p>
-            Discover unforgettable travel experiences with our exclusive
-            collection of featured destinations. Whether you're seeking pristine
-            tropical beaches, majestic mountain retreats, or vibrant cultural
-            cities, we have something for every traveler. Our carefully curated
-            destinations ensure you find the perfect match for your travel style
-            and budget.
+            From the mystical Lost City (Ciudad Perdida) hidden in the Sierra
+            Nevada mountains to the colorful colonial streets of Cartagena,
+            Colombia offers experiences you won't find anywhere else. Our
+            signature tours include UNESCO World Heritage sites, world-renowned
+            coffee regions, and exclusive access to protected natural areas.
+            Every package is designed with sustainability in mind, ensuring your
+            visit benefits local communities while preserving Colombia's natural
+            and cultural treasures.
           </p>
           <Button
             As="button"
             type="button"
             color="white-outline"
             class:list={"mt-4 group-hover:bg-white/10"}
-            >View all destinations</Button
+            >Discover Colombia</Button
           >
         </GridItem>
 
@@ -106,27 +119,30 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
           link="/destinations"
           As="a"
         >
-          <h3>Popular destinations</h3>
+          <h3>Adventure & Nature</h3>
           <p>
-            Explore the world's most sought-after destinations. Whether you're
-            looking for tropical paradise, mountain adventures, or cultural
-            immersion, we have something for everyone.
+            Experience Colombia's incredible biodiversity in our carefully
+            planned eco-adventures. Trek through cloud forests, spot exotic
+            wildlife in national parks, or dive into crystal-clear Caribbean
+            waters. All our nature tours are led by certified naturalist guides
+            and follow strict environmental protocols.
           </p>
           <Button
             As="button"
             type="button"
             color="white-outline"
-            class:list={"mt-4 group-hover:bg-white/10"}
-            >View all destinations</Button
+            class:list={"mt-4 group-hover:bg-white/10"}>Nature Tours</Button
           >
         </GridItem>
 
         <GridItem>
-          <h3>Trending destinations</h3>
+          <h3>Cultural Immersion</h3>
           <p>
-            Discover what's trending in travel right now. From hidden gems to
-            popular hotspots, explore destinations that are capturing travelers'
-            hearts worldwide.
+            Connect with Colombia's rich cultural heritage through authentic
+            experiences with local communities. Learn traditional crafts,
+            participate in coffee harvesting, or dance salsa in its birthplace.
+            Our cultural tours directly support indigenous and rural
+            communities, ensuring your visit makes a positive impact.
           </p>
         </GridItem>
       </Grid>
@@ -138,11 +154,15 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     <Container>
       <Hero invert>
         <div slot="hero-left" class="prose lg:max-w-2xl">
-          <h2>Welcome to our travel agency!</h2>
+          <h2>Safety & Trust You Can Count On</h2>
           <p>
-            Find your next adventure here. We offer a wide range of destinations
-            for every type of traveler. Browse through our collection and find
-            the perfect getaway that matches your dreams and budget.
+            Your safety is our top priority. We're a fully licensed Colombian
+            tour operator with comprehensive insurance coverage, emergency
+            response protocols, and partnerships with trusted local providers.
+            Our team includes certified wilderness first aid responders, and we
+            maintain 24/7 communication during all tours. Read our verified
+            reviews from thousands of satisfied travelers who've experienced
+            Colombia safely with us.
           </p>
         </div>
         <div slot="hero-right">
@@ -156,11 +176,15 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section class:list={"bg-blue-50"}>
     <Container>
       <Heading>
-        <h2 slot="heading-title" class="mb-0">Featured destinations</h2>
+        <h2 slot="heading-title" class="mb-0">
+          Signature Colombian Experiences
+        </h2>
         <p slot="heading-content">
-          Discover your next dream destination here. We have amazing places to
-          visit around the world. Browse through our collection and find the
-          perfect getaway that suits your travel style and budget.
+          Explore our most popular Colombian adventures, carefully crafted to
+          showcase the country's diverse landscapes and rich culture. Each tour
+          includes expert local guides, comfortable accommodations, and
+          authentic experiences that connect you with the heart of Colombia
+          while supporting sustainable tourism.
         </p>
       </Heading>
 
@@ -178,31 +202,35 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section>
     <Container>
       <Heading class:list={"text-center mx-auto"}>
-        <h2 slot="heading-title" class="text-balance">Why choose us?</h2>
+        <h2 slot="heading-title" class="text-balance">
+          Colombia Experts You Can Trust
+        </h2>
         <p slot="heading-content">
-          We are the leading travel agency in the industry. With over 20 years
-          of experience, we have helped thousands of travelers discover their
-          dream destinations.
+          As Colombia's premier responsible tourism company, we've been sharing
+          our country's wonders with international visitors for over a decade.
+          Our commitment to safety, authenticity, and sustainability has earned
+          us recognition from international travel organizations and thousands
+          of satisfied travelers.
         </p>
       </Heading>
 
       <Stats
         items={[
           {
-            title: "Destinations available",
-            value: "259",
-            animateNumber: true,
-            animateFrom: 100,
+            title: "Colombian Destinations",
+            value: "50+",
+            animateNumber: false,
           },
           {
-            title: "Happy travelers",
-            value: "1088",
+            title: "Happy Travelers",
+            value: "5,000+",
             animateNumber: true,
-            animateFrom: 800,
+            animateFrom: 4000,
           },
           {
-            title: "Experience",
-            value: "20+ years",
+            title: "Safety Record",
+            value: "100%",
+            animateNumber: false,
           },
         ]}
       />
@@ -213,17 +241,19 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section class:list={"bg-gradient-to-br from-gray-900 to-gray-700"}>
     <Container>
       <Heading class:list={"mb-0 lg:mb-0 prose-invert text-center mx-auto"}>
-        <h2 slot="heading-title">Can't find the perfect destination?</h2>
+        <h2 slot="heading-title">Ready to Discover Colombia?</h2>
 
         <p slot="heading-content">
-          Our team is here to help you find the perfect destination that suits
-          your travel dreams and budget. Whether you're looking for tropical
-          beaches, mountain adventures, or cultural experiences, we have
-          something for everyone.
+          Let our Colombian travel experts design your perfect adventure.
+          Whether you're dreaming of Caribbean beaches, Andean peaks, Amazon
+          rainforest, or colonial cities, we'll create a personalized itinerary
+          that matches your interests, budget, and travel style. Contact us
+          today for a free consultation and start planning your safe, authentic
+          Colombian experience.
         </p>
 
         <Button href="/contact" color="white" class:list={"mt-8"}
-          >Contact us</Button
+          >Plan My Colombia Trip</Button
         >
       </Heading>
     </Container>
@@ -233,11 +263,15 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section class:list={"bg-gray-50"}>
     <Container>
       <Heading>
-        <h2 slot="heading-title" class="mb-0">Popular destinations</h2>
+        <h2 slot="heading-title" class="mb-0">
+          Most Loved Colombian Adventures
+        </h2>
         <p slot="heading-content">
-          Explore trending destinations here. We have amazing places to visit
-          around the world. Browse through our collection and find the perfect
-          adventure that suits your travel preferences and budget.
+          Discover why these Colombian experiences consistently earn 5-star
+          reviews from our travelers. From ancient archaeological sites to
+          vibrant coffee plantations, these tours represent the very best of
+          what Colombia has to offer - all delivered with our signature
+          commitment to safety and authenticity.
         </p>
       </Heading>
 
@@ -256,12 +290,14 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section>
     <Container>
       <Heading class:list={"max-w-3xl"}>
-        <h2 slot="heading-title">Latest travel news</h2>
+        <h2 slot="heading-title">Colombia Travel Insights</h2>
 
         <p slot="heading-content">
-          Stay up to date with the latest travel news and updates from our
-          agency. Read our blog posts to learn more about featured destinations,
-          special offers, and travel industry insights.
+          Stay informed with the latest updates from Colombia's tourism
+          landscape. Our blog features insider tips, seasonal travel advice,
+          cultural insights, and stories from fellow travelers who've
+          experienced the magic of Colombia with us. Get inspired and plan your
+          perfect Colombian adventure.
         </p>
       </Heading>
 
@@ -273,31 +309,37 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section class:list={"bg-gray-50"}>
     <Container>
       <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
-        <h2 slot="heading-title">Welcome to our travel agency!</h2>
+        <h2 slot="heading-title">Frequently Asked Questions</h2>
 
         <p slot="heading-content">
-          Find your next adventure here. We have amazing destinations around the
-          world. Browse through our collection and find the perfect getaway that
-          suits your travel dreams and budget.
+          Planning your first trip to Colombia? We understand you may have
+          questions about safety, logistics, and what to expect. Here are
+          answers to the most common questions from travelers considering a
+          Colombian adventure.
         </p>
       </Heading>
 
       <Faq
         items={[
           {
-            question: "What types of destinations do you offer?",
+            question: "Is it safe to travel to Colombia?",
             answer:
-              "We offer a wide variety of destinations including tropical beaches, mountain retreats, cultural cities, adventure locations, and luxury resorts worldwide.",
+              "Absolutely! Colombia has transformed dramatically and is now one of South America's top tourist destinations. We work only with vetted local partners, maintain 24/7 communication during tours, and our guides are trained in safety protocols. Millions of international visitors explore Colombia safely each year.",
           },
           {
-            question: "Do you provide custom travel packages?",
+            question: "What makes your Colombia tours different?",
             answer:
-              "Yes! We specialize in creating personalized travel experiences tailored to your preferences, budget, and travel style.",
+              "As a locally-owned Colombian company, we offer authentic insider access you won't find elsewhere. Our tours support local communities, use certified guides, and include unique experiences like staying with indigenous families or accessing private nature reserves. Plus, we're available 24/7 throughout your journey.",
           },
           {
-            question: "What's included in your travel packages?",
+            question: "What's included in your Colombia travel packages?",
             answer:
-              "Our packages typically include accommodation, transportation, guided tours, and local experiences. Specific inclusions vary by destination and package type.",
+              "Our comprehensive packages include accommodation (carefully selected for comfort and location), all transportation, expert bilingual guides, entrance fees, most meals, and 24/7 support. We also provide detailed pre-trip information and can arrange travel insurance.",
+          },
+          {
+            question: "Do you offer custom Colombia itineraries?",
+            answer:
+              "Yes! We specialize in creating personalized Colombian adventures. Whether you want to focus on nature, culture, adventure, or relaxation, we'll design an itinerary that matches your interests, fitness level, and budget. Contact us for a free consultation.",
           },
         ]}
       />
@@ -308,14 +350,15 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
   <Section>
     <Container>
       <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
-        <h2 slot="heading-title">Our travel experts</h2>
+        <h2 slot="heading-title">Meet Your Colombian Travel Experts</h2>
 
         <p slot="heading-content">
-          Meet the team behind our travel agency. Our dedicated travel
-          consultants are here to help you find the perfect destination that
-          suits your needs and budget. Whether you're seeking tropical beaches,
-          mountain adventures, or cultural experiences, we have something for
-          everyone.
+          Our passionate team of Colombian travel specialists combines deep
+          local knowledge with international hospitality standards. Each team
+          member is a certified guide, wilderness first aid trained, and
+          committed to sharing Colombia's beauty responsibly. We're not just
+          your tour operators - we're your Colombian friends who want to show
+          you our incredible country.
         </p>
       </Heading>
 
