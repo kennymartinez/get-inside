@@ -3,7 +3,9 @@ import { siteName } from "~/data/config";
 import { menuNavigation, menuMisc, menuService, menuLegal } from "~/data/menus";
 import NewsletterFooter from "./forms/NewsletterFooter.astro";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 import SocialMediaIcons from "./SocialMediaIcons.astro";
+import logoGetInside from "~/assets/images/logo-getinside-512x512.png";
 const year = new Date().getFullYear();
 
 // Ensure all menu objects have an items array, even if empty
@@ -17,13 +19,12 @@ const legal = menuLegal?.items || [];
   <div class="container py-16">
     <div class="xl:grid xl:grid-cols-3 xl:gap-8">
       <div>
-        <a href="/">
-          <div class="flex items-center gap-x-2">
-            <Icon name="tabler:planet" class="h-5 lg:h-8 inline-block" />
-            <span class="font-bold text-2xl lg:text-4xl"
-              >Hyper<span class="font-normal">Drive</span></span
-            >
-          </div>
+        <a href="/" class="flex items-center">
+          <Image
+            src={logoGetInside}
+            alt="Get Inside Colombia - Authentic Colombian Tours"
+            class="h-12 lg:h-46 w-auto"
+          />
         </a>
       </div>
       <div

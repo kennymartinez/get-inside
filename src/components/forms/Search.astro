@@ -5,13 +5,22 @@ import Icon from "~/components/Icon.astro";
 
 const destinations = await getDestinations();
 const tourTypes = await getTourTypes();
+
+// Duration options for quick filtering
+const durationOptions = [
+  { value: "1", label: "1 Day" },
+  { value: "2-3", label: "2-3 Days" },
+  { value: "4-7", label: "4-7 Days" },
+  { value: "8-14", label: "1-2 Weeks" },
+  { value: "15+", label: "2+ Weeks" },
+];
 ---
 
 <form
   id="form-widget-search"
-  action="/tours"
+  action="/tours/1"
   method="get"
-  class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+  class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-4"
   data-destinations={JSON.stringify(destinations)}
   data-tour-types={JSON.stringify(tourTypes)}
 >
@@ -55,7 +64,7 @@ const tourTypes = await getTourTypes();
         id="difficulty"
         class="appearance-none col-start-1 row-start-1"
       >
-        <option value="all">Choose difficulty</option>
+        <option value="all">Any difficulty</option>
         {
           difficultyLevels.map((level) => (
             <option value={level}>{level}</option>
@@ -67,12 +76,31 @@ const tourTypes = await getTourTypes();
   </div>
 
   <div>
+    <label class="sr-only" for="duration">Duration</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="duration"
+        id="duration"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Any duration</option>
+        {
+          durationOptions.map((option) => (
+            <option value={option.value}>{option.label}</option>
+          ))
+        }
+      </select>
+      <Icon name="chevron-down" class="icon-chevron-down" />
+    </div>
+  </div>
+
+  <div class="lg:col-span-2 xl:col-span-4">
     <button
       type="submit"
-      class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition"
+      class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition flex items-center justify-center gap-2"
     >
-      <Icon name="search" class="size-5 -mt-0.5 inline-block" />
-      <span>Search</span>
+      <Icon name="search" class="size-5" />
+      <span>Find Colombia Tours</span>
     </button>
   </div>
 </form>
@@ -84,19 +112,38 @@ const tourTypes = await getTourTypes();
     ) as HTMLFormElement;
 
     if (form) {
-      const destinationsData = form.getAttribute("data-destinations");
-      const tourTypesData = form.getAttribute("data-tour-types");
-      const destinations = destinationsData ? JSON.parse(destinationsData) : [];
-      const tourTypes = tourTypesData ? JSON.parse(tourTypesData) : [];
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
+      const originalButtonText = submitButton.innerHTML;
 
-      const destinationSelect = document.getElementById(
-        "destination"
-      )! as HTMLSelectElement;
-      const tourTypeSelect = document.getElementById(
-        "tourType"
-      )! as HTMLSelectElement;
+      // Handle form submission with loading state
+      form.addEventListener("submit", function (e) {
+        // Show loading state
+        submitButton.disabled = true;
+        submitButton.innerHTML = `
+          <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-current" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          </svg>
+          Searching Tours...
+        `;
 
-      // You can add additional interactive functionality here if needed
+        // Reset button after a delay if form doesn't navigate
+        setTimeout(() => {
+          submitButton.disabled = false;
+          submitButton.innerHTML = originalButtonText;
+        }, 5000);
+      });
+
+      // Add form validation
+      const selects = form.querySelectorAll("select");
+      selects.forEach((select) => {
+        select.addEventListener("change", function () {
+          // Remove any previous validation styling
+          this.classList.remove("border-red-300");
+        });
+      });
     }
   });
 </script>

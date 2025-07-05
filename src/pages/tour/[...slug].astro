@@ -12,24 +12,21 @@ import Icon from "~/components/Icon.astro";
 
 // Tourism UI Components
 import Slider from "~/components/tour/single-page/Slider.astro";
-import TourPrice from "~/components/tour/single-page/TourPrice.astro";
+import TourPrice from "~/components/tour/single-page/Price.astro";
 import TourOverview from "~/components/tour/single-page/TourOverview.astro";
 import TourItinerary from "~/components/tour/single-page/TourItinerary.astro";
 import TourInclusions from "~/components/tour/single-page/TourInclusions.astro";
-import TourRequirements from "~/components/tour/single-page/TourRequirements.astro";
 import FormBookingInquiry from "~/components/forms/BookingInquiry.astro";
 import WidgetBooking from "~/components/tour/single-page/WidgetBooking.astro";
 import ModalSlider from "~/components/modals/ModalSlider.astro";
-import TourHighlights from "~/components/tour/single-page/TourHighlights.astro";
-import WeatherInfo from "~/components/tour/single-page/WeatherInfo.astro";
-import RelatedTours from "~/components/tour/single-page/RelatedTours.astro";
+import TourHighlights from "~/components/tour/TourHighlights.astro";
 
 // Buttons
 import ButtonGoBack from "~/components/buttons/ButtonGoBack.astro";
 import ButtonShare from "~/components/buttons/ButtonShare.astro";
 import ButtonPrint from "~/components/buttons/ButtonPrint.astro";
 import ButtonCall from "~/components/buttons/ButtonCall.astro";
-import ButtonBookNow from "~/components/buttons/ButtonBookNow.astro";
+
 import LinkWhatsApp from "~/components/tour/single-page/LinkWhatsApp.astro";
 
 export async function getStaticPaths() {
@@ -53,17 +50,7 @@ export async function getStaticPaths() {
 const { tour } = Astro.props;
 const { Content } = await render(tour);
 
-// Get related tours from same destination or tour type
-const relatedTours = await getCollection(
-  "tours",
-  ({ data }) =>
-    !data.misc?.hidden &&
-    (data.general.destination === tour.data.general.destination ||
-      data.general.tourType === tour.data.general.tourType)
-);
-const filteredRelatedTours = relatedTours
-  .filter((t) => t.id !== tour.id)
-  .slice(0, 3);
+// Related tours functionality can be added later when component is created
 ---
 
 <Layout
@@ -204,7 +191,6 @@ const filteredRelatedTours = relatedTours
                   class="flex items-center max-sm:justify-center gap-x-4 w-full"
                 >
                   <ButtonCall />
-                  <ButtonBookNow />
                 </div>
 
                 <div
@@ -241,14 +227,8 @@ const filteredRelatedTours = relatedTours
           <!-- What's Included/Excluded -->
           <TourInclusions tour={tour} />
 
-          <!-- Requirements & Recommendations -->
-          <TourRequirements tour={tour} />
-
-          <!-- Weather & Best Time to Visit -->
-          {tour.data.seasonal && <WeatherInfo tour={tour} />}
-
           <!-- Tour Highlights -->
-          <TourHighlights tour={tour} />
+          <TourHighlights data={tour.data} />
 
           <!-- Booking Widget -->
           <WidgetBooking
@@ -271,20 +251,7 @@ const filteredRelatedTours = relatedTours
     </Container>
   </Section>
 
-  <!-- Related Tours -->
-  {
-    filteredRelatedTours.length > 0 && (
-      <Section class:list={"bg-gray-50"}>
-        <Container>
-          <RelatedTours
-            tours={filteredRelatedTours}
-            destination={tour.data.general.destination}
-            tourType={tour.data.general.tourType}
-          />
-        </Container>
-      </Section>
-    )
-  }
+  <!-- Related Tours section can be added later when component is created -->
 
   <ModalSlider tour={tour} />
 </Layout>

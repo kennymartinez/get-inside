@@ -1,0 +1,6 @@
+---
+// Redirect to tours/1 with search parameters preserved
+const searchParams = Astro.url.searchParams.toString();
+const redirectUrl = searchParams ? `/tours/1?${searchParams}` : "/tours/1";
+return Astro.redirect(redirectUrl);
+---
