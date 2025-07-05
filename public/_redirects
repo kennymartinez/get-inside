@@ -1,0 +1,14 @@
+# API routes
+/api/* /.netlify/functions/api/:splat 200
+
+# Tours pages
+/tours/* /tours/:splat 200
+
+# Tour detail pages  
+/tour/* /tour/:splat 200
+
+# Blog pages
+/blog/* /blog/:splat 200
+
+# Fallback for SPA routing
+/* /index.html 200

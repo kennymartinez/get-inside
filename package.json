@@ -1,12 +1,15 @@
 {
-  "name": "astro-hyperdrive",
+  "name": "get-inside-colombia",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "description": "Get Inside Colombia - Authentic Colombian Tours and Travel Experiences",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "start": "astro dev",
+    "check": "astro check"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.0",
