@@ -1,98 +1,149 @@
 import type { CollectionEntry } from "astro:content";
-import { unitSystem } from "~/data/config";
-
-type UnitSystem = "imperial" | "metric";
-const unitSystemTyped: UnitSystem = unitSystem as UnitSystem;
 
 type ShapeToLabels<T extends Record<string, any>> = {
-	[K in keyof T]: T[K] extends Record<string, any> ? ShapeToLabels<T[K]> : string | Record<string, string>;
+  [K in keyof T]: T[K] extends Record<string, any>
+    ? ShapeToLabels<T[K]>
+    : string | Record<string, string>;
 };
 
-export const labels: ShapeToLabels<CollectionEntry<"cars">["data"]> = {
-	title: "Title",
-	image: "Image",
-	imageAlt: "Image Alt",
-	gallery: {
-		image: "Image",
-		alt: "Alt",
-	},
-	videoTourUrl: "Video Tour URL",
-	excerpt: "Excerpt",
-	publishDate: "Publish Date" as unknown as ShapeToLabels<Date>,
-	general: {
-		make: "Make",
-		model: "Model",
-		type: "Type",
-		price: "Price",
-		salePrice: "Sale Price",
-		bodyType: "Body Type",
-		drivetrain: "Drivetrain",
-		doors: "Doors",
-		seatingCapacity: "Seating Capacity",
-		condition: "Condition",
-		availability: "Availability",
-	},
-	history: {
-		mileage: unitSystemTyped === "imperial" ? "Mileage" : "Kilometerage",
-		year: "Year",
-		previousOwners: "Previous Owners",
-		accidentHistory: "Damage",
-	},
-	technical: {
-		horsePower: "Horse Power",
-		transmission: "Transmission",
-		engineSizeCC: "Engine Size CC",
-		gears: "Gears",
-		cilinders: "Cilinders",
-		weight: "Weight",
-	},
-	efficiency: {
-		fuelType: "Fuel Type",
-		fuelEfficiencyMPG: "Fuel Efficiency MPG",
-		fuelEfficiencyLPer100KM: "Fuel Efficiency L/100KM",
-		emissionsCO2: "Emissions CO2",
-		emissionsRating: "Emissions Rating",
-	},
-	options: "Options",
-	security: {
-		alarm: "Alarm",
-		immobilizer: "Immobilizer",
-		airbags: "Airbags",
-		abs: "ABS",
-		esp: "ESP",
-		tireCondition: "Tire Condition",
-		safetyRating: "Safety Rating",
-	},
-	exterior: {
-		color: "Color",
-		paintType: "Paint Type",
-		wheelSize: "Wheel Size",
-		wheelType: "Wheel Type",
-	},
-	interior: {
-		materialSeats: "Material Seats",
-		heatedSeats: "Heated Seats",
-		ventilatedSeats: "Ventilated Seats",
-	},
-	misc: {
-		vin: "VIN",
-		registrationStatus: "Registration Status",
-		warranty: "Warranty",
-		dealerNotes: "Dealer Notes",
-		hidden: "Hidden",
-		loanWidget: "Loan Widget",
-		featured: "Featured",
-	},
+// Updated labels for tourism schema
+export const labels: ShapeToLabels<CollectionEntry<"tours">["data"]> = {
+  title: "Tour Title",
+  image: "Main Image",
+  imageAlt: "Image Description",
+  gallery: {
+    image: "Gallery Image",
+    alt: "Image Description",
+  },
+  videoTourUrl: "Video Tour URL",
+  excerpt: "Tour Summary",
+  publishDate: "Publish Date" as unknown as ShapeToLabels<Date>,
+
+  // General Information
+  general: {
+    destination: "Destination",
+    tourType: "Tour Type",
+    category: "Category",
+    price: "Price",
+    salePrice: "Special Price",
+    duration: {
+      days: "Days",
+      nights: "Nights",
+    },
+    groupSize: {
+      min: "Minimum Group",
+      max: "Maximum Group",
+    },
+    difficulty: "Difficulty Level",
+    availability: "Availability",
+  },
+
+  // Logistics
+  logistics: {
+    departureCity: "Departure City",
+    departurePoint: "Meeting Point",
+    transportation: "Transportation",
+    accommodationType: "Accommodation",
+    mealsIncluded: "Meals Included",
+  },
+
+  // Experience Details
+  experience: {
+    languages: "Languages",
+    guideType: "Guide Type",
+    physicalRequirement: "Fitness Level",
+    ageRestriction: {
+      min: "Minimum Age",
+      max: "Maximum Age",
+    },
+    bestTimeToVisit: "Best Months",
+  },
+
+  // Pricing
+  pricing: {
+    currency: "Currency",
+    priceIncludes: "What's Included",
+    priceExcludes: "What's Excluded",
+    depositRequired: "Deposit Required",
+    cancellationPolicy: "Cancellation Policy",
+  },
+
+  // Activities
+  activities: "Activities Included",
+
+  // Requirements
+  requirements: {
+    documents: "Required Documents",
+    vaccinations: "Vaccinations",
+    equipment: "Required Equipment",
+    insurance: "Insurance Required",
+    medicalClearance: "Medical Clearance",
+    swimmingSkills: "Swimming Skills",
+  },
+
+  // Accommodation
+  accommodation: {
+    type: "Accommodation Type",
+    standard: "Standard",
+    roomType: "Room Type",
+    amenities: "Amenities",
+  },
+
+  // Dining
+  dining: {
+    mealsIncluded: "Meals Included",
+    dietaryRestrictions: "Dietary Options",
+    localCuisine: "Local Cuisine",
+    vegetarianOptions: "Vegetarian Options",
+  },
+
+  // Seasonal Information
+  seasonal: {
+    bestMonths: "Best Travel Months",
+    weatherConditions: "Weather Conditions",
+    seasonalHighlights: "Seasonal Highlights",
+    specialEvents: "Special Events",
+  },
+
+  // Miscellaneous
+  misc: {
+    tourCode: "Tour Code",
+    operator: "Tour Operator",
+    operatorContact: "Operator Contact",
+    bookingNotes: "Booking Notes",
+    hidden: "Hidden",
+    featured: "Featured Tour",
+    sustainable: "Eco-Friendly",
+    newTour: "New Tour",
+    popularTour: "Popular Tour",
+  },
 };
 
+// Updated category labels for tourism
 export const categoryLabels = {
-	general: "General information",
-	history: "History",
-	technical: "Technical information",
-	exterior: "Exterior",
-	interior: "Interior",
-	options: "Options",
-	security: "Security",
-	efficiency: "Efficiency",
-	misc: "Miscellaneous",
+  general: "General Information",
+  logistics: "Logistics & Travel",
+  experience: "Experience Details",
+  pricing: "Pricing Information",
+  activities: "Activities",
+  requirements: "Requirements & Preparation",
+  accommodation: "Accommodation",
+  dining: "Meals & Dining",
+  seasonal: "Seasonal Information",
+  misc: "Additional Information",
+};
+
+// Legacy labels for backward compatibility
+export const legacyLabels = {
+  // Car fields mapped to closest tourism equivalent
+  make: "Destination",
+  model: "Category",
+  bodyType: "Tour Type",
+  fuelType: "Difficulty",
+  transmission: "Guide Type",
+  mileage: "Duration",
+  year: "Season",
+  horsePower: "Group Size",
+  condition: "Availability",
+  color: "Special Features",
 };

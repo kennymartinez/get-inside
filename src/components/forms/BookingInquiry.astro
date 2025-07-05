@@ -1,0 +1,480 @@
+---
+import IconPaperAirplane from "~/assets/images/icons/paper-airplane.svg";
+import IconCalendar from "~/assets/images/icons/calendar.svg";
+import IconGroup from "~/assets/images/icons/group.svg";
+import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+
+interface Props {
+  tourCode?: string;
+  tourTitle?: string;
+  showTourInfo?: boolean;
+}
+
+const { tourCode, tourTitle, showTourInfo = true } = Astro.props;
+---
+
+<div class="max-w-2xl">
+  <h2 class="h4 flex items-center gap-2">
+    <span>📝</span>
+    Book This Tour
+  </h2>
+  <p class="text-gray-600 mb-6">
+    Ready to experience Colombia? Fill out the form below and we'll create your
+    perfect adventure. Our travel experts will contact you within 24 hours to
+    finalize your booking.
+  </p>
+
+  {
+    showTourInfo && tourTitle && (
+      <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+        <div class="flex items-center gap-2 text-blue-800">
+          <span>🎯</span>
+          <span class="font-semibold">Selected Tour:</span>
+        </div>
+        <p class="text-blue-700 font-medium mt-1">{tourTitle}</p>
+        {tourCode && <p class="text-blue-600 text-sm">Tour Code: {tourCode}</p>}
+      </div>
+    )
+  }
+
+  <form id="booking-inquiry-form" class="space-y-6">
+    {/* Hidden fields */}
+    {tourCode && <input type="hidden" name="tourCode" value={tourCode} />}
+    {tourTitle && <input type="hidden" name="tourTitle" value={tourTitle} />}
+
+    {/* Personal Information */}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700 mb-2">
+          <span class="flex items-center gap-2">
+            <span>👤</span>
+            Full Name *
+          </span>
+        </label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          required
+          class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          placeholder="Enter your full name"
+        />
+      </div>
+
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+          <span class="flex items-center gap-2">
+            <span>📧</span>
+            Email Address *
+          </span>
+        </label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          required
+          class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          placeholder="your.email@example.com"
+        />
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div>
+        <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">
+          <span class="flex items-center gap-2">
+            <span>📱</span>
+            Phone Number
+          </span>
+        </label>
+        <input
+          type="tel"
+          id="phone"
+          name="phone"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          placeholder="+1 (555) 123-4567"
+        />
+      </div>
+
+      <div>
+        <label
+          for="nationality"
+          class="block text-sm font-medium text-gray-700 mb-2"
+        >
+          <span class="flex items-center gap-2">
+            <span>🌍</span>
+            Nationality
+          </span>
+        </label>
+        <input
+          type="text"
+          id="nationality"
+          name="nationality"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          placeholder="e.g. American, Canadian, British"
+        />
+      </div>
+    </div>
+
+    {/* Travel Details */}
+    <div class="border-t border-gray-200 pt-6">
+      <h3
+        class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2"
+      >
+        <span>✈️</span>
+        Travel Details
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <label
+            for="preferredDate"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            <span class="flex items-center gap-2">
+              <IconCalendar class="size-4" />
+              Preferred Travel Date *
+            </span>
+          </label>
+          <input
+            type="date"
+            id="preferredDate"
+            name="preferredDate"
+            required
+            min={new Date().toISOString().split("T")[0]}
+            max={new Date(Date.now() + 2 * 365 * 24 * 60 * 60 * 1000)
+              .toISOString()
+              .split("T")[0]}
+            class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          />
+        </div>
+
+        <div>
+          <label
+            for="groupSize"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            <span class="flex items-center gap-2">
+              <IconGroup class="size-4" />
+              Group Size *
+            </span>
+          </label>
+          <div class="grid grid-cols-1">
+            <select
+              name="groupSize"
+              id="groupSize"
+              required
+              class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+            >
+              <option value="">Select group size</option>
+              <option value="1">1 person</option>
+              <option value="2">2 people</option>
+              <option value="3">3 people</option>
+              <option value="4">4 people</option>
+              <option value="5">5 people</option>
+              <option value="6">6 people</option>
+              <option value="7">7 people</option>
+              <option value="8">8 people</option>
+              <option value="9">9 people</option>
+              <option value="10">10 people</option>
+              <option value="more">More than 10 (specify in message)</option>
+            </select>
+            <IconChevronDown class="icon-chevron-down" />
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <div>
+          <label
+            for="accommodationPreference"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            <span class="flex items-center gap-2">
+              <span>🏨</span>
+              Accommodation Preference
+            </span>
+          </label>
+          <div class="grid grid-cols-1">
+            <select
+              name="accommodationPreference"
+              id="accommodationPreference"
+              class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+            >
+              <option value="">No preference</option>
+              <option value="budget">Budget (Hostels, basic hotels)</option>
+              <option value="standard">Standard (3-star hotels)</option>
+              <option value="superior">Superior (4-star hotels)</option>
+              <option value="luxury">Luxury (5-star hotels)</option>
+              <option value="unique">Unique (Eco-lodges, local stays)</option>
+            </select>
+            <IconChevronDown class="icon-chevron-down" />
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="budgetRange"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            <span class="flex items-center gap-2">
+              <span>💰</span>
+              Budget Range (per person)
+            </span>
+          </label>
+          <div class="grid grid-cols-1">
+            <select
+              name="budgetRange"
+              id="budgetRange"
+              class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+            >
+              <option value="">Select budget range</option>
+              <option value="under-500">Under $500</option>
+              <option value="500-1000">$500 - $1,000</option>
+              <option value="1000-2000">$1,000 - $2,000</option>
+              <option value="2000-5000">$2,000 - $5,000</option>
+              <option value="5000+">$5,000+</option>
+              <option value="flexible">Flexible</option>
+            </select>
+            <IconChevronDown class="icon-chevron-down" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Special Requirements */}
+    <div class="border-t border-gray-200 pt-6">
+      <h3
+        class="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2"
+      >
+        <span>🎯</span>
+        Special Requests & Preferences
+      </h3>
+
+      <div class="mb-6">
+        <label
+          for="specialRequests"
+          class="block text-sm font-medium text-gray-700 mb-2"
+        >
+          Special Requests or Requirements
+        </label>
+        <textarea
+          id="specialRequests"
+          name="specialRequests"
+          rows="4"
+          class="w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500"
+          placeholder="Tell us about any dietary restrictions, mobility needs, special occasions, or specific activities you're interested in..."
+        ></textarea>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-3">
+            Interests (check all that apply)
+          </label>
+          <div class="space-y-2">
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="interests"
+                value="culture"
+                class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              />
+              <span class="ml-2 text-sm">Cultural experiences</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="interests"
+                value="adventure"
+                class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              />
+              <span class="ml-2 text-sm">Adventure activities</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="interests"
+                value="food"
+                class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              />
+              <span class="ml-2 text-sm">Food & gastronomy</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="interests"
+                value="nature"
+                class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              />
+              <span class="ml-2 text-sm">Nature & wildlife</span>
+            </label>
+            <label class="flex items-center">
+              <input
+                type="checkbox"
+                name="interests"
+                value="photography"
+                class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+              />
+              <span class="ml-2 text-sm">Photography</span>
+            </label>
+          </div>
+        </div>
+
+        <div>
+          <label
+            for="hearAboutUs"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            How did you hear about us?
+          </label>
+          <div class="grid grid-cols-1">
+            <select
+              name="hearAboutUs"
+              id="hearAboutUs"
+              class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+            >
+              <option value="">Select an option</option>
+              <option value="google">Google search</option>
+              <option value="social-media">Social media</option>
+              <option value="friend-referral">Friend referral</option>
+              <option value="travel-blog">Travel blog</option>
+              <option value="travel-agent">Travel agent</option>
+              <option value="previous-customer">Previous customer</option>
+              <option value="other">Other</option>
+            </select>
+            <IconChevronDown class="icon-chevron-down" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Submit Button */}
+    <div class="border-t border-gray-200 pt-6">
+      <button type="submit" class="button button-yellow gap-2 w-full lg:w-auto">
+        <IconPaperAirplane class="size-5 -rotate-45" />
+        <span class="text-lg">Send Booking Inquiry</span>
+      </button>
+
+      <div class="mt-4 space-y-2 text-sm text-gray-600">
+        <p class="flex items-center gap-2">
+          <span>⏱️</span>
+          <span>We'll respond within 24 hours</span>
+        </p>
+        <p class="flex items-center gap-2">
+          <span>💳</span>
+          <span>No payment required for inquiry</span>
+        </p>
+        <p class="flex items-center gap-2">
+          <span>🔒</span>
+          <span>Your information is secure and private</span>
+        </p>
+      </div>
+    </div>
+  </form>
+
+  {/* Success/Error Messages */}
+  <div
+    id="booking-success"
+    class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg"
+  >
+    <div class="flex items-center gap-2 text-green-800">
+      <span>✅</span>
+      <span class="font-semibold">Booking inquiry sent successfully!</span>
+    </div>
+    <p class="text-green-700 mt-1">
+      Thank you for your interest! Our travel experts will contact you within 24
+      hours to discuss your Colombia adventure.
+    </p>
+  </div>
+
+  <div
+    id="booking-error"
+    class="hidden mt-6 p-4 bg-red-50 border border-red-200 rounded-lg"
+  >
+    <div class="flex items-center gap-2 text-red-800">
+      <span>❌</span>
+      <span class="font-semibold">Something went wrong</span>
+    </div>
+    <p class="text-red-700 mt-1">
+      Please try again or contact us directly at <a
+        href="mailto:info@colombia-adventures.com"
+        class="underline">info@colombia-adventures.com</a
+      >
+    </p>
+  </div>
+</div>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document.addEventListener("astro:page-load", function () {
+    const form = document.getElementById(
+      "booking-inquiry-form"
+    ) as HTMLFormElement;
+    const successMessage = document.getElementById(
+      "booking-success"
+    ) as HTMLDivElement;
+    const errorMessage = document.getElementById(
+      "booking-error"
+    ) as HTMLDivElement;
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      // Hide previous messages
+      successMessage.classList.add("hidden");
+      errorMessage.classList.add("hidden");
+
+      // Show loading state
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
+      const originalText = submitButton.innerHTML;
+      submitButton.innerHTML =
+        '<span class="animate-spin">⏳</span> Sending...';
+      submitButton.disabled = true;
+
+      try {
+        const formData = new FormData(form);
+
+        // Convert group size to number
+        const groupSizeStr = formData.get("groupSize") as string;
+        if (groupSizeStr && groupSizeStr !== "more") {
+          formData.set("groupSize", groupSizeStr);
+        }
+
+        const { data, error } = await actions.submitBookingInquiry(formData);
+
+        if (error) {
+          console.error("Booking inquiry error:", error);
+          errorMessage.classList.remove("hidden");
+        } else {
+          console.log("Booking inquiry success:", data);
+          successMessage.classList.remove("hidden");
+          form.reset(); // Clear the form
+
+          // Scroll to success message
+          successMessage.scrollIntoView({ behavior: "smooth" });
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+        errorMessage.classList.remove("hidden");
+      } finally {
+        // Restore button
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+      }
+    });
+
+    // Auto-set minimum date to tomorrow
+    const dateInput = document.getElementById(
+      "preferredDate"
+    ) as HTMLInputElement;
+    if (dateInput) {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      dateInput.min = tomorrow.toISOString().split("T")[0];
+    }
+  });
+</script>

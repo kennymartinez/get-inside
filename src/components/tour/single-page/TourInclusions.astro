@@ -1,0 +1,54 @@
+---
+import type { Tour } from "~/types";
+
+const { tour } = Astro.props as { tour: Tour };
+---
+
+<div class="pt-12">
+  <h2 class="h6 tour-icon tour-icon-inclusions mb-6">
+    What's Included & Excluded
+  </h2>
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <!-- Included -->
+    {
+      tour.data.pricing?.priceIncludes &&
+        tour.data.pricing.priceIncludes.length > 0 && (
+          <div class="bg-green-50 rounded-lg p-6">
+            <h3 class="font-semibold text-green-800 mb-4 flex items-center">
+              <span class="text-green-600 mr-2">✓</span>
+              What's Included
+            </h3>
+            <ul class="space-y-2">
+              {tour.data.pricing.priceIncludes.map((item) => (
+                <li class="flex items-start">
+                  <span class="text-green-600 mr-2 mt-1">•</span>
+                  <span class="text-green-800">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+    }
+
+    <!-- Excluded -->
+    {
+      tour.data.pricing?.priceExcludes &&
+        tour.data.pricing.priceExcludes.length > 0 && (
+          <div class="bg-red-50 rounded-lg p-6">
+            <h3 class="font-semibold text-red-800 mb-4 flex items-center">
+              <span class="text-red-600 mr-2">✗</span>
+              What's Not Included
+            </h3>
+            <ul class="space-y-2">
+              {tour.data.pricing.priceExcludes.map((item) => (
+                <li class="flex items-start">
+                  <span class="text-red-600 mr-2 mt-1">•</span>
+                  <span class="text-red-800">{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )
+    }
+  </div>
+</div>

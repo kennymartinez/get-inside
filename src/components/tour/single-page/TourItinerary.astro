@@ -1,0 +1,64 @@
+---
+import type { Tour } from "~/types";
+
+const { tour } = Astro.props as { tour: Tour };
+
+// Create sample itinerary based on tour data
+const generateItinerary = (tour: Tour) => {
+  const days = tour.data.general.duration.days;
+  const activities = tour.data.activities || [];
+
+  return Array.from({ length: days }, (_, index) => ({
+    day: index + 1,
+    title:
+      index === 0
+        ? "Arrival & Welcome"
+        : index === days - 1
+          ? "Departure"
+          : `${tour.data.general.category} Experience`,
+    activities: activities.slice(index * 2, (index + 1) * 2),
+    accommodation:
+      index === days - 1 ? "Departure" : tour.data.logistics.accommodationType,
+    meals:
+      tour.data.logistics.mealsIncluded !== "None"
+        ? ["Breakfast", "Lunch", "Dinner"]
+        : [],
+  }));
+};
+
+const itinerary = generateItinerary(tour);
+---
+
+<div class="pt-12">
+  <h2 class="h6 tour-icon tour-icon-itinerary mb-6">Day-by-Day Itinerary</h2>
+  <div class="space-y-6">
+    {
+      itinerary.map((day) => (
+        <div class="relative pl-8 pb-8 border-l-2 border-gray-200 last:border-l-0">
+          <div class="absolute -left-3 top-0 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+            <span class="text-white text-xs font-bold">{day.day}</span>
+          </div>
+          <div class="bg-gray-50 rounded-lg p-4">
+            <h3 class="font-semibold text-lg mb-2">
+              Day {day.day}: {day.title}
+            </h3>
+            {day.activities.length > 0 && (
+              <div class="mb-3">
+                <h4 class="font-medium text-gray-700 mb-1">Activities:</h4>
+                <ul class="list-disc list-inside text-gray-600 space-y-1">
+                  {day.activities.map((activity) => (
+                    <li>{activity}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            <div class="flex flex-wrap gap-4 text-sm text-gray-600">
+              <span>🏨 {day.accommodation}</span>
+              {day.meals.length > 0 && <span>🍽️ {day.meals.join(", ")}</span>}
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</div>

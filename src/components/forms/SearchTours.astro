@@ -1,0 +1,84 @@
+---
+import {
+  getDestinations,
+  getTourTypes,
+  getCategories,
+} from "~/utils/tourism-helpers";
+import { difficultyLevels } from "~/content.config";
+import IconSearch from "~/assets/images/icons/search.svg";
+import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+
+const allDestinations = await getDestinations();
+const allTourTypes = await getTourTypes();
+const allCategories = await getCategories();
+---
+
+<form
+  id="form-widget-search-tours"
+  action="/tours"
+  method="get"
+  class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+>
+  <div>
+    <label class="sr-only" for="destination">Destination</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="destination"
+        id="destination"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Choose destination</option>
+        {
+          allDestinations.map((destination) => (
+            <option value={destination}>{destination}</option>
+          ))
+        }
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
+
+  <div>
+    <label class="sr-only" for="tourType">Tour Type</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="tourType"
+        id="tourType"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Choose tour type</option>
+        {allTourTypes.map((type) => <option value={type}>{type}</option>)}
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
+
+  <div>
+    <label class="sr-only" for="difficulty">Difficulty</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="difficulty"
+        id="difficulty"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Any difficulty</option>
+        {
+          difficultyLevels.map((difficulty) => (
+            <option value={difficulty}>{difficulty}</option>
+          ))
+        }
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
+
+  <div>
+    <button
+      type="submit"
+      class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition"
+    >
+      <IconSearch class="size-5 -mt-0.5 inline-block" />
+      <span>Search Tours</span>
+    </button>
+  </div>
+</form>

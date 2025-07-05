@@ -1,0 +1,384 @@
+---
+import type { Tour } from "~/types";
+import { getPrice, formatGroupSize } from "~/utils/helpers";
+import { SEASONAL_PRICING, GROUP_SIZE_CATEGORIES } from "~/utils/constants";
+import IconCalculator from "~/assets/images/icons/calculator.svg";
+import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+
+interface Props {
+  tour: Tour;
+  showSeasonalPricing?: boolean;
+}
+
+const { tour, showSeasonalPricing = true } = Astro.props;
+const basePrice = tour.data.general.salePrice || tour.data.general.price;
+const currency = tour.data.pricing?.currency || "USD";
+---
+
+<form id="form-tour-price-calculator" class="space-y-6">
+  <input type="hidden" name="basePrice" value={basePrice} />
+  <input
+    type="hidden"
+    name="duration"
+    value={tour.data.general.duration.days}
+  />
+
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+    {/* Group Size */}
+    <div>
+      <label
+        for="groupSize"
+        class="block text-sm font-medium text-gray-700 mb-2"
+      >
+        👥 Group Size *
+      </label>
+      <div class="grid grid-cols-1">
+        <select
+          name="groupSize"
+          id="calc-groupSize"
+          required
+          class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+        >
+          <option value="">Select group size</option>
+          {
+            Array.from(
+              { length: Math.min(tour.data.general.groupSize.max, 20) },
+              (_, i) => i + 1
+            ).map((size) => (
+              <option value={size}>
+                {size} {size === 1 ? "person" : "people"}
+                {size <= 3
+                  ? " (Private)"
+                  : size <= 8
+                    ? " (Small Group)"
+                    : size <= 15
+                      ? " (Standard)"
+                      : " (Large Group)"}
+              </option>
+            ))
+          }
+        </select>
+        <IconChevronDown class="icon-chevron-down" />
+      </div>
+      <p class="mt-1 text-xs text-gray-500">
+        Tour capacity: {
+          formatGroupSize(
+            tour.data.general.groupSize.min,
+            tour.data.general.groupSize.max
+          )
+        }
+      </p>
+    </div>
+
+    {/* Travel Season */}
+    {
+      showSeasonalPricing && (
+        <div>
+          <label
+            for="season"
+            class="block text-sm font-medium text-gray-700 mb-2"
+          >
+            📅 Travel Season
+          </label>
+          <div class="grid grid-cols-1">
+            <select
+              name="season"
+              id="calc-season"
+              class="appearance-none col-start-1 row-start-1 w-full rounded-md border-gray-300 shadow-sm focus:border-yellow-500 focus:ring-yellow-500 pr-10"
+            >
+              <option value="1">Regular Season (Standard pricing)</option>
+              <option value="0.8">Low Season (20% discount)</option>
+              <option value="1.3">High Season (30% premium)</option>
+            </select>
+            <IconChevronDown class="icon-chevron-down" />
+          </div>
+          <p class="mt-1 text-xs text-gray-500">
+            Prices vary by season and availability
+          </p>
+        </div>
+      )
+    }
+
+    {/* Optional Add-ons */}
+    <div class="lg:col-span-2">
+      <label class="block text-sm font-medium text-gray-700 mb-3">
+        🎯 Optional Add-ons
+      </label>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3">
+        <label
+          class="flex items-center p-3 border border-gray-200 rounded-md hover:border-gray-300"
+        >
+          <input
+            type="checkbox"
+            name="addOns"
+            value="travel-insurance"
+            data-price="25"
+            class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium">Travel Insurance</span>
+            <span class="block text-xs text-gray-500">+$25 per person</span>
+          </div>
+        </label>
+
+        <label
+          class="flex items-center p-3 border border-gray-200 rounded-md hover:border-gray-300"
+        >
+          <input
+            type="checkbox"
+            name="addOns"
+            value="airport-transfer"
+            data-price="40"
+            class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium">Airport Transfer</span>
+            <span class="block text-xs text-gray-500">+$40 per person</span>
+          </div>
+        </label>
+
+        <label
+          class="flex items-center p-3 border border-gray-200 rounded-md hover:border-gray-300"
+        >
+          <input
+            type="checkbox"
+            name="addOns"
+            value="photo-package"
+            data-price="60"
+            class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium">Professional Photos</span>
+            <span class="block text-xs text-gray-500">+$60 per person</span>
+          </div>
+        </label>
+
+        <label
+          class="flex items-center p-3 border border-gray-200 rounded-md hover:border-gray-300"
+        >
+          <input
+            type="checkbox"
+            name="addOns"
+            value="private-guide"
+            data-price="100"
+            class="rounded border-gray-300 text-yellow-600 focus:ring-yellow-500"
+          />
+          <div class="ml-3">
+            <span class="text-sm font-medium">Private Guide Upgrade</span>
+            <span class="block text-xs text-gray-500">+$100 per group</span>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    {/* Calculate Button */}
+    <div class="lg:col-span-2 flex items-center justify-center">
+      <button type="submit" class="button button-yellow w-full lg:w-auto gap-2">
+        <IconCalculator class="size-4" />
+        <span>Calculate Total Price</span>
+      </button>
+    </div>
+  </div>
+
+  {/* Results Display */}
+  <div
+    id="price-calculator-result"
+    class="opacity-0 transition duration-300 transform translate-y-4"
+  >
+    <div class="bg-white rounded-lg border-2 border-yellow-200 p-6 space-y-4">
+      <h3 class="text-lg font-semibold text-gray-900 text-center mb-4">
+        💰 Your Tour Pricing
+      </h3>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-center">
+        <div class="bg-gray-50 rounded-lg p-4">
+          <span class="block text-sm font-medium text-gray-600"
+            >Total Price</span
+          >
+          <span
+            id="calc-total-price"
+            class="block text-2xl font-bold text-gray-900">--</span
+          >
+        </div>
+
+        <div class="bg-yellow-50 rounded-lg p-4">
+          <span class="block text-sm font-medium text-gray-600"
+            >Price Per Person</span
+          >
+          <span
+            id="calc-per-person"
+            class="block text-2xl font-bold text-yellow-700">--</span
+          >
+        </div>
+
+        <div class="bg-blue-50 rounded-lg p-4">
+          <span class="block text-sm font-medium text-gray-600"
+            >Price Per Day</span
+          >
+          <span id="calc-per-day" class="block text-2xl font-bold text-blue-700"
+            >--</span
+          >
+        </div>
+      </div>
+
+      <div id="calc-breakdown" class="border-t border-gray-200 pt-4 space-y-2">
+        <h4 class="font-medium text-gray-900">Price Breakdown:</h4>
+        <div
+          id="calc-breakdown-content"
+          class="space-y-1 text-sm text-gray-600"
+        >
+          <!-- Breakdown items will be populated here -->
+        </div>
+      </div>
+
+      <div class="border-t border-gray-200 pt-4 text-center">
+        <a href="#book-this-tour" class="button button-yellow gap-2">
+          <span>📝</span>
+          <span>Book This Tour</span>
+        </a>
+      </div>
+
+      <div class="text-xs text-gray-500 text-center">
+        <p>
+          Prices are estimates and subject to availability. Final pricing
+          confirmed upon booking.
+        </p>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script>
+  import { actions } from "astro:actions";
+
+  document.addEventListener("astro:page-load", function () {
+    const form = document.getElementById(
+      "form-tour-price-calculator"
+    ) as HTMLFormElement;
+    const resultDiv = document.getElementById(
+      "price-calculator-result"
+    ) as HTMLDivElement;
+    const totalPriceSpan = document.getElementById(
+      "calc-total-price"
+    ) as HTMLSpanElement;
+    const perPersonSpan = document.getElementById(
+      "calc-per-person"
+    ) as HTMLSpanElement;
+    const perDaySpan = document.getElementById(
+      "calc-per-day"
+    ) as HTMLSpanElement;
+    const breakdownContent = document.getElementById(
+      "calc-breakdown-content"
+    ) as HTMLDivElement;
+
+    form?.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(form);
+      const groupSize = parseInt(formData.get("groupSize") as string);
+
+      if (!groupSize) {
+        alert("Please select a group size");
+        return;
+      }
+
+      // Show loading state
+      const submitButton = form.querySelector(
+        'button[type="submit"]'
+      ) as HTMLButtonElement;
+      const originalText = submitButton.innerHTML;
+      submitButton.innerHTML =
+        '<span class="animate-spin">⏳</span> Calculating...';
+      submitButton.disabled = true;
+
+      try {
+        // Collect add-ons
+        const addOnCheckboxes = form.querySelectorAll(
+          'input[name="addOns"]:checked'
+        ) as NodeListOf<HTMLInputElement>;
+        const addOns = Array.from(addOnCheckboxes).map((checkbox) => ({
+          name: checkbox.value,
+          price: parseInt(checkbox.dataset.price || "0"),
+        }));
+
+        const calculationData = new FormData();
+        calculationData.append(
+          "basePrice",
+          formData.get("basePrice") as string
+        );
+        calculationData.append("groupSize", groupSize.toString());
+        calculationData.append("duration", formData.get("duration") as string);
+        calculationData.append(
+          "seasonalMultiplier",
+          (formData.get("season") as string) || "1"
+        );
+        calculationData.append("addOns", JSON.stringify(addOns));
+
+        const { data, error } =
+          await actions.calculateTourPrice(calculationData);
+
+        if (error) {
+          console.error("Calculation error:", error);
+          alert("Error calculating price. Please try again.");
+        } else {
+          // Display results
+          totalPriceSpan.textContent = data.totalPrice;
+          perPersonSpan.textContent = data.pricePerPerson;
+          perDaySpan.textContent = data.pricePerDay;
+
+          // Display breakdown
+          breakdownContent.innerHTML = `
+						<div class="flex justify-between">
+							<span>Base price (${groupSize} people):</span>
+							<span>${data.breakdown.basePrice}</span>
+						</div>
+						${
+              data.breakdown.seasonalAdjustment
+                ? `
+							<div class="flex justify-between">
+								<span>Seasonal adjustment:</span>
+								<span>${data.breakdown.seasonalAdjustment}</span>
+							</div>
+						`
+                : ""
+            }
+						${data.breakdown.addOns
+              .map(
+                (addOn) => `
+							<div class="flex justify-between">
+								<span>${addOn.name}:</span>
+								<span>${addOn.totalPrice}</span>
+							</div>
+						`
+              )
+              .join("")}
+						${
+              data.breakdown.addOns.length > 0
+                ? `
+							<div class="flex justify-between font-medium border-t border-gray-200 pt-2">
+								<span>Add-ons total:</span>
+								<span>${data.breakdown.addOnTotal}</span>
+							</div>
+						`
+                : ""
+            }
+					`;
+
+          // Show results with animation
+          resultDiv.style.opacity = "1";
+          resultDiv.style.transform = "translateY(0)";
+
+          // Scroll to results
+          resultDiv.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+      } catch (error) {
+        console.error("Network error:", error);
+        alert("Network error. Please try again.");
+      } finally {
+        // Restore button
+        submitButton.innerHTML = originalText;
+        submitButton.disabled = false;
+      }
+    });
+  });
+</script>

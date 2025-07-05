@@ -1,0 +1,338 @@
+---
+import slugify from "slugify";
+import { Image } from "astro:assets";
+import { getCollection, render } from "astro:content";
+import { siteName } from "~/data/config";
+
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Article from "~/components/Article.astro";
+import IconLogo from "~/assets/images/icons/logo.svg";
+
+// Tourism UI Components
+import Slider from "~/components/tour/single-page/Slider.astro";
+import TourPrice from "~/components/tour/single-page/TourPrice.astro";
+import TourOverview from "~/components/tour/single-page/TourOverview.astro";
+import TourItinerary from "~/components/tour/single-page/TourItinerary.astro";
+import TourInclusions from "~/components/tour/single-page/TourInclusions.astro";
+import TourRequirements from "~/components/tour/single-page/TourRequirements.astro";
+import FormBookingInquiry from "~/components/forms/BookingInquiry.astro";
+import WidgetBooking from "~/components/tour/single-page/WidgetBooking.astro";
+import ModalSlider from "~/components/modals/ModalSlider.astro";
+import TourHighlights from "~/components/tour/single-page/TourHighlights.astro";
+import WeatherInfo from "~/components/tour/single-page/WeatherInfo.astro";
+import RelatedTours from "~/components/tour/single-page/RelatedTours.astro";
+
+// Buttons
+import ButtonGoBack from "~/components/buttons/ButtonGoBack.astro";
+import ButtonShare from "~/components/buttons/ButtonShare.astro";
+import ButtonPrint from "~/components/buttons/ButtonPrint.astro";
+import ButtonCall from "~/components/buttons/ButtonCall.astro";
+import ButtonBookNow from "~/components/buttons/ButtonBookNow.astro";
+import LinkWhatsApp from "~/components/tour/single-page/LinkWhatsApp.astro";
+
+export async function getStaticPaths() {
+  const tours = await getCollection("tours");
+  const slugCount: { [key: string]: number } = {};
+  return tours.map((tour) => {
+    let slug = slugify(tour.id, { lower: true });
+    if (slugCount[slug]) {
+      slugCount[slug]++;
+      slug = `${slug}-${slugCount[slug] - 1}`;
+    } else {
+      slugCount[slug] = 1;
+    }
+    return {
+      params: { slug },
+      props: { tour },
+    };
+  });
+}
+
+const { tour } = Astro.props;
+const { Content } = await render(tour);
+
+// Get related tours from same destination or tour type
+const relatedTours = await getCollection(
+  "tours",
+  ({ data }) =>
+    !data.misc?.hidden &&
+    (data.general.destination === tour.data.general.destination ||
+      data.general.tourType === tour.data.general.tourType)
+);
+const filteredRelatedTours = relatedTours
+  .filter((t) => t.id !== tour.id)
+  .slice(0, 3);
+---
+
+<Layout
+  pageTitle={tour.data.title}
+  title={tour.data.title}
+  description={tour.data.excerpt}
+>
+  <Section class:list={"bg-gray-50"}>
+    <Container class:list={"pb-0 lg:pb-0 max-sm:pt-8 print:hidden"}>
+      <ButtonGoBack />
+    </Container>
+
+    <Container class:list={"pt-0 lg:pt-0 max-md:max-w-full max-md:px-0"}>
+      <div class="bg-white shadow-md">
+        <div class="grid grid-cols-1 xl:grid-cols-2 gap-8">
+          <!-- Tour Gallery -->
+          <div id="gallery-wrapper" class="relative">
+            {
+              tour.data.image ? (
+                tour.data.gallery ? (
+                  <Slider
+                    image={tour.data.image}
+                    alt={tour.data.imageAlt}
+                    gallery={tour.data.gallery}
+                  />
+                ) : (
+                  <Image
+                    src={tour.data.image}
+                    alt={tour.data.imageAlt ? tour.data.imageAlt : ""}
+                    loading={"eager"}
+                    fetchpriority={"high"}
+                    class="w-full h-full object-cover"
+                  />
+                )
+              ) : (
+                <div class="lg:absolute inset-0 text-gray-200 size-full bg-gray-50 flex flex-col gap-4 items-center justify-center">
+                  <IconLogo class="h-24" />
+                  <span class="text-gray-400 select-none font-bold italic">
+                    Coming Soon
+                  </span>
+                </div>
+              )
+            }
+
+            <!-- Tour badges overlay -->
+            <div class="absolute top-4 left-4 flex flex-col gap-2">
+              {
+                tour.data.misc?.featured && (
+                  <span class="inline-flex items-center rounded-full bg-yellow-100 px-3 py-1 text-sm font-medium text-yellow-800">
+                    ⭐ Featured
+                  </span>
+                )
+              }
+              {
+                tour.data.misc?.sustainable && (
+                  <span class="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-medium text-green-800">
+                    🌱 Eco-Friendly
+                  </span>
+                )
+              }
+              {
+                tour.data.general.salePrice && (
+                  <span class="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-sm font-medium text-red-800">
+                    🏷️ Special Offer
+                  </span>
+                )
+              }
+            </div>
+          </div>
+
+          <!-- Tour Info -->
+          <div>
+            <div class="p-4 lg:p-8 flex flex-col items-start h-full">
+              <!-- Title and Location -->
+              <div class="mb-4 lg:mb-6">
+                <div class="flex items-center gap-2 mb-3">
+                  <span
+                    class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+                  >
+                    📍 {tour.data.general.destination}
+                  </span>
+                  <span
+                    class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-sm font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+                  >
+                    {tour.data.general.tourType}
+                  </span>
+                </div>
+
+                <h1 class="h4">{tour.data.title}</h1>
+
+                <div class="flex items-center gap-4 mt-2 text-sm text-gray-600">
+                  <span
+                    >🕒 {tour.data.general.duration.days} day{
+                      tour.data.general.duration.days > 1 ? "s" : ""
+                    }</span
+                  >
+                  <span
+                    >👥 {tour.data.general.groupSize.min}-{
+                      tour.data.general.groupSize.max
+                    } people</span
+                  >
+                  <span
+                    class={`px-2 py-1 rounded text-xs font-medium ${
+                      tour.data.general.difficulty === "Easy"
+                        ? "bg-green-100 text-green-800"
+                        : tour.data.general.difficulty === "Moderate"
+                          ? "bg-yellow-100 text-yellow-800"
+                          : tour.data.general.difficulty === "Challenging"
+                            ? "bg-orange-100 text-orange-800"
+                            : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {tour.data.general.difficulty}
+                  </span>
+                </div>
+
+                <p class="mt-6 text-gray-600">{tour.data.excerpt}</p>
+              </div>
+
+              <hr class="w-full border-gray-200" />
+
+              <!-- Pricing -->
+              <TourPrice properties={tour.data.general} />
+
+              <!-- Quick WhatsApp Link -->
+              <LinkWhatsApp tourTitle={tour.data.title} />
+
+              <!-- Tour Overview Box -->
+              <TourOverview tour={tour} />
+
+              <hr class="w-full mt-auto border-gray-200" />
+
+              <!-- Action Buttons -->
+              <div
+                class="flex flex-col sm:flex-row sm:items-center gap-x-4 mt-8 w-full max-sm:gap-y-8 print:hidden"
+              >
+                <div
+                  class="flex items-center max-sm:justify-center gap-x-4 w-full"
+                >
+                  <ButtonCall />
+                  <ButtonBookNow />
+                </div>
+
+                <div
+                  class="sm:ml-auto flex items-center max-sm:justify-center gap-x-4 shrink-0"
+                >
+                  <ButtonShare />
+                  <ButtonPrint />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tour Description -->
+        <div class="p-4 lg:p-8">
+          <h2 class="h6 tour-icon tour-icon-description">Tour Description</h2>
+          <div class="prose max-w-none mt-8">
+            <Content />
+          </div>
+        </div>
+
+        <!-- Tour Details Sections -->
+        <div
+          id="tour-details"
+          class="p-4 lg:p-8 divide-y divide-gray-200 max-w-6xl grid grid-cols-1 gap-y-12"
+        >
+          <!-- Itinerary -->
+          {
+            tour.data.activities && tour.data.activities.length > 0 && (
+              <TourItinerary tour={tour} />
+            )
+          }
+
+          <!-- What's Included/Excluded -->
+          <TourInclusions tour={tour} />
+
+          <!-- Requirements & Recommendations -->
+          <TourRequirements tour={tour} />
+
+          <!-- Weather & Best Time to Visit -->
+          {tour.data.seasonal && <WeatherInfo tour={tour} />}
+
+          <!-- Tour Highlights -->
+          <TourHighlights tour={tour} />
+
+          <!-- Booking Widget -->
+          <WidgetBooking
+            price={tour.data.general.salePrice
+              ? tour.data.general.salePrice
+              : tour.data.general.price}
+            tourTitle={tour.data.title}
+            duration={tour.data.general.duration}
+            groupSize={tour.data.general.groupSize}
+          />
+        </div>
+
+        <hr class="border-gray-200" />
+
+        <!-- Booking Inquiry Form -->
+        <div id="book-this-tour" class="p-8 max-w-3xl pt-12 prose print:hidden">
+          <FormBookingInquiry tourCode={tour.data.misc?.tourCode} />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Related Tours -->
+  {
+    filteredRelatedTours.length > 0 && (
+      <Section class:list={"bg-gray-50"}>
+        <Container>
+          <RelatedTours
+            tours={filteredRelatedTours}
+            destination={tour.data.general.destination}
+            tourType={tour.data.general.tourType}
+          />
+        </Container>
+      </Section>
+    )
+  }
+
+  <ModalSlider tour={tour} />
+</Layout>
+
+<script>
+  // Enhanced tour page functionality
+  document.addEventListener("astro:page-load", function () {
+    // Smooth scroll to sections
+    const tourDetailLinks = document.querySelectorAll('a[href^="#tour-"]');
+    tourDetailLinks.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute("href")?.substring(1);
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          targetElement.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+
+    // Initialize booking form interactions
+    const bookingButtons = document.querySelectorAll(
+      '[data-action="book-now"]'
+    );
+    bookingButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const bookingForm = document.getElementById("book-this-tour");
+        if (bookingForm) {
+          bookingForm.scrollIntoView({ behavior: "smooth" });
+        }
+      });
+    });
+
+    // Image gallery lazy loading
+    const galleryImages = document.querySelectorAll(
+      ".tour-gallery img[data-src]"
+    );
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target as HTMLImageElement;
+          img.src = img.dataset.src || "";
+          img.classList.remove("opacity-0");
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    galleryImages.forEach((img) => imageObserver.observe(img));
+  });
+</script>

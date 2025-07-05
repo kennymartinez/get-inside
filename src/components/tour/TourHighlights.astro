@@ -1,0 +1,55 @@
+---
+import type { Tour } from "~/types";
+import IconDuration from "~/assets/images/icons/calendar.svg";
+import IconDifficulty from "~/assets/images/icons/difficulty.svg";
+import IconGroup from "~/assets/images/icons/group.svg";
+import IconGuide from "~/assets/images/icons/guide.svg";
+import IconTransport from "~/assets/images/icons/transport.svg";
+const { data } = Astro.props as { data: Tour["data"] };
+
+const duration = `${data.general.duration.days} day${data.general.duration.days > 1 ? "s" : ""}`;
+const groupSize = `${data.general.groupSize.min}-${data.general.groupSize.max} people`;
+const difficulty = data.general.difficulty;
+const guideType = data.experience.guideType;
+const transport = data.logistics.transportation;
+
+const pillClasses =
+  "flex items-center gap-x-1 rounded-full bg-gray-100 px-3 py-1 ring-1 ring-gray-200";
+const difficultyColors = {
+  Easy: "bg-green-50 text-green-700 ring-green-600/20",
+  Moderate: "bg-yellow-50 text-yellow-700 ring-yellow-600/20",
+  Challenging: "bg-orange-50 text-orange-700 ring-orange-600/20",
+  Expert: "bg-red-50 text-red-700 ring-red-600/20",
+};
+---
+
+<ul
+  class="flex gap-x-2 sm:gap-x-4 items-center gap-y-2 mt-auto flex-wrap text-sm lg:text-base"
+>
+  <li class={pillClasses}>
+    <IconDuration class="size-4 lg:size-5" />
+    <span>{duration}</span>
+  </li>
+
+  <li
+    class={`flex items-center gap-x-1 rounded-full px-3 py-1 ring-1 ${difficultyColors[difficulty]}`}
+  >
+    <IconDifficulty class="size-4 lg:size-5" />
+    <span>{difficulty}</span>
+  </li>
+
+  <li class={pillClasses}>
+    <IconGroup class="size-4 lg:size-5" />
+    <span>{groupSize}</span>
+  </li>
+
+  <li class={pillClasses}>
+    <IconGuide class="size-4 lg:size-5" />
+    <span>{guideType}</span>
+  </li>
+
+  <li class={pillClasses}>
+    <IconTransport class="size-4 lg:size-5" />
+    <span>{transport}</span>
+  </li>
+</ul>

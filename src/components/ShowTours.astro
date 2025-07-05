@@ -1,0 +1,82 @@
+---
+import type { ShowToursProps as Props } from "~/types";
+import { getCollection, getEntries } from "astro:content";
+import CardTourAlt from "~/components/tour/CardTourAlt.astro";
+import CardTour from "~/components/tour/CardTour.astro";
+import type { CollectionEntry } from "astro:content";
+type Tour = CollectionEntry<"tours">;
+
+const {
+  recent = false,
+  featured = false,
+  popular = false,
+  sustainable = false,
+  slugs = [],
+  ui = "list",
+  destination,
+  tourType,
+} = Astro.props;
+
+let tours = [];
+
+if (recent) {
+  tours = await getCollection("tours", ({ data }) => !data.misc?.hidden);
+  tours.sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  );
+  tours = tours.slice(0, 3);
+} else if (featured) {
+  const allFeaturedTours = await getCollection(
+    "tours",
+    ({ data }) => data.misc?.featured && !data.misc?.hidden
+  );
+  tours = allFeaturedTours.sort(() => 0.5 - Math.random()).slice(0, 3);
+} else if (popular) {
+  const allPopularTours = await getCollection(
+    "tours",
+    ({ data }) => data.misc?.popularTour && !data.misc?.hidden
+  );
+  tours = allPopularTours.sort(() => 0.5 - Math.random()).slice(0, 3);
+} else if (sustainable) {
+  const allSustainableTours = await getCollection(
+    "tours",
+    ({ data }) => data.misc?.sustainable && !data.misc?.hidden
+  );
+  tours = allSustainableTours.slice(0, 3);
+} else if (slugs.length > 0) {
+  const references = slugs.map((slug) => ({
+    collection: "tours" as const,
+    id: slug,
+  }));
+  tours = await getEntries(references);
+  tours = tours.filter(
+    (tour): tour is Tour => tour !== undefined && !tour.data.misc?.hidden
+  );
+} else {
+  return;
+}
+
+// Apply additional filters
+if (destination) {
+  tours = tours.filter((tour) => tour.data.general.destination === destination);
+}
+
+if (tourType) {
+  tours = tours.filter((tour) => tour.data.general.tourType === tourType);
+}
+
+const wrapperClasses = {
+  list: "grid grid-cols-1 gap-8",
+  grid: "grid grid-cols-1 gap-8 lg:grid-cols-3",
+};
+---
+
+<ul class={wrapperClasses[ui]}>
+  {
+    tours.map((tour) =>
+      ui === "grid" ? <CardTourAlt tour={tour} /> : <CardTour tour={tour} />
+    )
+  }
+</ul>

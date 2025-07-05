@@ -1,0 +1,84 @@
+---
+import type { Tour } from "~/types";
+import { Image } from "astro:assets";
+import TourHighlights from "~/components/tour/TourHighlights.astro";
+import CardPrice from "~/components/tour/CardPrice.astro";
+import IconLogo from "~/assets/images/icons/logo.svg";
+const { tour } = Astro.props as { tour: Tour };
+---
+
+<li
+  data-tour-id={tour.id}
+  data-tour-on-sale={tour.data.general.salePrice ? "true" : "false"}
+  data-tour-available={tour.data.general.availability}
+  data-tour-featured={tour.data.misc?.featured ? "true" : "false"}
+  data-tour-sustainable={tour.data.misc?.sustainable ? "true" : "false"}
+  class="card-tour bg-white shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-r-4 hover:lg:border-yellow-300"
+>
+  <a
+    href={`/tour/${tour.id}`}
+    class="relative isolate flex flex-col gap-8 xxl:flex-row"
+  >
+    <div class="relative aspect-[4/3] xxl:w-72 lg:shrink-0 ribbon">
+      {
+        tour.data.image ? (
+          <Image
+            src={tour.data.image}
+            alt={tour.data.imageAlt}
+            class="absolute inset-0 size-full bg-gray-50 object-cover"
+          />
+        ) : (
+          <div class="absolute inset-0 text-gray-400 size-full bg-gray-100 flex flex-col gap-4 items-center justify-center">
+            <IconLogo class="h-24" />
+            <span class="text-gray-400 font-bold italic">Coming Soon</span>
+          </div>
+        )
+      }
+    </div>
+    <div
+      class="flex flex-col items-start lg:py-4 grow max-xxl:px-4 max-lg:pb-8"
+    >
+      <div
+        class="relative xxl:flex xxl:items-start xxl:gap-4 xxl:justify-between w-full"
+      >
+        <div class="mb-4 lg:mb-6">
+          <div class="flex items-center gap-2 mb-2">
+            <span
+              class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10"
+            >
+              {tour.data.general.destination}
+            </span>
+            <span
+              class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10"
+            >
+              {tour.data.general.tourType}
+            </span>
+            {
+              tour.data.misc?.sustainable && (
+                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/10">
+                  Sustainable
+                </span>
+              )
+            }
+          </div>
+          <h2 class="h5 line-clamp-2">
+            {tour.data.title}
+          </h2>
+          <p class="text-base mt-2 line-clamp-3">{tour.data.excerpt}</p>
+          {
+            tour.data.activities && tour.data.activities.length > 0 && (
+              <p class="text-base text-gray-400 mt-3 line-clamp-1">
+                {tour.data.activities.slice(0, 3).join(" • ")}
+                {tour.data.activities.length > 3 && " • +more"}
+              </p>
+            )
+          }
+        </div>
+        <CardPrice data={tour.data.general} />
+      </div>
+      <div class="mt-auto lg:mb-4">
+        <TourHighlights data={tour.data} />
+      </div>
+    </div>
+  </a>
+</li>

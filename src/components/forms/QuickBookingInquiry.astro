@@ -1,0 +1,60 @@
+---
+import IconWhatsApp from "~/assets/images/icons/whatsapp.svg";
+import IconMail from "~/assets/images/icons/mail.svg";
+
+interface Props {
+  tourTitle: string;
+  tourCode?: string;
+  price: number;
+  className?: string;
+}
+
+const { tourTitle, tourCode, price, className = "" } = Astro.props;
+const whatsappMessage = `Hi! I'm interested in the ${tourTitle} tour${tourCode ? ` (${tourCode})` : ""}. Can you please send me more information?`;
+const whatsappUrl = `https://wa.me/573001234567?text=${encodeURIComponent(whatsappMessage)}`;
+const emailSubject = `Inquiry about ${tourTitle}${tourCode ? ` (${tourCode})` : ""}`;
+const emailBody = `Hi,\n\nI'm interested in booking the ${tourTitle} tour.\n\nPlease send me more information about:\n- Available dates\n- Group discounts\n- What's included\n- Payment options\n\nThank you!`;
+const emailUrl = `mailto:info@colombia-adventures.com?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+---
+
+<div
+  class={`bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg p-6 ${className}`}
+>
+  <h3 class="text-lg font-semibold text-gray-900 mb-2 flex items-center gap-2">
+    <span>⚡</span>
+    Quick Inquiry
+  </h3>
+  <p class="text-gray-700 mb-4">
+    Interested in this tour? Get instant information through WhatsApp or email
+    us for detailed itinerary.
+  </p>
+
+  <div class="space-y-3">
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors w-full"
+    >
+      <IconWhatsApp class="size-5" />
+      <span>WhatsApp Us - Instant Response</span>
+    </a>
+
+    <a
+      href={emailUrl}
+      class="flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors w-full"
+    >
+      <IconMail class="size-5" />
+      <span>Send Email Inquiry</span>
+    </a>
+  </div>
+
+  <div class="mt-4 text-center">
+    <p class="text-sm text-gray-600">
+      💰 Starting from <span class="font-semibold text-lg">${price}</span> per person
+    </p>
+    <p class="text-xs text-gray-500 mt-1">
+      ⏱️ Response within 2 hours • 🔒 No spam, we promise
+    </p>
+  </div>
+</div>

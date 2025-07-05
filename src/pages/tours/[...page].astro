@@ -1,0 +1,143 @@
+---
+export const prerender = false;
+
+import { type CollectionEntry } from "astro:content";
+import { siteName, priceSteps, defaultPaginationSize } from "~/data/config";
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import CardTour from "~/components/tour/CardTour.astro";
+import SidebarTourFilters from "~/components/sidebars/SidebarTourFilters.astro";
+import Pagination from "~/components/Pagination.astro";
+import SearchSort from "~/components/SearchSort.astro";
+import PresetBar from "~/components/PresetBar.astro";
+import FilterBarMobile from "~/components/FilterBarMobile.astro";
+import {
+  getTourTypes,
+  getDestinations,
+  getCategories,
+  getDifficulties,
+} from "~/utils/tourism-helpers";
+
+type Tour = CollectionEntry<"tours">;
+
+let APIURL = new URL("/api/getFilteredTours.json", Astro.url);
+
+const searchParamsValue = Astro.url.searchParams;
+const searchParamsArray = Array.from(searchParamsValue);
+
+APIURL.search = searchParamsValue.toString();
+
+const response = await fetch(APIURL);
+const responseData =
+  response.status === 404 ? { allTours: [] } : await response.json();
+const allTours: Tour[] = responseData.allTours;
+
+// Get filter data for sidebar
+const destinations = await getDestinations();
+const tourTypes = await getTourTypes();
+const categories = await getCategories();
+const difficulties = await getDifficulties();
+const count = allTours.length;
+
+const sideBarData = {
+  destinations,
+  tourTypes,
+  categories,
+  difficulties,
+  count,
+  priceSteps,
+};
+
+const page = parseInt(searchParamsValue.get("page") || "1");
+const pageSize = defaultPaginationSize;
+const totalPages = Math.ceil(
+  Array.isArray(allTours) ? allTours.length / pageSize : 0
+);
+const paginatedTours = Array.isArray(allTours)
+  ? allTours.slice((page - 1) * pageSize, page * pageSize)
+  : [];
+---
+
+<Layout
+  pageTitle={`Tours | ${siteName}`}
+  description="Discover amazing Colombia tours and adventures."
+>
+  <Section class:list={"bg-gray-50 max-lg:max-w-svw max-lg:overflow-hidden"}>
+    <Container class:list={"pt-0 max-lg:px-0 max-lg:max-w-full"}>
+      <div class="flex flex-col lg:flex-row">
+        <FilterBarMobile params={searchParamsArray} />
+
+        <SidebarTourFilters data={sideBarData} />
+
+        <main class="lg:pl-16 grow">
+          <div class="lg:px-8">
+            <SearchSort />
+
+            <div class="max-lg:hidden">
+              <PresetBar params={searchParamsArray} />
+            </div>
+
+            <ul class="grid grid-cols-1 lg:gap-16">
+              {
+                paginatedTours.length > 0 ? (
+                  paginatedTours.map((tour) => <CardTour tour={tour} />)
+                ) : (
+                  <li class="text-center text-gray-500">
+                    <div class="py-12">
+                      <div class="text-6xl mb-4">🔍</div>
+                      <h3 class="text-lg font-medium text-gray-900 mb-2">
+                        No tours found
+                      </h3>
+                      <p class="text-gray-500">
+                        Try adjusting your filters or search terms
+                      </p>
+                    </div>
+                  </li>
+                )
+              }
+            </ul>
+
+            {
+              paginatedTours.length > 0 && totalPages > 1 && (
+                <Pagination
+                  page={page}
+                  totalPages={totalPages}
+                  searchParams={searchParamsValue}
+                />
+              )
+            }
+          </div>
+        </main>
+      </div>
+    </Container>
+  </Section>
+</Layout>
+
+<script>
+  document.addEventListener("astro:page-load", function () {
+    const buttonModalFilterOpen = document.getElementById(
+      "button-modal-filter-open"
+    );
+    const buttonModalFilterClose = document.getElementById(
+      "button-modal-filter-close"
+    );
+    const sidebarFiltersMobile = document.getElementById("sidebar-filter");
+
+    if (sidebarFiltersMobile) {
+      buttonModalFilterOpen?.addEventListener("click", () => {
+        sidebarFiltersMobile.classList.remove(
+          "max-lg:opacity-0",
+          "max-lg:pointer-events-none"
+        );
+      });
+
+      buttonModalFilterClose?.addEventListener("click", () => {
+        sidebarFiltersMobile.classList.add(
+          "max-lg:opacity-0",
+          "max-lg:pointer-events-none"
+        );
+      });
+    }
+  });
+</script>

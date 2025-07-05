@@ -1,146 +1,326 @@
 import { z, defineCollection } from "astro:content";
 import { glob, file } from "astro/loaders";
 
-export const bodyTypes = ["SUV", "Sedan", "Hatchback", "Coupe", "Convertible", "Pickup"] as const;
-export const fuelTypes = ["Petrol", "Diesel", "Hybrid", "Electric", "CNG"] as const;
-export const conditions = ["New", "Used", "Certified Pre-Owned"] as const;
-export const transmission = ["Automatic", "Manual", "CVT", "Dual-Clutch"] as const;
+// Tourism-specific enums for Colombia
+export const tourTypes = [
+  "Adventure",
+  "Cultural",
+  "Nature",
+  "Beach",
+  "Urban",
+  "Gastronomic",
+] as const;
+export const difficultyLevels = [
+  "Easy",
+  "Moderate",
+  "Challenging",
+  "Expert",
+] as const;
+export const transportationTypes = [
+  "Bus",
+  "Flight",
+  "Private Vehicle",
+  "Boat",
+  "Walking",
+  "Mixed",
+] as const;
+export const accommodationTypes = [
+  "Hotel",
+  "Hostel",
+  "Lodge",
+  "Camping",
+  "Local Family",
+  "Mixed",
+] as const;
+export const mealOptions = [
+  "None",
+  "Breakfast",
+  "Half Board",
+  "Full Board",
+  "All Inclusive",
+] as const;
+export const guideTypes = [
+  "Local Guide",
+  "Bilingual Guide",
+  "Specialist Guide",
+  "Self-Guided",
+] as const;
+export const languageOptions = [
+  "Spanish",
+  "English",
+  "French",
+  "Portuguese",
+] as const;
+export const fitnessLevels = [
+  "None",
+  "Basic Fitness",
+  "Good Fitness",
+  "Excellent Fitness",
+] as const;
+
+// Colombian destinations
+export const colombianDestinations = [
+  "Cartagena",
+  "Medellín",
+  "Bogotá",
+  "Amazon",
+  "Coffee Region",
+  "Tayrona",
+  "Ciudad Perdida",
+  "San Andrés",
+  "Villa de Leyva",
+  "Cocora Valley",
+  "Nuquí",
+  "Guatapé",
+  "Caño Cristales",
+  "Cali",
+  "Santa Marta",
+  "Providencia",
+  "Popayán",
+  "Barichara",
+  "Leticia",
+] as const;
+
+// Tour categories
+export const tourCategories = [
+  "City Tour",
+  "Hiking",
+  "Diving",
+  "Cultural Immersion",
+  "Wildlife Watching",
+  "Coffee Experience",
+  "Beach Relaxation",
+  "Adventure Sports",
+  "Historical Tour",
+  "Gastronomy",
+  "Photography",
+  "Bird Watching",
+  "Indigenous Communities",
+  "Colonial Architecture",
+] as const;
+
+// Months for seasonal info
+export const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+] as const;
+
+// Blog categories updated for tourism
 export const blogCategories = {
-	news: "indigo",
-	reviews: "pink",
-	tips: "purple",
-	events: "green",
+  destinations: "blue",
+  tips: "green",
+  culture: "purple",
+  adventure: "orange",
+  news: "indigo",
 } as const;
 
 const categoryKeys = Object.keys(blogCategories) as [
-	keyof typeof blogCategories,
-	...Array<keyof typeof blogCategories>
+  keyof typeof blogCategories,
+  ...Array<keyof typeof blogCategories>
 ];
 
-const cars = defineCollection({
-	loader: glob({ pattern: ["*.mdx", "!example.mdx"], base: "./src/content/cars" }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			image: image().optional(),
-			imageAlt: z.string().optional().default(""),
-			gallery: z.array(z.object({ image: image(), alt: z.string() })).optional(),
-			videoTourUrl: z.string().url().optional(),
-			excerpt: z.string().optional(),
-			publishDate: z.coerce.date().default(new Date(2025, 0, 1)),
-			general: z.object({
-				make: z.string(),
-				model: z.coerce.string(),
-				type: z.string().optional(),
-				price: z.number().positive(),
-				salePrice: z.number().positive().optional(),
-				bodyType: z.enum(bodyTypes),
-				drivetrain: z
-					.enum(["Front-Wheel Drive", "Rear-Wheel Drive", "All-Wheel Drive", "Four-Wheel Drive"])
-					.optional(),
-				doors: z.number().int().positive(),
-				seatingCapacity: z.number().int().positive(),
-				condition: z.enum(conditions).optional(),
-				availability: z.enum(["in-stock", "reserved", "sold", "coming-soon"]).default("in-stock"),
-			}),
-			history: z.object({
-				mileage: z.number().nonnegative(),
-				year: z.number().int().min(1886),
-				previousOwners: z.number().int().nonnegative().optional(),
-				accidentHistory: z.enum(["No", "Yes - Minor Damage", "Yes - Major Repair"]).optional(),
-			}),
-			technical: z.object({
-				horsePower: z.number().positive(),
-				transmission: z.enum(transmission),
-				engineSizeCC: z.number().nonnegative(),
-				gears: z.number().int().optional(),
-				cilinders: z.number().int().optional(),
-				weight: z.number().int().optional(),
-			}),
-			efficiency: z.object({
-				fuelType: z.enum(fuelTypes),
-				fuelEfficiencyMPG: z.number().positive().optional(),
-				fuelEfficiencyLPer100KM: z.number().positive().optional(),
-				emissionsCO2: z.string().optional(),
-				emissionsRating: z.string().optional(),
-			}),
-			options: z.array(z.string()).optional(),
-			security: z
-				.object({
-					alarm: z.boolean().optional(),
-					immobilizer: z.boolean().optional(),
-					airbags: z.number().int().positive().optional(),
-					abs: z.boolean().optional(),
-					esp: z.boolean().optional(),
-					tireCondition: z.enum(["New", "Good", "Needs Replacement"]).optional(),
-					safetyRating: z.string().optional(),
-				})
-				.optional(),
-			exterior: z.object({
-				color: z.string(),
-				paintType: z.enum(["Metallic", "Pearl", "Matte"]).optional(),
-				wheelSize: z.number().positive().optional(),
-				wheelType: z.enum(["Alloy", "Steel", "Carbon Fiber"]).optional(),
-			}),
-			interior: z
-				.object({
-					materialSeats: z.string().optional(),
-					heatedSeats: z.boolean().optional(),
-					ventilatedSeats: z.boolean().optional(),
-				})
-				.optional(),
-			misc: z
-				.object({
-					vin: z.string().optional(),
-					registrationStatus: z.enum(["Registered", "Unregistered", "Registration Pending"]).optional(),
-					warranty: z.string().optional(),
-					dealerNotes: z.string().optional(),
-					hidden: z.boolean().optional().default(false),
-					loanWidget: z.boolean().optional().default(false),
-					featured: z.boolean().optional().default(false),
-				})
-				.optional(),
-		}),
+// Main tours collection (replacing cars)
+const tours = defineCollection({
+  loader: glob({
+    pattern: ["*.mdx", "!example.mdx"],
+    base: "./src/content/tours",
+  }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      image: image().optional(),
+      imageAlt: z.string().optional().default(""),
+      gallery: z
+        .array(
+          z.object({
+            image: image(),
+            alt: z.string(),
+          })
+        )
+        .optional(),
+      videoTourUrl: z.string().url().optional(),
+      excerpt: z.string().optional(),
+      publishDate: z.coerce.date().default(new Date(2025, 0, 1)),
+
+      // General Information (replacing car general info)
+      general: z.object({
+        destination: z.enum(colombianDestinations),
+        tourType: z.enum(tourTypes),
+        category: z.enum(tourCategories),
+        price: z.number().positive(),
+        salePrice: z.number().positive().optional(),
+        duration: z.object({
+          days: z.number().int().positive(),
+          nights: z.number().int().min(0),
+        }),
+        groupSize: z.object({
+          min: z.number().int().positive().default(1),
+          max: z.number().int().positive(),
+        }),
+        difficulty: z.enum(difficultyLevels),
+        availability: z
+          .enum(["Available", "Sold Out", "Coming Soon", "Seasonal"])
+          .default("Available"),
+      }),
+
+      // Logistics (replacing car history)
+      logistics: z.object({
+        departureCity: z.enum(colombianDestinations),
+        departurePoint: z.string().optional(),
+        transportation: z.enum(transportationTypes),
+        accommodationType: z.enum(accommodationTypes),
+        mealsIncluded: z.enum(mealOptions).default("None"),
+      }),
+
+      // Experience Details (replacing car technical)
+      experience: z.object({
+        languages: z.array(z.enum(languageOptions)).default(["Spanish"]),
+        guideType: z.enum(guideTypes),
+        physicalRequirement: z.enum(fitnessLevels).default("None"),
+        ageRestriction: z
+          .object({
+            min: z.number().int().min(0).optional(),
+            max: z.number().int().max(99).optional(),
+          })
+          .optional(),
+        bestTimeToVisit: z.array(z.enum(months)).optional(),
+      }),
+
+      // What's included/excluded (replacing car efficiency)
+      pricing: z.object({
+        currency: z.enum(["USD", "COP"]).default("USD"),
+        priceIncludes: z.array(z.string()).optional(),
+        priceExcludes: z.array(z.string()).optional(),
+        depositRequired: z.number().min(0).max(100).optional(), // percentage
+        cancellationPolicy: z.string().optional(),
+      }),
+
+      // Activities (replacing car options)
+      activities: z.array(z.string()).optional(),
+
+      // Safety & Requirements (replacing car security)
+      requirements: z
+        .object({
+          documents: z.array(z.string()).optional(),
+          vaccinations: z.array(z.string()).optional(),
+          equipment: z.array(z.string()).optional(),
+          insurance: z.boolean().optional().default(false),
+          medicalClearance: z.boolean().optional().default(false),
+          swimmingSkills: z.boolean().optional(),
+        })
+        .optional(),
+
+      // Accommodation details (replacing car exterior)
+      accommodation: z
+        .object({
+          type: z.enum(accommodationTypes),
+          standard: z
+            .enum(["Budget", "Standard", "Superior", "Luxury"])
+            .optional(),
+          roomType: z
+            .enum(["Shared", "Private", "Double", "Single"])
+            .optional(),
+          amenities: z.array(z.string()).optional(),
+        })
+        .optional(),
+
+      // Food & Dining (replacing car interior)
+      dining: z
+        .object({
+          mealsIncluded: z.enum(mealOptions),
+          dietaryRestrictions: z.boolean().optional().default(false),
+          localCuisine: z.boolean().optional().default(false),
+          vegetarianOptions: z.boolean().optional().default(false),
+        })
+        .optional(),
+
+      // Seasonal & Weather Info
+      seasonal: z
+        .object({
+          bestMonths: z.array(z.enum(months)).optional(),
+          weatherConditions: z.string().optional(),
+          seasonalHighlights: z.array(z.string()).optional(),
+          specialEvents: z.array(z.string()).optional(),
+        })
+        .optional(),
+
+      // Miscellaneous (similar structure to car misc)
+      misc: z
+        .object({
+          tourCode: z.string().optional(),
+          operator: z.string().optional(), // Hidden from frontend
+          operatorContact: z.string().optional(), // Hidden from frontend
+          bookingNotes: z.string().optional(),
+          hidden: z.boolean().optional().default(false),
+          featured: z.boolean().optional().default(false),
+          sustainable: z.boolean().optional().default(false),
+          newTour: z.boolean().optional().default(false),
+          popularTour: z.boolean().optional().default(false),
+        })
+        .optional(),
+    }),
 });
 
+// Blog collection updated for tourism content
 const blog = defineCollection({
-	loader: glob({ pattern: "**/[^_]*.mdx", base: "./src/content/blog" }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			slug: z.string(),
-			image: image(),
-			imageAlt: z.string(),
-			excerpt: z.string().optional(),
-			publishDate: z.coerce.date().default(new Date(2025, 0, 1)),
-			category: z.enum(categoryKeys).default("news"),
-		}),
+  loader: glob({ pattern: "**/[^_]*.mdx", base: "./src/content/blog" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      slug: z.string(),
+      image: image(),
+      imageAlt: z.string(),
+      excerpt: z.string().optional(),
+      publishDate: z.coerce.date().default(new Date(2025, 0, 1)),
+      category: z.enum(categoryKeys).default("destinations"),
+      destination: z.enum(colombianDestinations).optional(),
+      readTime: z.number().optional(), // estimated reading time in minutes
+    }),
 });
 
+// Team collection (can remain mostly the same)
 const team = defineCollection({
-	loader: file("src/data/team.json"),
-	schema: ({ image }) =>
-		z.object({
-			name: z.string(),
-			role: z.string(),
-			email: z.string().email(),
-			phone: z.string(),
-			image: image(),
-		}),
+  loader: file("src/data/team.json"),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      role: z.string(),
+      email: z.string().email(),
+      phone: z.string(),
+      image: image(),
+      specialties: z.array(z.string()).optional(), // Tourism specialties
+      languages: z.array(z.enum(languageOptions)).optional(),
+      experience: z.string().optional(), // Years of experience description
+    }),
 });
 
+// Testimonials collection updated for tourism
 const testimonials = defineCollection({
-	loader: file("./src/data/testimonials.json"),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			description: z.string(),
-			img: image(),
-			author: z.string(),
-			location: z.string(),
-			hidden: z.boolean().default(false),
-			starRating: z.number().min(1).max(5),
-		}),
+  loader: file("./src/data/testimonials.json"),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      description: z.string(),
+      img: image(),
+      author: z.string(),
+      location: z.string(),
+      tourTaken: z.string().optional(), // Which tour they took
+      travelDate: z.string().optional(), // When they traveled
+      hidden: z.boolean().default(false),
+      starRating: z.number().min(1).max(5),
+      verified: z.boolean().default(false), // Verified review
+    }),
 });
 
-export const collections = { cars, blog, team, testimonials };
+// Export collections with new tourism focus
+export const collections = { tours, blog, team, testimonials };

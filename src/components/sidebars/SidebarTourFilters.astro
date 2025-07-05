@@ -1,0 +1,511 @@
+---
+export const prerender = false;
+import {
+  tourTypes,
+  difficultyLevels,
+  colombianDestinations,
+  tourCategories,
+} from "~/content.config";
+import { getPrice } from "~/utils/helpers";
+import { durationSteps, groupSizeOptions } from "~/data/config";
+import IconReset from "~/assets/images/icons/reset.svg";
+import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
+import IconClose from "~/assets/images/icons/close.svg";
+
+interface Props {
+  data: {
+    destinations: string[];
+    tourTypes: string[];
+    difficulties: string[];
+    categories: string[];
+    count: number;
+    priceSteps: number[];
+  };
+}
+
+const { data } = Astro.props;
+---
+
+<div
+  id="sidebar-filter"
+  class="fixed lg:relative max-lg:overflow-y-auto shrink-0 inset-y-0 z-50 lg:flex w-full lg:w-80 lg:flex-col max-lg:bg-white transition duration-300 max-lg:opacity-0 max-lg:pointer-events-none"
+>
+  <div
+    class="flex lg:sticky lg:top-8 flex-col gap-y-5 bg-white lg:shadow-md px-6 py-4 relative"
+  >
+    <button
+      id="button-modal-filter-close"
+      class="lg:hidden"
+      type="button"
+      aria-label="Close filter modal"
+    >
+      <div class="flex justify-end">
+        <IconClose class="size-8 bg-gray-800 rounded-full p-1 text-white" />
+      </div>
+    </button>
+
+    <div class="text-center lg:text-left mb-4">
+      <h2 class="text-lg font-semibold text-gray-900">
+        Find Your Perfect Tour
+      </h2>
+      <p class="text-sm text-gray-600">Filter tours by your preferences</p>
+    </div>
+
+    <form id="form-filter" method="get" class="grid grid-cols-1 gap-y-6">
+      <!-- 1. DESTINATION (Replaces "Make") -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="destination" class="text-sm font-medium text-gray-700"
+            >📍 Destination</label
+          >
+          <button id="clear-input-destination" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="destination"
+            id="destination"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Destinations</option>
+            {
+              data.destinations.map((destination) => (
+                <option value={destination}>{destination}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 2. TOUR TYPE (Replaces "Body Type") -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="tourType" class="text-sm font-medium text-gray-700"
+            >🎯 Tour Type</label
+          >
+          <button id="clear-input-tourType" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="tourType"
+            id="tourType"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Types</option>
+            {tourTypes.map((type) => <option value={type}>{type}</option>)}
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 3. TOUR CATEGORY (Replaces "Model") -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="category" class="text-sm font-medium text-gray-700"
+            >🏷️ Category</label
+          >
+          <button id="clear-input-category" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="category"
+            id="category"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Categories</option>
+            {
+              data.categories.map((category) => (
+                <option value={category}>{category}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 4. PRICE RANGE (Enhanced for tourism) -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="price" class="text-sm font-medium text-gray-700"
+            >💰 Price Range</label
+          >
+          <button id="clear-input-price" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="price"
+            id="price"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Prices</option>
+            {
+              data.priceSteps.map((step, index) => {
+                const nextStep = data.priceSteps[index + 1];
+                if (index === 0) {
+                  return (
+                    <option value={`0-${step}`}>Under {getPrice(step)}</option>
+                  );
+                } else if (nextStep) {
+                  return (
+                    <option value={`${step}-${nextStep}`}>
+                      {getPrice(step)} - {getPrice(nextStep)}
+                    </option>
+                  );
+                } else {
+                  return (
+                    <option value={`${step}-`}>Over {getPrice(step)}</option>
+                  );
+                }
+              })
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 5. DURATION (New for tourism) -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="duration" class="text-sm font-medium text-gray-700"
+            >🕒 Duration</label
+          >
+          <button id="clear-input-duration" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="duration"
+            id="duration"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">Any Duration</option>
+            {
+              durationSteps.map((duration) => (
+                <option value={duration.value}>{duration.label}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 6. DIFFICULTY (Replaces "Fuel Type") -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="difficulty" class="text-sm font-medium text-gray-700"
+            >⛰️ Difficulty</label
+          >
+          <button id="clear-input-difficulty" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="difficulty"
+            id="difficulty"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Levels</option>
+            {
+              difficultyLevels.map((difficulty) => (
+                <option value={difficulty}>{difficulty}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 7. GROUP SIZE (New for tourism) -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="groupSize" class="text-sm font-medium text-gray-700"
+            >👥 Group Size</label
+          >
+          <button id="clear-input-groupSize" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="groupSize"
+            id="groupSize"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">Any Size</option>
+            {
+              groupSizeOptions.map((size) => (
+                <option value={size.value}>{size.label}</option>
+              ))
+            }
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- 8. SPECIAL FILTERS (Tourism-specific) -->
+      <div>
+        <div class="flex items-center gap-x-2">
+          <label for="special" class="text-sm font-medium text-gray-700"
+            >✨ Special</label
+          >
+          <button id="clear-input-special" type="button" class="hidden">
+            <IconReset
+              class="size-3 -mt-px text-gray-400 hover:text-gray-600"
+            />
+          </button>
+        </div>
+        <div class="grid grid-cols-1">
+          <select
+            name="special"
+            id="special"
+            class="appearance-none col-start-1 row-start-1 block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-yellow-500 focus:ring-yellow-500"
+          >
+            <option value="all">All Tours</option>
+            <option value="featured">Featured Tours</option>
+            <option value="sustainable">Eco-Friendly</option>
+            <option value="popular">Most Popular</option>
+            <option value="new">New Tours</option>
+            <option value="sale">Special Offers</option>
+          </select>
+          <IconChevronDown class="icon-chevron-down" />
+        </div>
+      </div>
+
+      <!-- SEARCH BUTTON -->
+      <div class="sticky bottom-0 pt-4 border-t border-gray-200">
+        <button
+          type="submit"
+          class="button button-yellow w-full flex items-center justify-center"
+        >
+          <span>🔍 Search Tours</span>
+          <span id="filter-result-found" class="ml-2 font-medium"
+            >({data.count})</span
+          >
+        </button>
+
+        <!-- Quick Reset -->
+        <button
+          type="button"
+          id="clear-all-filters"
+          class="w-full mt-2 text-sm text-gray-500 hover:text-gray-700 underline"
+        >
+          Clear All Filters
+        </button>
+      </div>
+    </form>
+
+    <!-- QUICK FILTER PRESETS -->
+    <div class="border-t border-gray-200 pt-4">
+      <h3 class="text-sm font-medium text-gray-700 mb-3">Quick Filters</h3>
+      <div class="flex flex-wrap gap-2">
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-yellow-100 hover:text-yellow-800"
+          data-preset="adventure"
+        >
+          🏔️ Adventure
+        </button>
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-blue-100 hover:text-blue-800"
+          data-preset="cultural"
+        >
+          🏛️ Cultural
+        </button>
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-800"
+          data-preset="nature"
+        >
+          🌿 Nature
+        </button>
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-cyan-100 hover:text-cyan-800"
+          data-preset="beach"
+        >
+          🏖️ Beach
+        </button>
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-red-100 hover:text-red-800"
+          data-preset="budget"
+        >
+          💰 Budget
+        </button>
+        <button
+          type="button"
+          class="preset-filter inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700 hover:bg-purple-100 hover:text-purple-800"
+          data-preset="luxury"
+        >
+          ✨ Luxury
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("astro:page-load", async function () {
+    const form = document.getElementById("form-filter") as HTMLFormElement;
+
+    if (form) {
+      const resultFound = document.getElementById("filter-result-found")!;
+      const urlParams = new URLSearchParams(window.location.search);
+
+      // Initialize form from URL parameters
+      for (const [key, value] of urlParams.entries()) {
+        const input = form.elements.namedItem(key) as HTMLSelectElement;
+        const clearButton = document.getElementById(
+          `clear-input-${key}`
+        )! as HTMLButtonElement;
+
+        if (input) {
+          input.value = value;
+          if (value !== "all" && clearButton) {
+            clearButton.classList.remove("hidden");
+          }
+        }
+      }
+
+      // Handle form changes and live filtering
+      form.addEventListener("change", async (event) => {
+        const target = event.target! as HTMLSelectElement;
+        const clearButton = document.getElementById(
+          `clear-input-${target.name}`
+        )! as HTMLButtonElement;
+
+        // Show/hide clear button
+        if (target.value !== "all") {
+          clearButton.classList.remove("hidden");
+        } else {
+          clearButton.classList.add("hidden");
+        }
+
+        // Live update results count
+        await updateResultsCount();
+      });
+
+      // Clear individual filters
+      document.querySelectorAll('[id^="clear-input-"]').forEach((button) => {
+        button.addEventListener("click", async (e) => {
+          const fieldName = (e.target as HTMLElement).id.replace(
+            "clear-input-",
+            ""
+          );
+          const field = form.elements.namedItem(fieldName) as HTMLSelectElement;
+          if (field) {
+            field.value = "all";
+            (e.target as HTMLElement).classList.add("hidden");
+            await updateResultsCount();
+          }
+        });
+      });
+
+      // Clear all filters
+      document
+        .getElementById("clear-all-filters")
+        ?.addEventListener("click", async () => {
+          const selects = form.querySelectorAll("select");
+          selects.forEach((select) => {
+            select.value = "all";
+          });
+          document
+            .querySelectorAll('[id^="clear-input-"]')
+            .forEach((button) => {
+              button.classList.add("hidden");
+            });
+          await updateResultsCount();
+        });
+
+      // Preset filter buttons
+      document.querySelectorAll(".preset-filter").forEach((button) => {
+        button.addEventListener("click", async (e) => {
+          const preset = (e.target as HTMLElement).dataset.preset;
+          applyPreset(preset!);
+          await updateResultsCount();
+        });
+      });
+
+      // Apply preset filters
+      function applyPreset(preset: string) {
+        // Clear all first
+        const selects = form.querySelectorAll("select");
+        selects.forEach((select) => (select.value = "all"));
+        document.querySelectorAll('[id^="clear-input-"]').forEach((button) => {
+          button.classList.add("hidden");
+        });
+
+        // Apply preset-specific filters
+        const presets = {
+          adventure: { tourType: "Adventure", difficulty: "Challenging" },
+          cultural: { tourType: "Cultural", difficulty: "Easy" },
+          nature: { tourType: "Nature", destination: "Amazon" },
+          beach: { tourType: "Beach", destination: "Tayrona" },
+          budget: { price: "0-500" },
+          luxury: { price: "1500-" },
+        };
+
+        const config = presets[preset as keyof typeof presets];
+        if (config) {
+          Object.entries(config).forEach(([key, value]) => {
+            const field = form.elements.namedItem(key) as HTMLSelectElement;
+            if (field) {
+              field.value = value;
+              const clearButton = document.getElementById(`clear-input-${key}`);
+              if (clearButton) clearButton.classList.remove("hidden");
+            }
+          });
+        }
+      }
+
+      // Update results count via API
+      async function updateResultsCount() {
+        try {
+          const url = new URL(
+            "/api/getFilteredTours.json",
+            window.location.origin
+          );
+          const formData = new FormData(form);
+
+          url.search = "";
+          for (const [key, value] of formData.entries()) {
+            if (value !== "all") {
+              url.searchParams.append(key, value.toString());
+            }
+          }
+
+          const response = await fetch(url);
+          const data = await response.json();
+          resultFound.textContent = `(${data?.allTours?.length ?? 0})`;
+        } catch (error) {
+          console.error("Error updating results count:", error);
+        }
+      }
+    }
+  });
+</script>

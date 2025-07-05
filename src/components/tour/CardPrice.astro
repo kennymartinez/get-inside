@@ -1,0 +1,53 @@
+---
+import { getPrice } from "~/utils/helpers";
+
+interface Props {
+  data: {
+    price: number;
+    salePrice?: number;
+    duration?: {
+      days: number;
+      nights: number;
+    };
+  };
+}
+
+const { data } = Astro.props;
+const hasDiscount = data.salePrice && data.salePrice < data.price;
+const displayPrice = hasDiscount ? data.salePrice : data.price;
+const originalPrice = data.price;
+---
+
+<div class="relative">
+  <div class="flex flex-col items-end text-right">
+    {
+      hasDiscount && (
+        <span class="price text-sm text-gray-500 line-through">
+          {getPrice(originalPrice)}
+        </span>
+      )
+    }
+    <div class="flex items-baseline gap-1">
+      <span
+        class={`text-lg font-bold ${hasDiscount ? "text-green-600" : "text-gray-900"}`}
+      >
+        {getPrice(displayPrice!)}
+      </span>
+      <span class="text-sm text-gray-500">USD</span>
+    </div>
+    {
+      data.duration && (
+        <span class="text-xs text-gray-400">
+          per {data.duration.days === 1 ? "day" : "person"}
+        </span>
+      )
+    }
+    {
+      hasDiscount && (
+        <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20 mt-1">
+          Save {getPrice(originalPrice - displayPrice!)}
+        </span>
+      )
+    }
+  </div>
+</div>
