@@ -1,68 +1,226 @@
 ---
+import { Icon } from "astro-icon/components";
 import { menuMain } from "~/data/menus";
-import IconLogo from "~/assets/images/icons/logo.svg";
+
 const rmTrailingSlash = (path: string): string => {
-	return path.endsWith("/") && path.length > 1 ? path.slice(0, path.length - 1) : path;
+  return path.endsWith("/") && path.length > 1
+    ? path.slice(0, path.length - 1)
+    : path;
 };
 
 const pathname = rmTrailingSlash(Astro.url.pathname);
 ---
 
 <header>
-	<section class="bg-yellow-200">
-		<div class="container py-4 lg:py-8">
-			<div class="flex justify-between items-center gap-x-4">
-				<a href="/">
-					<div class="flex items-center gap-x-2">
-						<IconLogo class="h-5 lg:h-8 inline-block" />
-						<span class="font-bold text-2xl lg:text-4xl">Hyper<span class="font-normal">Drive</span></span>
-					</div>
-				</a>
+  <section class="bg-yellow-200">
+    <div class="container py-4 lg:py-8">
+      <div class="flex justify-between items-center gap-x-4">
+        <a href="/">
+          <div class="flex items-center gap-x-2">
+            <Icon name="tabler:planet" class="h-5 lg:h-8 inline-block" />
+            <span class="font-bold text-2xl lg:text-4xl"
+              >Hyper<span class="font-normal">Drive</span></span
+            >
+          </div>
+        </a>
 
-				<nav class="max-lg:hidden" role="navigation" aria-label="Main Navigation">
-					<div class="flex lg:gap-x-12 items-center">
-						{
-							menuMain.map((item) => (
-								<div class="relative group">
-									<a
-										href={item.url}
-										class={`border-b-2 transition border-transparent ${pathname === item.url ? "font-bold" : "hover:border-gray-800 font-medium"}`}
-										aria-haspopup={item.submenu ? "true" : "false"}
-										aria-expanded={item.submenu ? "false" : undefined}
-									>
-										{item.label}
-									</a>
-									{item.submenu && (
-										<div
-											class="absolute top-full -mt-4 pt-4 -left-4 z-50 translate-y-4 w-screen max-w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300"
-											role="menu"
-										>
-											<div
-												class="bg-white rounded-lg ring-1 shadow-md ring-gray-900/5 overflow-hidden"
-												role="menu"
-												aria-label={`Submenu for ${item.label}`}
-											>
-												{item.submenu.map((subItem) => (
-													<a
-														href={subItem.url}
-														class={`block px-4 py-3 text-base hover:bg-gray-100 ${
-															pathname === subItem.url ? "font-bold" : "font-medium"
-														}`}
-														role="menuitem"
-													>
-														{subItem.label}
-													</a>
-												))}
-											</div>
-										</div>
-									)}
-								</div>
-							))
-						}
-						<a href="/contact" class="button button-black ml-8">Contact</a>
-					</div>
-				</nav>
-			</div>
-		</div>
-	</section>
+        <nav
+          class="max-lg:hidden"
+          role="navigation"
+          aria-label="Main Navigation"
+        >
+          <div class="flex lg:gap-x-12 items-center">
+            {
+              menuMain.map((item) => (
+                <div class="relative group">
+                  <a
+                    href={item.url}
+                    class={`border-b-2 transition border-transparent ${pathname === item.url ? "font-bold" : "hover:border-gray-800 font-medium"}`}
+                    aria-haspopup={item.submenu ? "true" : "false"}
+                    aria-expanded={item.submenu ? "false" : undefined}
+                  >
+                    {item.label}
+                    {item.submenu && (
+                      <Icon
+                        name="tabler:chevron-down"
+                        class="inline-block ml-1 size-4"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </a>
+                  {item.submenu && (
+                    <div
+                      class="absolute top-full -mt-4 pt-4 -left-4 z-50 translate-y-4 w-screen max-w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition duration-300"
+                      role="menu"
+                    >
+                      <div
+                        class="bg-white rounded-lg ring-1 shadow-md ring-gray-900/5 overflow-hidden"
+                        role="menu"
+                        aria-label={`Submenu for ${item.label}`}
+                      >
+                        {item.submenu.map((subItem) => (
+                          <a
+                            href={subItem.url}
+                            class={`block px-4 py-3 text-base hover:bg-gray-100 ${
+                              pathname === subItem.url
+                                ? "font-bold"
+                                : "font-medium"
+                            }`}
+                            role="menuitem"
+                          >
+                            <Icon
+                              name="tabler:chevron-right"
+                              class="inline-block mr-1 size-4"
+                              aria-hidden="true"
+                            />
+                            {subItem.label}
+                          </a>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              ))
+            }
+            <a href="/contact" class="button button-black ml-8">
+              <Icon
+                name="tabler:mail"
+                class="inline-block mr-1 size-4"
+                aria-hidden="true"
+              />
+              Contact
+            </a>
+          </div>
+        </nav>
+
+        <button
+          type="button"
+          class="lg:hidden flex items-center"
+          aria-label="Toggle mobile menu"
+          id="mobile-menu-toggle"
+        >
+          <Icon name="tabler:menu-2" class="size-6" />
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile menu (hidden by default) -->
+  <div id="mobile-menu" class="hidden lg:hidden bg-white shadow-lg">
+    <div class="container py-4">
+      <nav role="navigation" aria-label="Mobile Navigation">
+        <ul class="space-y-4">
+          {
+            menuMain.map((item) => (
+              <li>
+                {!item.submenu ? (
+                  <a
+                    href={item.url}
+                    class={`block py-2 ${pathname === item.url ? "font-bold" : "font-medium"}`}
+                  >
+                    <Icon
+                      name="tabler:chevron-right"
+                      class="inline-block mr-1 size-4"
+                      aria-hidden="true"
+                    />
+                    {item.label}
+                  </a>
+                ) : (
+                  <div>
+                    <button
+                      type="button"
+                      class="flex items-center justify-between w-full py-2 font-medium"
+                      aria-expanded="false"
+                      aria-controls={`submenu-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                    >
+                      <span>
+                        <Icon
+                          name="tabler:chevron-right"
+                          class="inline-block mr-1 size-4"
+                          aria-hidden="true"
+                        />
+                        {item.label}
+                      </span>
+                      <Icon
+                        name="tabler:chevron-down"
+                        class="size-4"
+                        aria-hidden="true"
+                      />
+                    </button>
+                    <div
+                      id={`submenu-${item.label.toLowerCase().replace(/\s+/g, "-")}`}
+                      class="hidden pl-6 mt-2 space-y-2"
+                    >
+                      {item.submenu.map((subItem) => (
+                        <a
+                          href={subItem.url}
+                          class={`block py-2 ${pathname === subItem.url ? "font-bold" : "font-medium"}`}
+                        >
+                          <Icon
+                            name="tabler:minus"
+                            class="inline-block mr-1 size-4"
+                            aria-hidden="true"
+                          />
+                          {subItem.label}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </li>
+            ))
+          }
+          <li>
+            <a
+              href="/contact"
+              class="button button-black inline-flex items-center mt-4"
+            >
+              <Icon name="tabler:mail" class="mr-1 size-4" aria-hidden="true" />
+              Contact
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
 </header>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (mobileMenuToggle && mobileMenu) {
+      mobileMenuToggle.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        const expanded =
+          mobileMenuToggle.getAttribute("aria-expanded") === "true" || false;
+        mobileMenuToggle.setAttribute("aria-expanded", (!expanded).toString());
+      });
+    }
+
+    // Handle submenu toggles
+    const submenuButtons = document.querySelectorAll(
+      '[aria-controls^="submenu-"]'
+    );
+    submenuButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        const expanded =
+          button.getAttribute("aria-expanded") === "true" || false;
+        button.setAttribute("aria-expanded", (!expanded).toString());
+
+        const submenuId = button.getAttribute("aria-controls");
+        const submenu = document.getElementById(submenuId);
+        if (submenu) {
+          submenu.classList.toggle("hidden");
+
+          // Toggle icon rotation
+          const icon = button.querySelector('[name="tabler:chevron-down"]');
+          if (icon) {
+            icon.classList.toggle("rotate-180");
+          }
+        }
+      });
+    });
+  });
+</script>

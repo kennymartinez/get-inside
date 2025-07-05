@@ -1,0 +1,15 @@
+---
+import { Icon as AstroIcon } from 'astro-icon/components';
+
+interface Props {
+  name: string;
+  class?: string;
+  size?: string | number;
+}
+
+const { name, class: className = "", size = "6" } = Astro.props;
+const sizeClass = typeof size === 'string' ? `size-${size}` : `w-[${size}px] h-[${size}px]`;
+const iconName = name.includes(":") ? name : `tabler:${name}`;
+---
+
+<AstroIcon name={iconName} class:list={[sizeClass, className]} />

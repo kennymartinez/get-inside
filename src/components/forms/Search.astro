@@ -1,83 +1,103 @@
 ---
-import { getMakeModelSet } from "~/utils/helpers";
-import { conditions } from "~/content.config";
+import { getDestinations, getTourTypes } from "~/utils/tourism-helpers";
+import { difficultyLevels } from "~/content.config";
 import IconSearch from "~/assets/images/icons/search.svg";
 import IconChevronDown from "~/assets/images/icons/chevron-down-select.svg";
 
-const allCars = await getMakeModelSet();
+const destinations = await getDestinations();
+const tourTypes = await getTourTypes();
 ---
 
 <form
-	id="form-widget-search"
-	action="/cars"
-	method="get"
-	class="grid grid-cols-1 lg:grid-cols-2 gap-4"
-	data-car-set={JSON.stringify(allCars)}
+  id="form-widget-search"
+  action="/tours"
+  method="get"
+  class="grid grid-cols-1 lg:grid-cols-2 gap-4"
+  data-destinations={JSON.stringify(destinations)}
+  data-tour-types={JSON.stringify(tourTypes)}
 >
-	<div>
-		<label class="sr-only" for="make">Make</label>
-		<div class="grid grid-cols-1">
-			<select name="make" id="make" class="appearance-none col-start-1 row-start-1">
-				<option value="all">Choose make</option>
-				{allCars.map((car) => <option value={car.make}>{car.make}</option>)}
-			</select>
-			<IconChevronDown class="icon-chevron-down" />
-		</div>
-	</div>
-	<div>
-		<label class="sr-only" for="model">Model</label>
-		<div class="grid grid-cols-1">
-			<select name="model" id="model" class="appearance-none col-start-1 row-start-1">
-				<option value="all">Choose model</option>
-			</select>
-			<IconChevronDown class="icon-chevron-down" />
-		</div>
-	</div>
-	<div>
-		<label class="sr-only" for="condition">Condition</label>
-		<div class="grid grid-cols-1">
-			<select name="condition" id="condition" class="appearance-none col-start-1 row-start-1">
-				<option value="all">Choose condition</option>
-				{conditions.map((condition) => <option value={condition}>{condition}</option>)}
-			</select>
-			<IconChevronDown class="icon-chevron-down" />
-		</div>
-	</div>
+  <div>
+    <label class="sr-only" for="destination">Destination</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="destination"
+        id="destination"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Choose destination</option>
+        {
+          destinations.map((destination) => (
+            <option value={destination}>{destination}</option>
+          ))
+        }
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
+  <div>
+    <label class="sr-only" for="tourType">Tour Type</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="tourType"
+        id="tourType"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Choose tour type</option>
+        {tourTypes.map((type) => <option value={type}>{type}</option>)}
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
+  <div>
+    <label class="sr-only" for="difficulty">Difficulty</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="difficulty"
+        id="difficulty"
+        class="appearance-none col-start-1 row-start-1"
+      >
+        <option value="all">Choose difficulty</option>
+        {
+          difficultyLevels.map((level) => (
+            <option value={level}>{level}</option>
+          ))
+        }
+      </select>
+      <IconChevronDown class="icon-chevron-down" />
+    </div>
+  </div>
 
-	<div>
-		<button type="submit" class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition">
-			<IconSearch class="size-5 -mt-0.5 inline-block" />
-			<span>Search</span>
-		</button>
-	</div>
+  <div>
+    <button
+      type="submit"
+      class="bg-yellow-200 mt-1 rounded-md py-1.5 font-semibold w-full hover:opacity-80 transition"
+    >
+      <IconSearch class="size-5 -mt-0.5 inline-block" />
+      <span>Search</span>
+    </button>
+  </div>
 </form>
 
 <script>
-	document.addEventListener("astro:page-load", function () {
-		const form = document.getElementById("form-widget-search") as HTMLFormElement;
+  document.addEventListener("astro:page-load", function () {
+    const form = document.getElementById(
+      "form-widget-search"
+    ) as HTMLFormElement;
 
-		if (form) {
-			const dataCarSet = form.getAttribute("data-car-set");
-			const allCars = dataCarSet ? JSON.parse(dataCarSet) : [];
-			const makeSelect = document.getElementById("make")! as HTMLSelectElement;
-			const modelSelect = document.getElementById("model")! as HTMLSelectElement;
+    if (form) {
+      const destinationsData = form.getAttribute("data-destinations");
+      const tourTypesData = form.getAttribute("data-tour-types");
+      const destinations = destinationsData ? JSON.parse(destinationsData) : [];
+      const tourTypes = tourTypesData ? JSON.parse(tourTypesData) : [];
 
-			const populateModels = (selectedMake: string) => {
-				modelSelect.innerHTML = '<option value="all">Choose model</option>';
-				allCars.forEach((car: { make: string; models: string[] }) => {
-					if (car.make === selectedMake) {
-						car.models.forEach((model) => {
-							modelSelect.innerHTML += `<option value="${model}">${model}</option>`;
-						});
-					}
-				});
-			};
+      const destinationSelect = document.getElementById(
+        "destination"
+      )! as HTMLSelectElement;
+      const tourTypeSelect = document.getElementById(
+        "tourType"
+      )! as HTMLSelectElement;
 
-			populateModels(makeSelect.value);
-
-			makeSelect.addEventListener("change", function () {
-				populateModels(makeSelect.value);
-			});
-		}
-	});
+      // You can add additional interactive functionality here if needed
+    }
+  });
 </script>

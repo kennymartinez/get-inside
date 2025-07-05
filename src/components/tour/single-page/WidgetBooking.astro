@@ -3,7 +3,7 @@ import type { WidgetBookingProps as Props } from "~/types";
 import TourPriceCalculator from "~/components/forms/TourPriceCalculator.astro";
 import QuickBookingInquiry from "~/components/forms/QuickBookingInquiry.astro";
 
-const { price, tourTitle, duration, groupSize, tour } = Astro.props;
+const { price, tourTitle, tour } = Astro.props;
 ---
 
 <div
@@ -23,7 +23,7 @@ const { price, tourTitle, duration, groupSize, tour } = Astro.props;
         <span>🧮</span>
         Calculate Your Tour Price
       </h3>
-      <TourPriceCalculator tour={tour} />
+      {tour && <TourPriceCalculator tour={tour} />}
     </div>
 
     {/* Quick Booking Options */}

@@ -117,7 +117,7 @@ export const socialMedia = {
   tiktok: {
     url: "https://tiktok.com/@colombia_adventures",
     label: "TikTok",
-    icon: "tiktok",
+    icon: "brand-tiktok",
   },
   x: {
     url: "https://x.com/colombia_adventures",

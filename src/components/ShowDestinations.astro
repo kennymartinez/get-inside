@@ -1,0 +1,111 @@
+---
+import type { ShowDestinationsProps as Props } from "~/types";
+import { getCollection, getEntries } from "astro:content";
+import CardDestinationAlt from "~/components/destination/CardDestinationAlt.astro";
+import CardDestination from "~/components/destination/CardDestination.astro";
+import type { CollectionEntry } from "astro:content";
+
+// Use the tours collection instead of cars
+type Destination = CollectionEntry<"tours">;
+
+const {
+  recent = false,
+  featured = false,
+  slugs = [],
+  ui = "list",
+} = Astro.props;
+
+let destinations = [];
+
+if (recent) {
+  destinations = await getCollection("tours", ({ data }) => !data.misc?.hidden);
+  destinations.sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  );
+  destinations = destinations.slice(0, 3);
+} else if (featured) {
+  const allFeaturedDestinations = await getCollection(
+    "tours",
+    ({ data }) => data.misc?.featured && !data.misc?.hidden
+  );
+  destinations = allFeaturedDestinations
+    .sort(() => 0.5 - Math.random())
+    .slice(0, 3);
+} else if (slugs.length > 0) {
+  const references = slugs.map((slug) => ({
+    collection: "tours" as const,
+    id: slug,
+  }));
+  destinations = await getEntries(references);
+  destinations = destinations.filter(
+    (destination): destination is Destination =>
+      destination !== undefined && !destination.data.misc?.hidden
+  );
+} else {
+  return;
+}
+
+const wrapperClasses = {
+  list: "grid grid-cols-1 gap-8",
+  grid: "grid grid-cols-1 gap-8 lg:grid-cols-3",
+};
+---
+
+<!-- Temporary tourism-themed message while transforming -->
+<div
+  class="text-center py-12 bg-gradient-to-br from-blue-50 to-green-50 rounded-lg"
+>
+  <div class="max-w-2xl mx-auto">
+    <h3 class="text-2xl font-bold text-gray-900 mb-4">
+      🏖️ Featured Destinations Coming Soon!
+    </h3>
+    <p class="text-gray-600 mb-6">
+      We're currently transforming our platform to showcase amazing travel
+      destinations. Our featured Colombia destinations will be available
+      shortly, including the beautiful locations from our latest blog posts.
+    </p>
+    <div class="flex flex-wrap justify-center gap-4">
+      <span
+        class="px-4 py-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium"
+        >🏛️ Cartagena</span
+      >
+      <span
+        class="px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-medium"
+        >🌸 Medellín</span
+      >
+      <span
+        class="px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium"
+        >🏝️ San Andrés</span
+      >
+    </div>
+    <div class="mt-8">
+      <a
+        href="/blog"
+        class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+      >
+        Read Our Destination Guides
+        <svg
+          class="ml-2 w-4 h-4"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M9 5l7 7-7 7"></path>
+        </svg>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- This will be uncommented once you create proper destination cards -->
+<!--
+<ul class={wrapperClasses[ui]}>
+	{destinations.map((destination) => (ui === "grid" ? <CardDestinationAlt destination={destination} /> : <CardDestination destination={destination} />))}
+</ul>
+-->

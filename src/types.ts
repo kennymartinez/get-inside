@@ -185,11 +185,12 @@ export interface SliderProps {
 export interface WidgetBookingProps {
   price: number;
   tourTitle: string;
-  duration: {
+  tour?: Tour;
+  duration?: {
     days: number;
     nights: number;
   };
-  groupSize: {
+  groupSize?: {
     min: number;
     max: number;
   };
@@ -368,4 +369,11 @@ export interface TourTestimonialMeta {
   verified: boolean;
   groupSize?: number;
   travelStyle?: string;
+}
+
+export interface ShowDestinationsProps {
+  recent?: boolean;
+  featured?: boolean;
+  slugs?: string[];
+  ui?: "list" | "grid";
 }

@@ -17,7 +17,7 @@ import Stats from "~/components/Stats.astro";
 // Images - These would need to be replaced with travel-themed images
 import ImageTravelAgent from "~/assets/images/pexels-shkrabaanthony-7144179.jpg";
 import ImageHeadingBackground from "~/assets/images/pexels-jeshoots-com-147458-451590.jpg";
-import ShowCars from "~/components/ShowCars.astro"; // This will be transformed to ShowDestinations
+import ShowDestinations from "~/components/ShowDestinations.astro"; // Updated import
 import ImageOne from "~/assets/images/pexels-leif-bergerson-99376750-9764731.webp";
 import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
 ---
@@ -152,7 +152,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 
-  {/* Featured Destinations - Using existing ShowCars component temporarily */}
+  {/* Featured Destinations */}
   <Section class:list={"bg-blue-50"}>
     <Container>
       <Heading>
@@ -164,11 +164,12 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         </p>
       </Heading>
 
-      {
-        /* Note: This component will need to be transformed to ShowDestinations */
-      }
-      <ShowCars
-        slugs={["audi-tt-coupe", "porsche-911", "volkswagen-polo-gti"]}
+      <ShowDestinations
+        slugs={[
+          "ciudad-perdida-trek",
+          "cartagena-city-tour",
+          "coffee-region-experience",
+        ]}
       />
     </Container>
   </Section>
@@ -240,12 +241,13 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         </p>
       </Heading>
 
-      {
-        /* Note: This component will need to be transformed to ShowDestinations */
-      }
-      <ShowCars
+      <ShowDestinations
         ui="grid"
-        slugs={["audi-tt-coupe", "porsche-911", "volkswagen-polo-gti"]}
+        slugs={[
+          "ciudad-perdida-trek",
+          "cartagena-city-tour",
+          "coffee-region-experience",
+        ]}
       />
     </Container>
   </Section>
