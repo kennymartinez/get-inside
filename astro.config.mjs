@@ -25,7 +25,8 @@ export default defineConfig({
         enabled: false,
     },
     adapter: netlify({
-        edgeMiddleware: true // Enable this for better performance
+        // Use the default function mode instead of edge for better compatibility
+        edgeMiddleware: false,
     }),
     vite: {
         plugins: [tailwindcss()],

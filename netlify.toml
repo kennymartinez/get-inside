@@ -5,33 +5,19 @@
 [build.environment]
   NODE_VERSION = "18"
 
-# Redirect rules for SPA-like behavior
-[[redirects]]
-  from = "/tours/*"
-  to = "/tours/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/tour/*"
-  to = "/tour/:splat"
-  status = 200
-
-[[redirects]]
-  from = "/blog/*"
-  to = "/blog/:splat"
-  status = 200
-
-# API routes
+# Simplified redirects for API routes
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/entry/:splat"
+  to = "/.netlify/functions/entry"
   status = 200
+  force = true
 
-# Fallback for client-side routing
+# Standard page redirects
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+  force = false
 
 # Headers for better performance
 [[headers]]
