@@ -21,23 +21,54 @@ import {
 
 type Tour = CollectionEntry<"tours">;
 
-let APIURL = new URL("/api/getFilteredTours.json", Astro.url);
+// Get the page parameter from the URL
+const { page: pageParam } = Astro.params;
+const page = pageParam ? parseInt(pageParam) : 1;
 
+// Validate page parameter
+if (isNaN(page) || page < 1) {
+  return Astro.redirect("/tours/1");
+}
+
+// Prepare API URL with search parameters
 const searchParamsValue = Astro.url.searchParams;
 const searchParamsArray = Array.from(searchParamsValue);
-
+const APIURL = new URL("/api/getFilteredTours", Astro.url);
 APIURL.search = searchParamsValue.toString();
 
-const response = await fetch(APIURL);
-const responseData =
-  response.status === 404 ? { allTours: [] } : await response.json();
-const allTours: Tour[] = responseData.allTours;
+// Fetch tours data from API
+let allTours: Tour[] = [];
+let error = null;
+
+try {
+  const response = await fetch(APIURL);
+
+  if (!response.ok) {
+    if (response.status === 404) {
+      allTours = [];
+    } else {
+      throw new Error(
+        `API returned ${response.status}: ${response.statusText}`
+      );
+    }
+  } else {
+    const responseData = await response.json();
+    allTours = responseData.allTours || [];
+  }
+} catch (e) {
+  console.error("Error fetching tours:", e);
+  error = e instanceof Error ? e.message : "Unknown error fetching tours";
+  allTours = [];
+}
 
 // Get filter data for sidebar
-const destinations = await getDestinations();
-const tourTypes = await getTourTypes();
-const categories = await getCategories();
-const difficulties = await getDifficulties();
+const [destinations, tourTypes, categories, difficulties] = await Promise.all([
+  getDestinations(),
+  getTourTypes(),
+  getCategories(),
+  getDifficulties(),
+]);
+
 const count = allTours.length;
 
 const sideBarData = {
@@ -49,14 +80,18 @@ const sideBarData = {
   priceSteps,
 };
 
-const page = parseInt(searchParamsValue.get("page") || "1");
+// Pagination logic
 const pageSize = defaultPaginationSize;
-const totalPages = Math.ceil(
-  Array.isArray(allTours) ? allTours.length / pageSize : 0
-);
-const paginatedTours = Array.isArray(allTours)
-  ? allTours.slice((page - 1) * pageSize, page * pageSize)
-  : [];
+const totalPages = Math.ceil(allTours.length / pageSize);
+
+// Redirect if page is out of range
+if (page > totalPages && totalPages > 0) {
+  return Astro.redirect(
+    `/tours/${totalPages}${searchParamsValue.toString() ? `?${searchParamsValue.toString()}` : ""}`
+  );
+}
+
+const paginatedTours = allTours.slice((page - 1) * pageSize, page * pageSize);
 ---
 
 <Layout
@@ -104,6 +139,17 @@ const paginatedTours = Array.isArray(allTours)
             <div class="max-lg:hidden">
               <PresetBar params={searchParamsArray} />
             </div>
+
+            {
+              error && (
+                <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded mb-6">
+                  <p>Error loading tours: {error}</p>
+                  <p class="text-sm mt-1">
+                    Please try refreshing the page or adjusting your filters.
+                  </p>
+                </div>
+              )
+            }
 
             <ul class="grid grid-cols-1 lg:gap-16">
               {

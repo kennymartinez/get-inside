@@ -46,14 +46,21 @@ if (recent) {
   );
   tours = allSustainableTours.slice(0, 3);
 } else if (slugs.length > 0) {
-  const references = slugs.map((slug) => ({
-    collection: "tours" as const,
-    id: slug,
-  }));
-  tours = await getEntries(references);
-  tours = tours.filter(
-    (tour): tour is Tour => tour !== undefined && !tour.data.misc?.hidden
-  );
+  try {
+    const references = slugs.map((slug) => ({
+      collection: "tours" as const,
+      id: slug,
+    }));
+
+    // Get entries and filter out any undefined entries
+    const entries = await getEntries(references);
+    tours = entries.filter(
+      (tour): tour is Tour => tour !== undefined && !tour.data.misc?.hidden
+    );
+  } catch (error) {
+    console.error("Error fetching tours by slugs:", error);
+    tours = [];
+  }
 } else {
   return;
 }
@@ -73,10 +80,18 @@ const wrapperClasses = {
 };
 ---
 
-<ul class={wrapperClasses[ui]}>
-  {
-    tours.map((tour) =>
-      ui === "grid" ? <CardTourAlt tour={tour} /> : <CardTour tour={tour} />
-    )
-  }
-</ul>
+<!-- Component template -->{
+  tours.length > 0 && (
+    <ul
+      class:list={[
+        ui === "grid"
+          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          : "space-y-8",
+      ]}
+    >
+      {tours.map((tour) =>
+        ui === "grid" ? <CardTourAlt tour={tour} /> : <CardTour tour={tour} />
+      )}
+    </ul>
+  )
+}

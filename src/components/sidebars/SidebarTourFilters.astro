@@ -492,10 +492,7 @@ const { data } = Astro.props;
       // Update results count via API
       async function updateResultsCount() {
         try {
-          const url = new URL(
-            "/api/getFilteredTours.json",
-            window.location.origin
-          );
+          const url = new URL("/api/getFilteredTours", window.location.origin);
           const formData = new FormData(form);
 
           url.search = "";
