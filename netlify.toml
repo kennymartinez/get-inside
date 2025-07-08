@@ -24,7 +24,7 @@
 # API routes
 [[redirects]]
   from = "/api/*"
-  to = "/.netlify/functions/api/:splat"
+  to = "/.netlify/functions/entry/:splat"
   status = 200
 
 # Fallback for client-side routing

@@ -1,5 +1,5 @@
 # API routes
-/api/* /.netlify/functions/api/:splat 200
+/api/* /.netlify/functions/entry/:splat 200
 
 # Tours pages
 /tours/* /tours/:splat 200

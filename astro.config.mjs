@@ -24,7 +24,9 @@ export default defineConfig({
     devToolbar: {
         enabled: false,
     },
-    adapter: netlify(),
+    adapter: netlify({
+        edgeMiddleware: true // Enable this for better performance
+    }),
     vite: {
         plugins: [tailwindcss()],
     },
