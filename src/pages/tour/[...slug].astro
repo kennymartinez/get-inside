@@ -52,7 +52,15 @@ try {
 }
 
 // Only render content if tour exists
-const { Content, headings } = await render(tour);
+let Content, headings;
+try {
+  const renderResult = await render(tour);
+  Content = renderResult.Content;
+  headings = renderResult.headings;
+} catch (error) {
+  console.error(`Error rendering tour content for "${slug}":`, error);
+  return Astro.redirect("/tours/1");
+}
 
 // Related tours functionality can be added later when component is created
 ---

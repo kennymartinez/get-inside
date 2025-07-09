@@ -7,9 +7,9 @@ export const menuMain: MainMenuItem[] = [
     url: "/",
   },
   {
-    id: "destinations",
-    label: "Destinations",
-    url: "/destinations",
+    id: "tours",
+    label: "Tours",
+    url: "/tours",
   },
   {
     id: "about",
@@ -29,11 +29,6 @@ export const menuMain: MainMenuItem[] = [
     url: "/services",
     submenu: [
       { id: "tours", label: "Guided Tours", url: "/services/tours" },
-      {
-        id: "accommodation",
-        label: "Accommodation",
-        url: "/services/accommodation",
-      },
       {
         id: "transportation",
         label: "Transportation",
@@ -56,8 +51,8 @@ export const menuNavigation: MenuNavigation = {
       url: "/",
     },
     {
-      name: "Destinations",
-      url: "/destinations",
+      name: "Tours",
+      url: "/tours",
     },
     {
       name: "About Us",
@@ -82,38 +77,8 @@ export const menuService: MenuNavigation = {
       url: "/services/tours",
     },
     {
-      name: "Accommodation",
-      url: "/services/accommodation",
-    },
-    {
       name: "Transportation",
       url: "/services/transportation",
-    },
-    {
-      name: "Travel Planning",
-      url: "/services/travel-planning",
-    },
-  ],
-};
-
-export const menuDestinations: MenuNavigation = {
-  prettyName: "Popular Destinations",
-  items: [
-    {
-      name: "Beach Resorts",
-      url: "/destinations/beach-resorts",
-    },
-    {
-      name: "Mountain Adventures",
-      url: "/destinations/mountains",
-    },
-    {
-      name: "Cultural Cities",
-      url: "/destinations/cultural-cities",
-    },
-    {
-      name: "Nature Parks",
-      url: "/destinations/nature-parks",
     },
   ],
 };

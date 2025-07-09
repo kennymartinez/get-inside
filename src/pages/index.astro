@@ -33,31 +33,57 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     <div class="absolute inset-0 w-full h-full object-cover bg-gray-800/80">
     </div>
     <Container class:list={"relative z-10"}>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+      <div
+        class="flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-12 items-center"
+      >
         <div>
           <Heading class:list={"prose-invert"}>
-            <h1 slot="heading-title" class="mb-0 lg:text-6xl text-balance">
-              Discover the Magic of Colombia with Trusted Local Experts
+            <h1
+              slot="heading-title"
+              class="mb-0 text-4xl lg:text-6xl text-balance"
+            >
+              Discover the Magic of Colombia
             </h1>
-            <p slot="heading-content">
+            <p slot="heading-content" class="hidden lg:block">
               Experience Colombia's breathtaking diversity through our carefully
               crafted travel packages. From the Caribbean coast to the Amazon
               rainforest, we offer authentic, safe, and responsible tourism
-              experiences that showcase the best of our beautiful country. Book
-              with confidence knowing you're traveling with certified local
-              experts.
+              experiences that showcase the best of our beautiful country.
             </p>
           </Heading>
         </div>
-        <div class="flex justify-center lg:justify-end">
+        <div class="w-full lg:flex lg:justify-end">
           <WidgetSearch />
+        </div>
+        <p class="text-white text-sm lg:hidden text-center">
+          Find your perfect Colombian adventure with our local experts
+        </p>
+      </div>
+    </Container>
+  </Section>
+
+  {/* Mobile-only intro section */}
+  <Section class:list={"lg:hidden bg-blue-50"}>
+    <Container>
+      <div class="prose">
+        <h2 class="text-center">
+          Your Gateway to Authentic Colombian Adventures
+        </h2>
+        <p>
+          Experience Colombia's breathtaking diversity through our carefully
+          crafted travel packages. From the Caribbean coast to the Amazon
+          rainforest, we offer authentic, safe, and responsible tourism
+          experiences that showcase the best of our beautiful country.
+        </p>
+        <div class="flex justify-center">
+          <Button href="/tours/1" class:list={"mt-2"}>Explore All Tours</Button>
         </div>
       </div>
     </Container>
   </Section>
 
-  {/* Hero */}
-  <Section>
+  {/* Hero - desktop only */}
+  <Section class:list={"hidden lg:block"}>
     <Container>
       <Hero>
         <div slot="hero-left" class="prose lg:max-w-2xl">
@@ -77,7 +103,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
             experience the real Colombia with complete peace of mind.
           </p>
 
-          <Button href="/destinations" class:list={"mt-4"}
+          <Button href="/tours/1" class:list={"mt-4"}
             >Explore Colombia Tours</Button
           >
         </div>
@@ -88,15 +114,38 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 
-  {/* Grid */}
+  {/* Featured Destinations - moved up for mobile */}
   <Section>
+    <Container>
+      <Heading>
+        <h2 slot="heading-title" class="mb-0">
+          Signature Colombian Experiences
+        </h2>
+        <p slot="heading-content" class="text-sm lg:text-base">
+          Explore our most popular Colombian adventures, carefully crafted to
+          showcase the country's diverse landscapes and rich culture.
+        </p>
+      </Heading>
+
+      <ShowDestinations
+        slugs={[
+          "ciudad-perdida-trek",
+          "cartagena-cultural-experience",
+          "coffee-region-experience",
+        ]}
+      />
+    </Container>
+  </Section>
+
+  {/* Grid */}
+  <Section class:list={"bg-gray-50"}>
     <Container>
       <Grid>
         <GridItem
           image={ImageOne}
           imageAlt="Travel destinations"
           span={2}
-          link="/destinations"
+          link="/tours/1"
           As="a"
           xl
         >
@@ -104,12 +153,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
           <p>
             From the mystical Lost City (Ciudad Perdida) hidden in the Sierra
             Nevada mountains to the colorful colonial streets of Cartagena,
-            Colombia offers experiences you won't find anywhere else. Our
-            signature tours include UNESCO World Heritage sites, world-renowned
-            coffee regions, and exclusive access to protected natural areas.
-            Every package is designed with sustainability in mind, ensuring your
-            visit benefits local communities while preserving Colombia's natural
-            and cultural treasures.
+            Colombia offers experiences you won't find anywhere else.
           </p>
           <Button
             As="button"
@@ -123,7 +167,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         <GridItem
           image={ImageTwo}
           imageAlt="Travel experiences"
-          link="/destinations"
+          link="/tours/1?tourType=Adventure"
           As="a"
         >
           <h3>Adventure & Nature</h3>
@@ -131,8 +175,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
             Experience Colombia's incredible biodiversity in our carefully
             planned eco-adventures. Trek through cloud forests, spot exotic
             wildlife in national parks, or dive into crystal-clear Caribbean
-            waters. All our nature tours are led by certified naturalist guides
-            and follow strict environmental protocols.
+            waters.
           </p>
           <Button
             As="button"
@@ -142,15 +185,19 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
           >
         </GridItem>
 
-        <GridItem>
+        <GridItem link="/tours/1?tourType=Cultural" As="a">
           <h3>Cultural Immersion</h3>
           <p>
             Connect with Colombia's rich cultural heritage through authentic
             experiences with local communities. Learn traditional crafts,
             participate in coffee harvesting, or dance salsa in its birthplace.
-            Our cultural tours directly support indigenous and rural
-            communities, ensuring your visit makes a positive impact.
           </p>
+          <Button
+            As="button"
+            type="button"
+            color="secondary"
+            class:list={"mt-4"}>Cultural Tours</Button
+          >
         </GridItem>
       </Grid>
     </Container>
@@ -167,41 +214,13 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
             tour operator with comprehensive insurance coverage, emergency
             response protocols, and partnerships with trusted local providers.
             Our team includes certified wilderness first aid responders, and we
-            maintain 24/7 communication during all tours. Read our verified
-            reviews from thousands of satisfied travelers who've experienced
-            Colombia safely with us.
+            maintain 24/7 communication during all tours.
           </p>
         </div>
         <div slot="hero-right">
           <Image src={ImageTravelAgent} alt="Travel consultant" />
         </div>
       </Hero>
-    </Container>
-  </Section>
-
-  {/* Featured Destinations */}
-  <Section class:list={"bg-blue-50"}>
-    <Container>
-      <Heading>
-        <h2 slot="heading-title" class="mb-0">
-          Signature Colombian Experiences
-        </h2>
-        <p slot="heading-content">
-          Explore our most popular Colombian adventures, carefully crafted to
-          showcase the country's diverse landscapes and rich culture. Each tour
-          includes expert local guides, comfortable accommodations, and
-          authentic experiences that connect you with the heart of Colombia
-          while supporting sustainable tourism.
-        </p>
-      </Heading>
-
-      <ShowDestinations
-        slugs={[
-          "ciudad-perdida-trek",
-          "cartagena-city-tour",
-          "coffee-region-experience",
-        ]}
-      />
     </Container>
   </Section>
 
@@ -215,9 +234,6 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         <p slot="heading-content">
           As Colombia's premier responsible tourism company, we've been sharing
           our country's wonders with international visitors for over a decade.
-          Our commitment to safety, authenticity, and sustainability has earned
-          us recognition from international travel organizations and thousands
-          of satisfied travelers.
         </p>
       </Heading>
 
@@ -250,16 +266,14 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
       <Heading class:list={"mb-0 lg:mb-0 prose-invert text-center mx-auto"}>
         <h2 slot="heading-title">Ready to Discover Colombia?</h2>
 
-        <p slot="heading-content">
+        <p slot="heading-content" class="text-sm lg:text-base">
           Let our Colombian travel experts design your perfect adventure.
           Whether you're dreaming of Caribbean beaches, Andean peaks, Amazon
           rainforest, or colonial cities, we'll create a personalized itinerary
-          that matches your interests, budget, and travel style. Contact us
-          today for a free consultation and start planning your safe, authentic
-          Colombian experience.
+          that matches your interests, budget, and travel style.
         </p>
 
-        <Button href="/contact" color="white" class:list={"mt-8"}
+        <Button href="/contact" color="white" class:list={"mt-4 lg:mt-8"}
           >Plan My Colombia Trip</Button
         >
       </Heading>
@@ -273,12 +287,9 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         <h2 slot="heading-title" class="mb-0">
           Most Loved Colombian Adventures
         </h2>
-        <p slot="heading-content">
+        <p slot="heading-content" class="text-sm lg:text-base">
           Discover why these Colombian experiences consistently earn 5-star
-          reviews from our travelers. From ancient archaeological sites to
-          vibrant coffee plantations, these tours represent the very best of
-          what Colombia has to offer - all delivered with our signature
-          commitment to safety and authenticity.
+          reviews from our travelers.
         </p>
       </Heading>
 
@@ -286,7 +297,7 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
         ui="grid"
         slugs={[
           "ciudad-perdida-trek",
-          "cartagena-city-tour",
+          "cartagena-cultural-experience",
           "coffee-region-experience",
         ]}
       />
@@ -299,12 +310,10 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
       <Heading class:list={"max-w-3xl"}>
         <h2 slot="heading-title">Colombia Travel Insights</h2>
 
-        <p slot="heading-content">
+        <p slot="heading-content" class="text-sm lg:text-base">
           Stay informed with the latest updates from Colombia's tourism
           landscape. Our blog features insider tips, seasonal travel advice,
-          cultural insights, and stories from fellow travelers who've
-          experienced the magic of Colombia with us. Get inspired and plan your
-          perfect Colombian adventure.
+          cultural insights, and stories from fellow travelers.
         </p>
       </Heading>
 
@@ -318,11 +327,9 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
       <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
         <h2 slot="heading-title">Frequently Asked Questions</h2>
 
-        <p slot="heading-content">
+        <p slot="heading-content" class="text-sm lg:text-base">
           Planning your first trip to Colombia? We understand you may have
-          questions about safety, logistics, and what to expect. Here are
-          answers to the most common questions from travelers considering a
-          Colombian adventure.
+          questions about safety, logistics, and what to expect.
         </p>
       </Heading>
 
@@ -359,13 +366,11 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
       <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
         <h2 slot="heading-title">Meet Your Colombian Travel Experts</h2>
 
-        <p slot="heading-content">
+        <p slot="heading-content" class="text-sm lg:text-base">
           Our passionate team of Colombian travel specialists combines deep
           local knowledge with international hospitality standards. Each team
           member is a certified guide, wilderness first aid trained, and
-          committed to sharing Colombia's beauty responsibly. We're not just
-          your tour operators - we're your Colombian friends who want to show
-          you our incredible country.
+          committed to sharing Colombia's beauty responsibly.
         </p>
       </Heading>
 
@@ -373,3 +378,29 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 </Layout>
+
+<style>
+  /* Mobile optimization styles */
+  @media (max-width: 768px) {
+    /* Reduce vertical spacing */
+    :global(section) {
+      padding-top: 2rem;
+      padding-bottom: 2rem;
+    }
+
+    /* Make search widget full width on mobile */
+    :global(.widget-search) {
+      width: 100%;
+      max-width: none;
+    }
+
+    /* Reduce text size for better mobile reading */
+    :global(h1) {
+      font-size: 2.25rem !important;
+    }
+
+    :global(h2) {
+      font-size: 1.75rem !important;
+    }
+  }
+</style>

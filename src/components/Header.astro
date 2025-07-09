@@ -2,7 +2,7 @@
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 import { menuMain } from "~/data/menus";
-import logoGetInside from "~/assets/images/logo-getinside-512x512.png";
+import logoGetInside from "~/assets/images/logo-getinside-transparent.png";
 
 const rmTrailingSlash = (path: string): string => {
   return path.endsWith("/") && path.length > 1
@@ -17,11 +17,11 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
   <section class="bg-yellow-200">
     <div class="container py-4 lg:py-8">
       <div class="flex justify-between items-center gap-x-4">
-        <a href="/" class="flex items-center">
+        <a href="/" class="flex items-center h-12 lg:h-16">
           <Image
             src={logoGetInside}
             alt="Get Inside Colombia - Authentic Colombian Tours"
-            class="h-12 lg:h-24 w-auto"
+            class="h-full w-auto object-contain"
           />
         </a>
 
@@ -185,6 +185,23 @@ const pathname = rmTrailingSlash(Astro.url.pathname);
     </div>
   </div>
 </header>
+
+<style>
+  /* Logo responsive styling */
+  header a img {
+    max-height: 100%;
+    width: auto;
+    object-position: left center;
+  }
+
+  /* Ensure header maintains consistent height */
+  @media (max-width: 1023px) {
+    header .container {
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+  }
+</style>
 
 <script>
   document.addEventListener("astro:page-load", () => {

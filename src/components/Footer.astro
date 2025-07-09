@@ -1,11 +1,6 @@
 ---
 import { siteName } from "~/data/config";
-import {
-  menuNavigation,
-  menuDestinations,
-  menuService,
-  menuLegal,
-} from "~/data/menus";
+import { menuNavigation, menuService, menuLegal } from "~/data/menus";
 import NewsletterFooter from "./forms/NewsletterFooter.astro";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
@@ -16,7 +11,6 @@ const year = new Date().getFullYear();
 // Ensure all menu objects have an items array, even if empty
 const navigation = menuNavigation?.items || [];
 const service = menuService?.items || [];
-const destinations = menuDestinations?.items || [];
 const legal = menuLegal?.items || [];
 ---
 
@@ -87,32 +81,6 @@ const legal = menuLegal?.items || [];
           }
         </div>
         <div class="md:grid md:grid-cols-2 md:gap-8">
-          {
-            destinations.length > 0 && (
-              <div>
-                <span class="text-base font-semibold">
-                  <Icon
-                    name="tabler:map-pin"
-                    class="size-5 inline-block mr-1"
-                  />
-                  {menuDestinations?.prettyName || "Destinations"}
-                </span>
-                <ul role="list" class="mt-6 space-y-4">
-                  {destinations.map((item) => (
-                    <li>
-                      <a
-                        href={item.url}
-                        class="text-base transition text-gray-600 hover:text-gray-800 flex items-center"
-                      >
-                        <Icon name="tabler:chevron-right" class="size-4 mr-1" />
-                        {item.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          }
           {
             legal.length > 0 && (
               <div class="max-md:mt-10">
