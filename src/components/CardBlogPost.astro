@@ -6,18 +6,33 @@ import Pill from "./Pill.astro";
 
 const { post, index } = Astro.props;
 const postData = post;
+
+// Function to get slug - use data.slug if exists, otherwise use post.id
+function getPostSlug(post) {
+  return post.data.slug || post.id;
+}
+
+const postSlug = getPostSlug(postData);
 ---
 
 <article class="group">
-  <a href={`/blog/${postData.data.slug}`}>
-    <Image
-      src={postData.data.image}
-      alt={postData.data.imageAlt}
-      class="rounded-lg aspect-[5/3] object-cover object-center w-full"
-      loading={index < 2 ? "eager" : "lazy"}
-      fetchpriority={index < 2 ? "high" : "auto"}
-      transition:name={`post-image-${postData.data.slug}`}
-    />
+  <a href={`/blog/${postSlug}`}>
+    {
+      postData.data.image ? (
+        <Image
+          src={postData.data.image}
+          alt={postData.data.imageAlt || postData.data.title}
+          class="rounded-lg aspect-[5/3] object-cover object-center w-full"
+          loading={index < 2 ? "eager" : "lazy"}
+          fetchpriority={index < 2 ? "high" : "auto"}
+          transition:name={`post-image-${postSlug}`}
+        />
+      ) : (
+        <div class="rounded-lg aspect-[5/3] bg-gray-200 flex items-center justify-center">
+          <span class="text-gray-500">No image</span>
+        </div>
+      )
+    }
   </a>
 
   <div class="group space-y-4 mt-4 prose max-w-none">
@@ -25,30 +40,34 @@ const postData = post;
       <time
         class="text-sm text-gray-600"
         datetime={post.data.publishDate.toISOString()}
-        transition:name={`post-date-${post.data.slug}`}
+        transition:name={`post-date-${postSlug}`}
       >
         Posted on: {post.data.publishDate.toLocaleDateString()}
       </time>
       <Pill
         title={post.data.category}
-        color={blogCategories[postData.data.category]}
+        color={blogCategories[postData.data.category] || "gray"}
       />
     </div>
 
-    <h2 class="h5" transition:name={`post-title-${postData.data.slug}`}>
+    <h2 class="h5" transition:name={`post-title-${postSlug}`}>
       <a
         class="no-underline font-bold hover:underline"
-        href={`/blog/${postData.data.slug}`}>{postData.data.title}</a
+        href={`/blog/${postSlug}`}
       >
+        {postData.data.title}
+      </a>
     </h2>
 
     <p class="text-pretty line-clamp-4">
-      {postData.data.excerpt}
+      {postData.data.excerpt || "Read this blog post to learn more..."}
     </p>
 
     <a
       class="no-underline hover:underline block font-semibold"
-      href={`/blog/${postData.data.slug}`}>Read more &rarr;</a
+      href={`/blog/${postSlug}`}
     >
+      Read more &rarr;
+    </a>
   </div>
 </article>
