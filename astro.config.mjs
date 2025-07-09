@@ -4,26 +4,22 @@ import mdx from "@astrojs/mdx";
 import playformInline from "@playform/inline";
 import netlify from "@astrojs/netlify";
 import tailwindcss from "@tailwindcss/vite";
-
 import icon from "astro-icon";
 
 // https://astro.build/config
 export default defineConfig({
-    site: "https://get-inside-colombia.netlify.app", // Update with your actual Netlify URL
+    site: "https://get-inside-colombia.netlify.app", 
     base: "/",
     integrations: [
         mdx(),
         playformInline({ Critters: true }),
         icon({
             include: {
-                tabler: ["*"] // Include all Tabler icons
+                tabler: ["*"] 
             }
         })
     ],
-    output: "server", // Changed from "static" to support API routes
-    devToolbar: {
-        enabled: false,
-    },
+    output: "server",
     adapter: netlify({
         // Use the default function mode instead of edge for better compatibility
         edgeMiddleware: false,
