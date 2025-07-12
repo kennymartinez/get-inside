@@ -9,6 +9,7 @@ import MedicalContactForm from "~/components/medical/MedicalContactForm.astro";
 import { Image } from "astro:assets";
 import Icon from "~/components/Icon.astro";
 import type { MedicalSpecialist } from "~/types";
+import Slider from "~/components/tour/single-page/Slider.astro";
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const specialists = await getCollection("medicalTourism");
@@ -109,14 +110,20 @@ const { data } = specialist;
         <!-- Doctor Image -->
         <div>
           {
-            data.image && (
+            data.image && data.gallery ? (
+              <Slider
+                image={data.image}
+                alt={data.imageAlt || `Dr. ${data.title}`}
+                gallery={data.gallery}
+              />
+            ) : data.image ? (
               <Image
                 src={data.image}
                 alt={data.imageAlt || `Dr. ${data.title}`}
                 class="w-full rounded-lg shadow-lg"
                 loading="eager"
               />
-            )
+            ) : null
           }
         </div>
       </div>
