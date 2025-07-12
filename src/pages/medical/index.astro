@@ -1,0 +1,83 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Heading from "~/components/Heading.astro";
+import ShowMedicalSpecialists from "~/components/medical/ShowMedicalSpecialists.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout pageTitle="Medical Tourism" title="Medical Tourism in Colombia">
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <Heading>
+        <h1 slot="heading-title">Medical Tourism in Colombia</h1>
+        <p slot="heading-content">
+          Discover world-class medical care with Colombia's leading healthcare
+          professionals. Our curated network of specialists offers
+          international-standard treatments at affordable prices in beautiful
+          Colombian cities.
+        </p>
+      </Heading>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <Heading>
+        <h2 slot="heading-title">Featured Medical Specialists</h2>
+        <p slot="heading-content">
+          Meet our carefully selected medical professionals who specialize in
+          treating international patients with the highest standards of care.
+        </p>
+      </Heading>
+      <ShowMedicalSpecialists featured={true} limit={6} />
+    </Container>
+  </Section>
+
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <Heading>
+        <h2 slot="heading-title">Why Choose Colombia for Medical Tourism?</h2>
+      </Heading>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div
+            class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <Icon name="tabler:award" class="w-8 h-8 text-blue-600" />
+          </div>
+          <h3 class="text-xl font-bold mb-2">World-Class Quality</h3>
+          <p class="text-gray-600">
+            JCI-accredited hospitals and internationally trained specialists
+          </p>
+        </div>
+        <div class="text-center">
+          <div
+            class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <Icon
+              name="tabler:currency-dollar"
+              class="w-8 h-8 text-green-600"
+            />
+          </div>
+          <h3 class="text-xl font-bold mb-2">Affordable Costs</h3>
+          <p class="text-gray-600">
+            Save 50-70% compared to US and European prices
+          </p>
+        </div>
+        <div class="text-center">
+          <div
+            class="bg-yellow-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4"
+          >
+            <Icon name="tabler:plane" class="w-8 h-8 text-yellow-600" />
+          </div>
+          <h3 class="text-xl font-bold mb-2">Easy Access</h3>
+          <p class="text-gray-600">
+            Direct flights from major cities and visa-free travel
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</Layout>

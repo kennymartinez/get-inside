@@ -4,9 +4,9 @@ import { pillColors } from "./components/Pill.astro";
 
 // Main collection types updated for tourism
 export type Blog = CollectionEntry<"blog">;
-export type Tour = CollectionEntry<"tours">; // Changed from Car to Tour
-export type Testimonial = CollectionEntry<"testimonials">;
-export type Team = CollectionEntry<"team">;
+export type Tour = CollectionEntry<"tours">;
+// Main medical collection type
+export type MedicalSpecialist = CollectionEntry<"medicalTourism">;
 
 // Base component interfaces (unchanged)
 export interface ClassNameProps {
@@ -345,4 +345,68 @@ export interface ShowDestinationsProps {
   featured?: boolean;
   slugs?: string[];
   ui?: "list" | "grid";
+}
+
+// Medical tourism component interfaces
+export interface ShowMedicalSpecialistsProps {
+  recent?: boolean;
+  featured?: boolean;
+  slugs?: string[];
+  ui?: "list" | "grid";
+  specialty?: string;
+  city?: string;
+  procedure?: string;
+  limit?: number;
+}
+
+export interface CardMedicalSpecialistProps {
+  specialist: MedicalSpecialist;
+  index?: number;
+  showCity?: boolean;
+  showSpecialty?: boolean;
+  showProcedures?: boolean;
+}
+
+export interface MedicalDetailProps {
+  specialist: MedicalSpecialist;
+  relatedSpecialists?: MedicalSpecialist[];
+  showContactForm?: boolean;
+}
+
+export interface MedicalSearchParams {
+  specialty?: string;
+  city?: string;
+  procedure?: string;
+  language?: string;
+  search?: string;
+  page?: string;
+}
+
+export interface MedicalFilterData {
+  specialties: string[];
+  cities: string[];
+  procedures: string[];
+  languages: string[];
+  count: number;
+}
+
+export interface MedicalContactFormData {
+  name: string;
+  email: string;
+  phone: string;
+  country: string;
+  procedure: string;
+  preferredDate: string;
+  medicalHistory: string;
+  message?: string;
+  specialistId?: string;
+}
+
+export interface SpecialtyPageProps {
+  specialty: string;
+  specialists: MedicalSpecialist[];
+  totalCount: number;
+  description?: string;
+  popularProcedures?: string[];
+  averageStay?: string;
 }

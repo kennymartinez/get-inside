@@ -1,0 +1,125 @@
+---
+import type { ShowMedicalSpecialistsProps as Props } from "~/types";
+import { getCollection, getEntries } from "astro:content";
+import CardMedicalSpecialist from "~/components/medical/CardMedicalSpecialist.astro";
+import type { CollectionEntry } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+type MedicalSpecialist = CollectionEntry<"medicalTourism">;
+
+const {
+  recent = false,
+  featured = false,
+  slugs = [],
+  ui = "grid",
+  specialty,
+  city,
+  procedure,
+  limit,
+} = Astro.props;
+
+let specialists: MedicalSpecialist[] = [];
+
+if (recent) {
+  specialists = await getCollection(
+    "medicalTourism",
+    ({ data }) => !data.misc?.hidden
+  );
+  specialists.sort(
+    (a, b) =>
+      new Date(b.data.publishDate).getTime() -
+      new Date(a.data.publishDate).getTime()
+  );
+  specialists = specialists.slice(0, limit || 6);
+} else if (featured) {
+  const allFeaturedSpecialists = await getCollection(
+    "medicalTourism",
+    ({ data }) => data.misc?.featured && !data.misc?.hidden
+  );
+  specialists = allFeaturedSpecialists
+    .sort(() => 0.5 - Math.random())
+    .slice(0, limit || 6);
+} else if (slugs.length > 0) {
+  try {
+    const references = slugs.map((slug) => ({
+      collection: "medicalTourism" as const,
+      id: slug,
+    }));
+
+    const entries = await getEntries(references);
+    specialists = entries.filter(
+      (specialist): specialist is MedicalSpecialist =>
+        specialist !== undefined && !specialist.data.misc?.hidden
+    );
+  } catch (error) {
+    console.error("Error fetching specialists by slugs:", error);
+    specialists = [];
+  }
+} else {
+  specialists = await getCollection(
+    "medicalTourism",
+    ({ data }) => !data.misc?.hidden
+  );
+}
+
+// Apply filters
+if (specialty) {
+  specialists = specialists.filter(
+    (specialist) => specialist.data.specialty === specialty
+  );
+}
+
+if (city) {
+  specialists = specialists.filter(
+    (specialist) => specialist.data.location.city === city
+  );
+}
+
+if (procedure) {
+  specialists = specialists.filter((specialist) =>
+    specialist.data.procedures.includes(procedure as any)
+  );
+}
+
+// Apply limit if specified
+if (limit && !recent && !featured) {
+  specialists = specialists.slice(0, limit);
+}
+
+const wrapperClasses = {
+  list: "space-y-6",
+  grid: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
+};
+---
+
+{
+  specialists.length > 0 ? (
+    <div class={wrapperClasses[ui]}>
+      {specialists.map((specialist, index) => (
+        <CardMedicalSpecialist
+          specialist={specialist}
+          showCity={!city}
+          showSpecialty={!specialty}
+        />
+      ))}
+    </div>
+  ) : (
+    <div class="text-center py-12">
+      <div class="max-w-md mx-auto">
+        <div class="mb-4">
+          <Icon
+            name="tabler:user-search"
+            class="mx-auto h-12 w-12 text-gray-400"
+          />
+        </div>
+        <h3 class="text-lg font-medium text-gray-900 mb-2">
+          No specialists found
+        </h3>
+        <p class="text-gray-600">
+          Try adjusting your search criteria or browse all available
+          specialists.
+        </p>
+      </div>
+    </div>
+  )
+}

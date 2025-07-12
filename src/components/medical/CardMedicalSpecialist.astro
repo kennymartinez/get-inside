@@ -1,0 +1,146 @@
+---
+import type { MedicalSpecialist } from "~/types";
+import { Image } from "astro:assets";
+import Icon from "~/components/Icon.astro";
+
+const {
+  specialist,
+  showCity = true,
+  showSpecialty = true,
+} = Astro.props as {
+  specialist: MedicalSpecialist;
+  showCity?: boolean;
+  showSpecialty?: boolean;
+};
+
+const { data } = specialist;
+const mainProcedures = data.procedures.slice(0, 3); // Show max 3 procedures
+const remainingCount = data.procedures.length - 3;
+---
+
+<div
+  class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+>
+  <a href={`/medical/${specialist.id}`} class="block">
+    <!-- Doctor Image -->
+    <div class="relative h-48 bg-gray-100">
+      {
+        data.image ? (
+          <Image
+            src={data.image}
+            alt={data.imageAlt || `Dr. ${data.title}`}
+            class="w-full h-full object-cover"
+            loading="lazy"
+          />
+        ) : (
+          <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
+            <Icon name="tabler:user-circle" class="w-16 h-16 text-blue-400" />
+          </div>
+        )
+      }
+
+      <!-- Featured Badge -->
+      {
+        data.misc?.featured && (
+          <div class="absolute top-3 right-3">
+            <span class="bg-blue-600 text-white px-2 py-1 rounded-full text-xs font-medium">
+              Featured
+            </span>
+          </div>
+        )
+      }
+
+      <!-- Verified Badge -->
+      {
+        data.misc?.verified && (
+          <div class="absolute top-3 left-3">
+            <div class="bg-green-600 text-white p-1 rounded-full">
+              <Icon name="tabler:shield-check" class="w-4 h-4" />
+            </div>
+          </div>
+        )
+      }
+    </div>
+
+    <!-- Content -->
+    <div class="p-6">
+      <!-- Doctor Name & Specialty -->
+      <div class="mb-4">
+        <h3 class="text-xl font-bold text-gray-900 mb-1">
+          Dr. {data.title}
+        </h3>
+        {
+          showSpecialty && (
+            <p class="text-blue-600 font-medium">{data.specialty}</p>
+          )
+        }
+        <p class="text-sm text-gray-600">
+          {data.professional.yearsExperience} years of experience
+        </p>
+      </div>
+
+      <!-- Location -->
+      {
+        showCity && (
+          <div class="flex items-center text-gray-600 mb-3">
+            <Icon name="tabler:map-pin" class="w-4 h-4 mr-2" />
+            <span class="text-sm">
+              {data.location.clinic}, {data.location.city}
+            </span>
+          </div>
+        )
+      }
+
+      <!-- Procedures -->
+      <div class="mb-4">
+        <h4 class="text-sm font-semibold text-gray-700 mb-2">
+          Specializes in:
+        </h4>
+        <div class="flex flex-wrap gap-1">
+          {
+            mainProcedures.map((procedure) => (
+              <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                {procedure}
+              </span>
+            ))
+          }
+          {
+            remainingCount > 0 && (
+              <span class="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">
+                +{remainingCount} more
+              </span>
+            )
+          }
+        </div>
+      </div>
+
+      <!-- Languages -->
+      <div class="flex items-center text-gray-600 mb-4">
+        <Icon name="tabler:language" class="w-4 h-4 mr-2" />
+        <span class="text-sm">
+          {data.professional.languagesSpoken.join(", ")}
+        </span>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="flex justify-between items-center">
+        <div class="text-sm text-gray-600">
+          {
+            data.procedureInfo.consultationRequired && (
+              <span class="flex items-center">
+                <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
+                Consultation required
+              </span>
+            )
+          }
+        </div>
+
+        <div
+          class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors"
+        >
+          Contact for Info →
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

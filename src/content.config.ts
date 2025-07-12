@@ -115,6 +115,65 @@ export const months = [
   "December",
 ] as const;
 
+// Medical specialties based on Colombia's popular medical tourism procedures
+export const medicalSpecialties = [
+  "Cosmetic Surgery",
+  "Dentistry",
+  "Bariatric Surgery",
+  "Orthopedics",
+  "Ophthalmology",
+  "Cardiology",
+  "Dermatology",
+  "Fertility Treatment",
+] as const;
+
+// Popular procedures in Colombian medical tourism
+export const medicalProcedures = [
+  // Cosmetic Surgery
+  "Breast Augmentation",
+  "Liposuction",
+  "Tummy Tuck",
+  "Brazilian Butt Lift",
+  "Rhinoplasty",
+  "Facelift",
+  "Mommy Makeover",
+
+  // Dentistry
+  "Dental Implants",
+  "Veneers",
+  "Teeth Whitening",
+  "Full Mouth Reconstruction",
+  "Orthodontics",
+
+  // Bariatric
+  "Gastric Sleeve",
+  "Gastric Bypass",
+  "Gastric Band",
+
+  // Other specialties
+  "LASIK Eye Surgery",
+  "Knee Replacement",
+  "Hip Replacement",
+  "Hair Transplant",
+  "Stem Cell Therapy",
+] as const;
+
+// Colombian medical tourism cities
+export const medicalCities = [
+  "Bogotá",
+  "Medellín",
+  "Cali",
+  "Cartagena",
+  "Barranquilla",
+] as const;
+
+export const languagesSpoken = [
+  "Spanish",
+  "English",
+  "Portuguese",
+  "French",
+] as const;
+
 // Blog categories updated for tourism
 export const blogCategories = {
   destinations: "blue",
@@ -322,5 +381,68 @@ const blog = defineCollection({
 //     }),
 // });
 
+// Medical Tourism Collection
+const medicalTourism = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/medical" }),
+  schema: ({ image }) =>
+    z.object({
+      // Basic Information
+      publishDate: z.date(),
+      title: z.string(), // Doctor's name
+      specialty: z.enum(medicalSpecialties),
+      procedures: z.array(z.enum(medicalProcedures)).min(1),
+
+      // Media
+      image: image().optional(),
+      imageAlt: z.string().optional(),
+      gallery: z
+        .array(
+          z.object({
+            image: image(),
+            alt: z.string(),
+          })
+        )
+        .optional(),
+
+      // Location & Contact
+      location: z.object({
+        city: z.enum(medicalCities),
+        clinic: z.string(), // Clinic/Hospital name
+        address: z.string().optional(),
+      }),
+
+      // Professional Details
+      professional: z.object({
+        yearsExperience: z.number().int().min(1),
+        education: z.string(), // University/Medical School
+        certifications: z.array(z.string()).optional(),
+        languagesSpoken: z.array(z.enum(languagesSpoken)).default(["Spanish"]),
+        internationalPatients: z.boolean().default(true),
+      }),
+
+      // Procedure Details
+      procedureInfo: z.object({
+        consultationRequired: z.boolean().default(true),
+        followUpIncluded: z.boolean().default(true),
+        estimatedStayDays: z.string().optional(), // e.g., "3-5 days"
+        recoveryInfo: z.string().optional(), // Brief recovery description
+      }),
+
+      // Content
+      excerpt: z.string().optional(),
+
+      // Meta
+      misc: z
+        .object({
+          featured: z.boolean().optional().default(false),
+          verified: z.boolean().default(true), // Since it's curated
+          hidden: z.boolean().optional().default(false),
+          seoTitle: z.string().optional(),
+          seoDescription: z.string().optional(),
+        })
+        .optional(),
+    }),
+});
+
 // Export collections with new tourism focus
-export const collections = { tours, blog };
+export const collections = { tours, blog, medicalTourism };

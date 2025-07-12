@@ -1,0 +1,175 @@
+---
+export const prerender = true;
+import type { GetStaticPaths } from "astro";
+import { getCollection, getEntry } from "astro:content";
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import MedicalContactForm from "~/components/medical/MedicalContactForm.astro";
+import { Image } from "astro:assets";
+import Icon from "~/components/Icon.astro";
+import type { MedicalSpecialist } from "~/types";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const specialists = await getCollection("medicalTourism");
+  return specialists.map((specialist) => ({
+    params: { specialist: specialist.id },
+    props: { specialist },
+  }));
+};
+
+const { specialist } = Astro.props as { specialist: MedicalSpecialist };
+const { data } = specialist;
+---
+
+<Layout
+  pageTitle={`Dr. ${data.title} - ${data.specialty}`}
+  title={`Dr. ${data.title}`}
+>
+  <!-- Hero Section -->
+  <Section>
+    <Container>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+        <!-- Doctor Info -->
+        <div>
+          <div class="flex items-center mb-4">
+            <h1 class="text-4xl font-bold text-gray-900">
+              Dr. {data.title}
+            </h1>
+            {
+              data.misc?.verified && (
+                <div class="ml-3 bg-green-100 p-2 rounded-full">
+                  <Icon
+                    name="tabler:shield-check"
+                    class="w-5 h-5 text-green-600"
+                  />
+                </div>
+              )
+            }
+          </div>
+
+          <div class="space-y-4 text-lg">
+            <p class="text-blue-600 font-semibold">
+              {data.specialty} Specialist
+            </p>
+
+            <div class="flex items-center text-gray-600">
+              <Icon name="tabler:map-pin" class="w-5 h-5 mr-2" />
+              <span>{data.location.clinic}, {data.location.city}</span>
+            </div>
+
+            <div class="flex items-center text-gray-600">
+              <Icon name="tabler:calendar" class="w-5 h-5 mr-2" />
+              <span
+                >{data.professional.yearsExperience} years of experience</span
+              >
+            </div>
+
+            <div class="flex items-center text-gray-600">
+              <Icon name="tabler:language" class="w-5 h-5 mr-2" />
+              <span>{data.professional.languagesSpoken.join(", ")}</span>
+            </div>
+          </div>
+
+          <!-- Procedures -->
+          <div class="mt-6">
+            <h3 class="text-xl font-bold mb-3">Specialized Procedures</h3>
+            <div class="flex flex-wrap gap-2">
+              {
+                data.procedures.map((procedure) => (
+                  <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                    {procedure}
+                  </span>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Quick Facts -->
+          {
+            data.procedureInfo.estimatedStayDays && (
+              <div class="mt-6 bg-gray-50 p-4 rounded-lg">
+                <h4 class="font-semibold mb-2">Quick Facts</h4>
+                <ul class="space-y-1 text-sm text-gray-600">
+                  <li>
+                    • Estimated stay: {data.procedureInfo.estimatedStayDays}
+                  </li>
+                  {data.procedureInfo.consultationRequired && (
+                    <li>• Initial consultation required</li>
+                  )}
+                  {data.procedureInfo.followUpIncluded && (
+                    <li>• Follow-up care included</li>
+                  )}
+                </ul>
+              </div>
+            )
+          }
+        </div>
+
+        <!-- Doctor Image -->
+        <div>
+          {
+            data.image && (
+              <Image
+                src={data.image}
+                alt={data.imageAlt || `Dr. ${data.title}`}
+                class="w-full rounded-lg shadow-lg"
+                loading="eager"
+              />
+            )
+          }
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Professional Background -->
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <div class="max-w-4xl mx-auto">
+        <h2 class="text-3xl font-bold mb-8">Professional Background</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div>
+            <h3 class="text-xl font-bold mb-4">Education</h3>
+            <p class="text-gray-700">{data.professional.education}</p>
+          </div>
+
+          {
+            data.professional.certifications &&
+              data.professional.certifications.length > 0 && (
+                <div>
+                  <h3 class="text-xl font-bold mb-4">Certifications</h3>
+                  <ul class="space-y-2">
+                    {data.professional.certifications.map((cert) => (
+                      <li class="flex items-start">
+                        <Icon
+                          name="tabler:award"
+                          class="w-5 h-5 text-blue-600 mr-2 mt-0.5"
+                        />
+                        <span class="text-gray-700">{cert}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )
+          }
+        </div>
+
+        <!-- Content -->
+        <div class="mt-12 prose prose-lg max-w-none">
+          {specialist.body && <Fragment set:html={specialist.body} />}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- Contact Form -->
+  <Section>
+    <Container>
+      <div class="max-w-2xl mx-auto">
+        <MedicalContactForm specialist={specialist} />
+      </div>
+    </Container>
+  </Section>
+</Layout>

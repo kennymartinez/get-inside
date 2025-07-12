@@ -1,0 +1,74 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getCollection } from "astro:content";
+import Layout from "~/layouts/Layout.astro";
+import Section from "~/components/Section.astro";
+import Container from "~/components/Container.astro";
+import Heading from "~/components/Heading.astro";
+import ShowMedicalSpecialists from "~/components/medical/ShowMedicalSpecialists.astro";
+import { medicalSpecialties } from "~/content.config";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  return medicalSpecialties.map((specialty) => ({
+    params: { specialty: specialty.toLowerCase().replace(/\s+/g, "-") },
+    props: { specialty },
+  }));
+};
+
+const { specialty } = Astro.props;
+const specialists = await getCollection(
+  "medicalTourism",
+  ({ data }) => data.specialty === specialty && !data.misc?.hidden
+);
+const specialtyString = "" + specialty;
+
+const specialtyDescriptions = {
+  "Cosmetic Surgery":
+    "Transform your appearance with Colombia's leading cosmetic surgeons, offering world-class procedures at affordable prices.",
+  Dentistry:
+    "Experience advanced dental care with cutting-edge technology and internationally trained dentists.",
+  "Bariatric Surgery":
+    "Life-changing weight loss procedures performed by experienced bariatric surgeons.",
+  Orthopedics:
+    "Advanced orthopedic treatments for joint replacement, sports injuries, and mobility restoration.",
+  Ophthalmology:
+    "Comprehensive eye care including LASIK, cataract surgery, and advanced vision correction.",
+  Cardiology:
+    "Expert cardiac care with state-of-the-art facilities and internationally recognized cardiologists.",
+  Dermatology: "Advanced skin treatments and aesthetic dermatology procedures.",
+  "Fertility Treatment":
+    "Comprehensive fertility services with high success rates and personalized care.",
+};
+
+const description =
+  specialtyDescriptions[
+    specialtyString as keyof typeof specialtyDescriptions
+  ] || `Expert ${specialtyString.toLowerCase()} specialists in Colombia.`;
+---
+
+<Layout
+  pageTitle={`${specialty} Specialists in Colombia`}
+  title={specialtyString}
+>
+  <Section class:list={"bg-gray-50"}>
+    <Container>
+      <Heading>
+        <h1 slot="heading-title">{specialty} Specialists</h1>
+        <p slot="heading-content">{description}</p>
+      </Heading>
+    </Container>
+  </Section>
+
+  <Section>
+    <Container>
+      <div class="mb-8">
+        <p class="text-gray-600">
+          Found {specialists.length} specialist{
+            specialists.length !== 1 ? "s" : ""
+          } in {specialty}
+        </p>
+      </div>
+      <ShowMedicalSpecialists specialty={specialtyString} />
+    </Container>
+  </Section>
+</Layout>
