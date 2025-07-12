@@ -9,16 +9,35 @@ interface Props {
 const { data } = Astro.props;
 ---
 
-<aside class="hidden lg:block w-80 shrink-0">
-  <div class="bg-white shadow-sm border border-gray-200 rounded-lg">
-    <div class="px-6 py-4 border-b border-gray-200">
+<div
+  id="sidebar-filter"
+  class="fixed lg:relative max-lg:overflow-y-auto shrink-0 inset-y-0 z-50 lg:flex w-full lg:w-80 lg:flex-col max-lg:bg-white transition duration-300 max-lg:opacity-0 max-lg:pointer-events-none"
+>
+  <div
+    class="flex lg:sticky lg:top-8 flex-col gap-y-5 bg-white lg:shadow-md px-6 py-4 relative"
+  >
+    <button
+      id="button-modal-filter-close"
+      class="lg:hidden"
+      type="button"
+      aria-label="Close filter modal"
+    >
+      <div class="flex justify-end">
+        <Icon name="x" class="size-8 bg-gray-800 rounded-full p-1 text-white" />
+      </div>
+    </button>
+
+    <div class="text-center lg:text-left mb-4">
       <h2 class="text-lg font-semibold text-gray-900">🔍 Find Specialists</h2>
+      <p class="text-sm text-gray-600">
+        Filter specialists by your preferences
+      </p>
     </div>
 
     <form
       method="get"
       action="/medical/specialists/1"
-      class="p-6 space-y-6"
+      class="grid grid-cols-1 gap-y-6"
       id="medical-filter-form"
     >
       <!-- SPECIALTY FILTER -->
@@ -255,7 +274,7 @@ const { data } = Astro.props;
       </div>
     </div>
   </div>
-</aside>
+</div>
 
 <script>
   document.addEventListener("astro:page-load", function () {

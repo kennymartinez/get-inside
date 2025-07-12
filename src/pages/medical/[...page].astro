@@ -11,7 +11,7 @@ import SidebarMedicalFilters from "~/components/sidebars/SidebarMedicalFilters.a
 import Pagination from "~/components/Pagination.astro";
 import SearchSort from "~/components/SearchSort.astro";
 import PresetBar from "~/components/PresetBar.astro";
-import FilterBarMobile from "~/components/FilterBarMobile.astro";
+import FilterBarMedical from "~/components/FilterBarMedical.astro";
 import {
   getMedicalSpecialties,
   getMedicalCities,
@@ -103,7 +103,7 @@ const paginatedSpecialists = allSpecialists.slice(
   <Section class:list={"bg-gray-50 max-lg:max-w-svw max-lg:overflow-hidden"}>
     <Container class:list={"pt-0 max-lg:px-0 max-lg:max-w-full"}>
       <div class="flex flex-col lg:flex-row">
-        <FilterBarMobile params={searchParamsArray} />
+        <FilterBarMedical params={searchParamsArray} />
 
         <SidebarMedicalFilters data={sideBarData} />
 
@@ -208,3 +208,31 @@ const paginatedSpecialists = allSpecialists.slice(
     </Container>
   </Section>
 </Layout>
+
+<script>
+  document.addEventListener("astro:page-load", function () {
+    const buttonModalFilterOpen = document.getElementById(
+      "button-modal-filter-open"
+    );
+    const buttonModalFilterClose = document.getElementById(
+      "button-modal-filter-close"
+    );
+    const sidebarFiltersMobile = document.getElementById("sidebar-filter");
+
+    if (sidebarFiltersMobile) {
+      buttonModalFilterOpen?.addEventListener("click", () => {
+        sidebarFiltersMobile.classList.remove(
+          "max-lg:opacity-0",
+          "max-lg:pointer-events-none"
+        );
+      });
+
+      buttonModalFilterClose?.addEventListener("click", () => {
+        sidebarFiltersMobile.classList.add(
+          "max-lg:opacity-0",
+          "max-lg:pointer-events-none"
+        );
+      });
+    }
+  });
+</script>

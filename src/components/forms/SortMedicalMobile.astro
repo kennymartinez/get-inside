@@ -1,0 +1,66 @@
+---
+import Icon from "~/components/Icon.astro";
+---
+
+<form id="form-sort-mobile" class="max-lg:shrink-0">
+  <div class="text-gray-800">
+    <label class="sr-only" for="sort-mobile">Sort Medical Specialists</label>
+    <div class="grid grid-cols-1">
+      <select
+        name="sort"
+        id="sort-mobile"
+        class="appearance-none col-start-1 w-8 focus:outline-none row-start-1 outline-none bg-transparent"
+        aria-label="Sort medical specialists by"
+      >
+        <option value="all">Sort by</option>
+        <option value="experience-desc">Most Experienced</option>
+        <option value="experience-asc">Least Experienced</option>
+        <option value="specialty-asc">Specialty A-Z</option>
+        <option value="specialty-desc">Specialty Z-A</option>
+        <option value="city-asc">City A-Z</option>
+        <option value="city-desc">City Z-A</option>
+        <option value="featured-desc">Featured First</option>
+        <option value="verified-desc">Verified First</option>
+        <option value="newest-desc">Newest Profiles</option>
+      </select>
+      <Icon
+        name="arrows-sort"
+        class="pointer-events-none text-white col-start-1 row-start-1 size-5 self-center justify-self-end"
+      />
+    </div>
+  </div>
+</form>
+
+<script>
+  document.addEventListener("astro:page-load", function () {
+    const sortSelectMobile = document.getElementById("sort-mobile") as HTMLSelectElement;
+    
+    if (sortSelectMobile) {
+      // Set current sort value from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentSort = urlParams.get("sort");
+      if (currentSort) {
+        sortSelectMobile.value = currentSort;
+      }
+
+      sortSelectMobile.addEventListener("change", (event) => {
+        const url = new URL(window.location.href);
+        const sort = sortSelectMobile.value;
+
+        if (url.searchParams.has("page")) {
+          url.searchParams.delete("page");
+        }
+
+        if (url.searchParams.has("sort")) {
+          url.searchParams.delete("sort");
+        }
+
+        if (sort !== "all") {
+          url.searchParams.set("sort", sort);
+        }
+
+        window.location.href = url.toString();
+      });
+    }
+  });
+</script>
