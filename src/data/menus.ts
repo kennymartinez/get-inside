@@ -15,28 +15,6 @@ export const menuMain: MainMenuItem[] = [
     id: "medical",
     label: "Medical Tourism",
     url: "/medical",
-    submenu: [
-      {
-        id: "cosmetic-surgery",
-        label: "Cosmetic Surgery",
-        url: "/medical/specialty/cosmetic-surgery",
-      },
-      {
-        id: "dentistry",
-        label: "Dentistry",
-        url: "/medical/specialty/dentistry",
-      },
-      {
-        id: "bariatric-surgery",
-        label: "Bariatric Surgery",
-        url: "/medical/specialty/bariatric-surgery",
-      },
-      {
-        id: "orthopedics",
-        label: "Orthopedics",
-        url: "/medical/specialty/orthopedics",
-      },
-    ],
   },
   {
     id: "services",
