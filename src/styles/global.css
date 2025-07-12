@@ -252,25 +252,6 @@ label {
 	@apply absolute w-8 h-14 z-10 inline-flex items-center justify-center cursor-pointer border-0 p-0 m-0 appearance-none bg-gray-800/50 touch-manipulation print:hidden;
 }
 
-/* Car Card */
-.card-car[data-car-on-sale="true"] .price.on-sale {
-	@apply line-through text-base;
-}
-
-.card-car[data-car-on-sale="true"] mark.price-on-sale {
-	@apply font-bold text-lg bg-yellow-200 px-2;
-}
-
-.card-car[data-car-on-sale="true"]:not([data-car-available="sold"]) .ribbon::after {
-	content: "On Sale";
-	@apply absolute z-20 bg-yellow-200 text-sm font-bold px-4 py-1;
-}
-
-.card-car[data-car-available="sold"] .ribbon::after {
-	content: "Sold";
-	@apply absolute z-20 bg-red-200 text-sm font-bold px-4 py-1 text-red-900;
-}
-
 .embla-testimonials .embla__dot {
 	@apply appearance-none touch-manipulation inline-flex items-center justify-center cursor-pointer border-0 p-0 m-0 bg-transparent size-6 rounded-full;
 	-webkit-tap-highlight-color: transparent;

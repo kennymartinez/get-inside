@@ -8,9 +8,6 @@ export type Tour = CollectionEntry<"tours">; // Changed from Car to Tour
 export type Testimonial = CollectionEntry<"testimonials">;
 export type Team = CollectionEntry<"team">;
 
-// Legacy type alias for compatibility during migration
-export type Car = Tour; // Temporary alias to prevent breaking changes
-
 // Base component interfaces (unchanged)
 export interface ClassNameProps {
   class?: string;
@@ -92,23 +89,6 @@ export interface SectionProps extends ClassNameProps {
   id?: string;
 }
 
-// Tourism-specific component interfaces
-
-// Updated from ShowCarsProps to ShowToursProps
-export interface ShowToursProps {
-  recent?: boolean;
-  featured?: boolean;
-  popular?: boolean; // New for tourism
-  sustainable?: boolean; // New for eco-friendly tours
-  slugs?: string[];
-  ui?: "list" | "grid";
-  destination?: string; // Filter by specific destination
-  tourType?: string; // Filter by tour type
-}
-
-// Legacy alias for migration compatibility
-export interface ShowCarsProps extends ShowToursProps {}
-
 // Updated tour card interface (replacing car card)
 export interface CardTourProps {
   tour: Tour;
@@ -116,11 +96,6 @@ export interface CardTourProps {
   showDestination?: boolean;
   showDuration?: boolean;
   showDifficulty?: boolean;
-}
-
-// Legacy alias for migration compatibility
-export interface CardCarProps extends CardTourProps {
-  car: Tour; // Alias for tour
 }
 
 export interface Stat {
@@ -224,12 +199,6 @@ export interface SidebarFiltersData {
   durations: string[];
   count: number;
   priceSteps: number[];
-}
-
-// Legacy alias for compatibility
-export interface SidebarCarsData extends SidebarFiltersData {
-  makes: string[]; // Will map to destinations
-  colors: string[]; // Will be removed
 }
 
 export interface TourSearchParams {

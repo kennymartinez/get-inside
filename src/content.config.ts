@@ -289,38 +289,38 @@ const blog = defineCollection({
 });
 
 // Team collection (can remain mostly the same)
-const team = defineCollection({
-  loader: file("src/data/team.json"),
-  schema: ({ image }) =>
-    z.object({
-      name: z.string(),
-      role: z.string(),
-      email: z.string().email(),
-      phone: z.string(),
-      image: image(),
-      specialties: z.array(z.string()).optional(), // Tourism specialties
-      languages: z.array(z.enum(languageOptions)).optional(),
-      experience: z.string().optional(), // Years of experience description
-    }),
-});
+// const team = defineCollection({
+//   loader: file("src/data/team.json"),
+//   schema: ({ image }) =>
+//     z.object({
+//       name: z.string(),
+//       role: z.string(),
+//       email: z.string().email(),
+//       phone: z.string(),
+//       image: image(),
+//       specialties: z.array(z.string()).optional(), // Tourism specialties
+//       languages: z.array(z.enum(languageOptions)).optional(),
+//       experience: z.string().optional(), // Years of experience description
+//     }),
+// });
 
-// Testimonials collection updated for tourism
-const testimonials = defineCollection({
-  loader: file("./src/data/testimonials.json"),
-  schema: ({ image }) =>
-    z.object({
-      title: z.string(),
-      description: z.string(),
-      img: image(),
-      author: z.string(),
-      location: z.string(),
-      tourTaken: z.string().optional(), // Which tour they took
-      travelDate: z.string().optional(), // When they traveled
-      hidden: z.boolean().default(false),
-      starRating: z.number().min(1).max(5),
-      verified: z.boolean().default(false), // Verified review
-    }),
-});
+// // Testimonials collection updated for tourism
+// const testimonials = defineCollection({
+//   loader: file("./src/data/testimonials.json"),
+//   schema: ({ image }) =>
+//     z.object({
+//       title: z.string(),
+//       description: z.string(),
+//       img: image(),
+//       author: z.string(),
+//       location: z.string(),
+//       tourTaken: z.string().optional(), // Which tour they took
+//       travelDate: z.string().optional(), // When they traveled
+//       hidden: z.boolean().default(false),
+//       starRating: z.number().min(1).max(5),
+//       verified: z.boolean().default(false), // Verified review
+//     }),
+// });
 
 // Export collections with new tourism focus
-export const collections = { tours, blog, team, testimonials };
+export const collections = { tours, blog };

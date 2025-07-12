@@ -114,29 +114,6 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 
-  {/* Featured Destinations - moved up for mobile */}
-  <Section>
-    <Container>
-      <Heading>
-        <h2 slot="heading-title" class="mb-0">
-          Signature Colombian Experiences
-        </h2>
-        <p slot="heading-content" class="text-sm lg:text-base">
-          Explore our most popular Colombian adventures, carefully crafted to
-          showcase the country's diverse landscapes and rich culture.
-        </p>
-      </Heading>
-
-      <ShowDestinations
-        slugs={[
-          "ciudad-perdida-trek",
-          "cartagena-cultural-experience",
-          "coffee-region-experience",
-        ]}
-      />
-    </Container>
-  </Section>
-
   {/* Grid */}
   <Section class:list={"bg-gray-50"}>
     <Container>
@@ -280,30 +257,6 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 
-  {/* Recent Destinations */}
-  <Section class:list={"bg-gray-50"}>
-    <Container>
-      <Heading>
-        <h2 slot="heading-title" class="mb-0">
-          Most Loved Colombian Adventures
-        </h2>
-        <p slot="heading-content" class="text-sm lg:text-base">
-          Discover why these Colombian experiences consistently earn 5-star
-          reviews from our travelers.
-        </p>
-      </Heading>
-
-      <ShowDestinations
-        ui="grid"
-        slugs={[
-          "ciudad-perdida-trek",
-          "cartagena-cultural-experience",
-          "coffee-region-experience",
-        ]}
-      />
-    </Container>
-  </Section>
-
   {/* News */}
   <Section>
     <Container>
@@ -357,24 +310,6 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
           },
         ]}
       />
-    </Container>
-  </Section>
-
-  {/* Team */}
-  <Section>
-    <Container>
-      <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
-        <h2 slot="heading-title">Meet Your Colombian Travel Experts</h2>
-
-        <p slot="heading-content" class="text-sm lg:text-base">
-          Our passionate team of Colombian travel specialists combines deep
-          local knowledge with international hospitality standards. Each team
-          member is a certified guide, wilderness first aid trained, and
-          committed to sharing Colombia's beauty responsibly.
-        </p>
-      </Heading>
-
-      <Team />
     </Container>
   </Section>
 </Layout>

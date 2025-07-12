@@ -12,18 +12,6 @@ export const menuMain: MainMenuItem[] = [
     url: "/tours",
   },
   {
-    id: "about",
-    label: "About",
-    url: "/about-us",
-    submenu: [
-      {
-        id: "testimonials",
-        label: "Testimonials",
-        url: "/about-us/testimonials",
-      },
-    ],
-  },
-  {
     id: "services",
     label: "Services",
     url: "/services",
