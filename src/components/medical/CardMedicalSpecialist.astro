@@ -14,27 +14,33 @@ const {
 };
 
 const { data } = specialist;
-const mainProcedures = data.procedures.slice(0, 3); // Show max 3 procedures
-const remainingCount = data.procedures.length - 3;
 ---
 
-<div
-  class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+<li
+  data-specialist-id={specialist.id}
+  data-specialist-featured={data.misc?.featured ? "true" : "false"}
+  data-specialist-verified={data.misc?.verified ? "true" : "false"}
+  class="card-tour bg-white shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-r-4 hover:lg:border-yellow-300"
 >
-  <a href={`/medical/${specialist.id}`} class="block">
-    <!-- Doctor Image -->
-    <div class="relative h-48 bg-gray-100">
+  <a
+    href={`/medical/${specialist.id}`}
+    class="relative isolate flex flex-col gap-8 xxl:flex-row"
+  >
+    <div class="relative aspect-[4/3] xxl:w-72 lg:shrink-0 ribbon">
       {
         data.image ? (
           <Image
             src={data.image}
             alt={data.imageAlt || `Dr. ${data.title}`}
-            class="w-full h-full object-cover"
+            class="absolute inset-0 size-full bg-gray-50 object-cover"
             loading="lazy"
           />
         ) : (
-          <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-100 to-blue-200">
-            <Icon name="tabler:user-circle" class="w-16 h-16 text-blue-400" />
+          <div class="absolute inset-0 text-gray-400 size-full bg-gray-100 flex flex-col gap-4 items-center justify-center">
+            <Icon name="tabler:user-circle" class="h-24 text-blue-400" />
+            <span class="text-gray-400 font-bold italic">
+              Profile Coming Soon
+            </span>
           </div>
         )
       }
@@ -62,85 +68,90 @@ const remainingCount = data.procedures.length - 3;
       }
     </div>
 
-    <!-- Content -->
-    <div class="p-6">
-      <!-- Doctor Name & Specialty -->
-      <div class="mb-4">
-        <h3 class="text-xl font-bold text-gray-900 mb-1">
-          Dr. {data.title}
-        </h3>
-        {
-          showSpecialty && (
-            <p class="text-blue-600 font-medium">{data.specialty}</p>
-          )
-        }
-        <p class="text-sm text-gray-600">
-          {data.professional.yearsExperience} years of experience
-        </p>
-      </div>
-
-      <!-- Location -->
-      {
-        showCity && (
-          <div class="flex items-center text-gray-600 mb-3">
-            <Icon name="tabler:map-pin" class="w-4 h-4 mr-2" />
-            <span class="text-sm">
-              {data.location.clinic}, {data.location.city}
-            </span>
+    <div
+      class="flex flex-col items-start lg:py-4 grow max-xxl:px-4 max-lg:pb-8"
+    >
+      <div
+        class="relative xxl:flex xxl:items-start xxl:gap-4 xxl:justify-between w-full"
+      >
+        <div class="mb-4 lg:mb-6">
+          <!-- Badges -->
+          <div class="flex items-center gap-2 mb-2">
+            {
+              showCity && (
+                <span class="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                  {data.location.city}
+                </span>
+              )
+            }
+            {
+              showSpecialty && (
+                <span class="inline-flex items-center rounded-md bg-gray-50 px-2 py-1 text-xs font-medium text-gray-600 ring-1 ring-inset ring-gray-500/10">
+                  {data.specialty}
+                </span>
+              )
+            }
+            {
+              data.misc?.verified && (
+                <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/10">
+                  Verified
+                </span>
+              )
+            }
           </div>
-        )
-      }
 
-      <!-- Procedures -->
-      <div class="mb-4">
-        <h4 class="text-sm font-semibold text-gray-700 mb-2">
-          Specializes in:
-        </h4>
-        <div class="flex flex-wrap gap-1">
+          <!-- Doctor Name -->
+          <h2 class="h5 line-clamp-2">
+            Dr. {data.title}
+          </h2>
+
+          <!-- Experience & Location -->
+          <p class="text-base mt-2 line-clamp-3">
+            {data.professional.yearsExperience} years of experience
+            {showCity && ` • ${data.location.clinic}`}
+          </p>
+
+          <!-- Procedures -->
           {
-            mainProcedures.map((procedure) => (
-              <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
-                {procedure}
-              </span>
-            ))
-          }
-          {
-            remainingCount > 0 && (
-              <span class="bg-gray-200 text-gray-600 px-2 py-1 rounded text-xs">
-                +{remainingCount} more
-              </span>
+            data.procedures && data.procedures.length > 0 && (
+              <p class="text-base text-gray-400 mt-3 line-clamp-1">
+                {data.procedures.slice(0, 3).join(" • ")}
+                {data.procedures.length > 3 && " • +more"}
+              </p>
             )
           }
         </div>
-      </div>
 
-      <!-- Languages -->
-      <div class="flex items-center text-gray-600 mb-4">
-        <Icon name="tabler:language" class="w-4 h-4 mr-2" />
-        <span class="text-sm">
-          {data.professional.languagesSpoken.join(", ")}
-        </span>
-      </div>
-
-      <!-- Contact Info -->
-      <div class="flex justify-between items-center">
-        <div class="text-sm text-gray-600">
+        <!-- Contact Info - positioned like price in tours -->
+        <div class="text-sm text-gray-600 space-y-1 xxl:text-right">
+          <div class="flex items-center xxl:justify-end">
+            <Icon name="tabler:language" class="w-4 h-4 mr-2" />
+            <span>{data.professional.languagesSpoken.join(", ")}</span>
+          </div>
           {
             data.procedureInfo.consultationRequired && (
-              <span class="flex items-center">
-                <Icon name="tabler:calendar" class="w-4 h-4 mr-1" />
-                Consultation required
-              </span>
+              <div class="flex items-center xxl:justify-end">
+                <Icon name="tabler:calendar" class="w-4 h-4 mr-2" />
+                <span>Consultation required</span>
+              </div>
             )
           }
         </div>
+      </div>
 
-        <div
-          class="text-blue-600 font-medium text-sm hover:text-blue-700 transition-colors"
-        >
-          Contact for Info →
+      <!-- Bottom section like tour highlights -->
+      <div class="mt-auto lg:mb-4">
+        <div class="text-sm text-gray-600">
+          <span class="font-medium">Specializes in:</span>
+          <span class="ml-2">
+            {data.procedures.slice(0, 2).join(", ")}
+            {
+              data.procedures.length > 2 &&
+                ` +${data.procedures.length - 2} more`
+            }
+          </span>
         </div>
       </div>
     </div>
   </a>
-</div>
+</li>

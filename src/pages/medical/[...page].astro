@@ -153,31 +153,43 @@ const paginatedSpecialists = allSpecialists.slice(
               )
             }
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <ul class="grid grid-cols-1 lg:gap-16">
               {
                 paginatedSpecialists.length > 0 ? (
                   paginatedSpecialists.map((specialist) => (
                     <CardMedicalSpecialist specialist={specialist} />
                   ))
                 ) : (
-                  <div class="col-span-full text-center text-gray-500 py-16">
-                    <div class="text-6xl mb-4">🏥</div>
-                    <h3 class="text-xl font-medium text-gray-900 mb-2">
-                      No specialists match your criteria
-                    </h3>
-                    <p class="text-gray-600 mb-4">
-                      Try adjusting your filters or browse all specialists.
-                    </p>
-                    <a
-                      href="/medical/1"
-                      class="text-blue-600 hover:text-blue-800 font-medium"
-                    >
-                      View All Specialists →
-                    </a>
-                  </div>
+                  <li class="text-center text-gray-500">
+                    <div class="py-16">
+                      <div class="text-6xl mb-4">🏥</div>
+                      <h3 class="text-xl font-medium text-gray-900 mb-2">
+                        No specialists match your criteria
+                      </h3>
+                      <p class="text-gray-600 mb-4">
+                        Don't worry! We have many qualified medical
+                        professionals waiting to help you.
+                      </p>
+                      <div class="space-y-2 text-sm">
+                        <p>Try:</p>
+                        <ul class="list-disc list-inside space-y-1 text-gray-500">
+                          <li>Selecting "All" for some filters</li>
+                          <li>Choosing a different specialty</li>
+                          <li>Adjusting the location</li>
+                          <li>Browsing all our specialists</li>
+                        </ul>
+                      </div>
+                      <a
+                        href="/medical/1"
+                        class="inline-block mt-4 text-blue-600 hover:text-blue-800 font-medium"
+                      >
+                        View All Specialists →
+                      </a>
+                    </div>
+                  </li>
                 )
               }
-            </div>
+            </ul>
 
             {
               paginatedSpecialists.length > 0 && totalPages > 1 && (

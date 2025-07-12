@@ -4,7 +4,7 @@ import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Heading from "~/components/Heading.astro";
 import ShowMedicalSpecialists from "~/components/medical/ShowMedicalSpecialists.astro";
-import SearchMedical from "~/components/forms/SearchMedical.astro";
+
 import Icon from "~/components/Icon.astro";
 import { getCollection } from "astro:content";
 
@@ -29,15 +29,10 @@ const specialistCount = allSpecialists.length;
           treatments at affordable prices in beautiful Colombian cities.
         </p>
 
-        <!-- Search Widget -->
-        <div class="max-w-2xl mx-auto mb-8">
-          <SearchMedical />
-        </div>
-
         <!-- Quick Action Button -->
         <div class="mb-8">
           <a
-            href="/medical/1"
+            href="/medical/specialists/1"
             class="button button-black inline-flex items-center text-lg px-8 py-4"
           >
             Browse All Specialists
@@ -73,7 +68,7 @@ const specialistCount = allSpecialists.length;
   <!-- Featured Specialists -->
   {
     specialistCount > 0 && (
-      <Section>
+      <Section class:list={"bg-white"}>
         <Container>
           <Heading>
             <h2 slot="heading-title">Featured Medical Specialists</h2>
@@ -87,7 +82,7 @@ const specialistCount = allSpecialists.length;
 
           <div class="text-center mt-8">
             <a
-              href="/medical/1"
+              href="/medical/specialists/1"
               class="button button-black inline-flex items-center"
             >
               View All Specialists
@@ -102,7 +97,7 @@ const specialistCount = allSpecialists.length;
   <!-- If no specialists, show setup message -->
   {
     specialistCount === 0 && (
-      <Section>
+      <Section class:list={"bg-white"}>
         <Container>
           <div class="text-center py-16">
             <div class="text-6xl mb-4">🏥</div>
@@ -177,7 +172,7 @@ const specialistCount = allSpecialists.length;
   </Section>
 
   <!-- Medical Specialties -->
-  <Section>
+  <Section class:list={"bg-white"}>
     <Container>
       <Heading>
         <h2 slot="heading-title">Popular Medical Specialties</h2>
@@ -190,7 +185,7 @@ const specialistCount = allSpecialists.length;
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <a href="/medical/specialty/cosmetic-surgery" class="group">
           <div
-            class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            class="bg-white p-6 rounded-lg shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-b-4 hover:lg:border-yellow-300"
           >
             <div class="text-center">
               <div class="text-4xl mb-3">✨</div>
@@ -206,7 +201,7 @@ const specialistCount = allSpecialists.length;
 
         <a href="/medical/specialty/dentistry" class="group">
           <div
-            class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            class="bg-white p-6 rounded-lg shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-b-4 hover:lg:border-yellow-300"
           >
             <div class="text-center">
               <div class="text-4xl mb-3">🦷</div>
@@ -222,7 +217,7 @@ const specialistCount = allSpecialists.length;
 
         <a href="/medical/specialty/bariatric-surgery" class="group">
           <div
-            class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            class="bg-white p-6 rounded-lg shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-b-4 hover:lg:border-yellow-300"
           >
             <div class="text-center">
               <div class="text-4xl mb-3">⚖️</div>
@@ -238,7 +233,7 @@ const specialistCount = allSpecialists.length;
 
         <a href="/medical/specialty/orthopedics" class="group">
           <div
-            class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow"
+            class="bg-white p-6 rounded-lg shadow overflow-hidden xxl:transition xxl:border-transparent xxl:border-b-4 hover:lg:border-yellow-300"
           >
             <div class="text-center">
               <div class="text-4xl mb-3">🦴</div>

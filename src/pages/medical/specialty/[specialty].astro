@@ -59,14 +59,22 @@ const description =
     </Container>
   </Section>
 
-  <Section class:list={"pt-0"}>
+  <Section class:list={"pt-0 bg-white"}>
     <Container class:list={"pt-4 pb-8"}>
-      <div class="mb-4">
-        <p class="text-gray-600">
-          Found {specialists.length} specialist{
-            specialists.length !== 1 ? "s" : ""
-          } in {specialty}
-        </p>
+      <div class="mb-6 lg:mb-8">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4"
+        >
+          <div>
+            <p class="text-gray-600 mt-1">
+              {
+                specialists.length > 0
+                  ? `${specialists.length} verified ${specialists.length === 1 ? "specialist" : "specialists"} found`
+                  : "Discover world-class medical professionals"
+              }
+            </p>
+          </div>
+        </div>
       </div>
       <ShowMedicalSpecialists specialty={specialtyString} />
     </Container>

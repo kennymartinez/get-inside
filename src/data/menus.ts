@@ -14,7 +14,7 @@ export const menuMain: MainMenuItem[] = [
   {
     id: "medical",
     label: "Medical Tourism",
-    url: "/medical",
+    url: "/medical/specialists/1",
   },
   {
     id: "services",
@@ -49,7 +49,7 @@ export const menuNavigation: MenuNavigation = {
     },
     {
       name: "Medical Tourism",
-      url: "/medical",
+      url: "/medical/specialists/1",
     },
     {
       name: "About Us",
@@ -79,7 +79,7 @@ export const menuService: MenuNavigation = {
     },
     {
       name: "Medical Tourism",
-      url: "/medical",
+      url: "/medical/specialists/1",
     },
   ],
 };

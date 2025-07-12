@@ -28,7 +28,7 @@ const { data } = specialist;
   title={`Dr. ${data.title}`}
 >
   <!-- Hero Section -->
-  <Section>
+  <Section class:list={"bg-white"}>
     <Container>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
         <!-- Doctor Info -->
@@ -172,7 +172,7 @@ const { data } = specialist;
   </Section>
 
   <!-- Contact Form -->
-  <Section>
+  <Section class:list={"bg-white"}>
     <Container>
       <div class="max-w-2xl mx-auto">
         <MedicalContactForm specialist={specialist} />

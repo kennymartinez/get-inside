@@ -85,24 +85,25 @@ if (procedure) {
 if (limit && !recent && !featured) {
   specialists = specialists.slice(0, limit);
 }
-
-const wrapperClasses = {
-  list: "space-y-6",
-  grid: "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6",
-};
 ---
 
 {
   specialists.length > 0 ? (
-    <div class={wrapperClasses[ui]}>
-      {specialists.map((specialist, index) => (
+    <ul
+      class:list={[
+        ui === "grid"
+          ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          : "grid grid-cols-1 lg:gap-16",
+      ]}
+    >
+      {specialists.map((specialist) => (
         <CardMedicalSpecialist
           specialist={specialist}
           showCity={!city}
           showSpecialty={!specialty}
         />
       ))}
-    </div>
+    </ul>
   ) : (
     <div class="text-center py-12">
       <div class="max-w-md mx-auto">
