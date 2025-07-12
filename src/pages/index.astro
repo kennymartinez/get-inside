@@ -4,22 +4,12 @@ import Layout from "~/layouts/Layout.astro";
 import Section from "~/components/Section.astro";
 import Container from "~/components/Container.astro";
 import Button from "~/components/Button.astro";
-import Hero from "~/components/Hero.astro";
-import Faq from "~/components/Faq.astro";
 import Heading from "~/components/Heading.astro";
 import WidgetSearch from "~/components/WidgetSearch.astro";
-import Grid from "~/components/Grid.astro";
-import GridItem from "~/components/GridItem.astro";
 import ShowPosts from "~/components/ShowPosts.astro";
-import Team from "~/components/Team.astro";
-import Stats from "~/components/Stats.astro";
 
-// Images - These would need to be replaced with travel-themed images
-import ImageTravelAgent from "~/assets/images/pexels-shkrabaanthony-7144179.jpg";
+// Images
 import ImageHeadingBackground from "~/assets/images/main-banner.jpg";
-import ShowDestinations from "~/components/ShowDestinations.astro"; // Updated import
-import ImageOne from "~/assets/images/pexels-leif-bergerson-99376750-9764731.webp";
-import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
 ---
 
 <Layout pageTitle="Home">
@@ -69,198 +59,348 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </Container>
   </Section>
 
-  {/* Mobile-only intro section */}
-  <Section class:list={"lg:hidden bg-blue-50"}>
+  {/* NEW: Medical Tourism Feature Section */}
+  <Section class:list={"bg-gradient-to-br from-blue-50 via-white to-green-50"}>
     <Container>
-      <div class="prose">
-        <h2 class="text-center">
-          Your Gateway to Authentic Colombian Adventures
-        </h2>
-        <p>
-          Experience Colombia's breathtaking diversity through our carefully
-          crafted travel packages. From the Caribbean coast to the Amazon
-          rainforest, we offer authentic, safe, and responsible tourism
-          experiences that showcase the best of our beautiful country.
-        </p>
-        <div class="flex justify-center">
-          <Button href="/tours/1" class:list={"mt-2"}>Explore All Tours</Button>
+      <div
+        class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-600 to-teal-600 shadow-2xl"
+      >
+        {/* Background Pattern */}
+        <div class="absolute inset-0 opacity-10">
+          <div
+            class="absolute inset-0 bg-white/5 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px]"
+          >
+          </div>
+        </div>
+
+        <div class="relative px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+          <div
+            class="mx-auto max-w-4xl text-center lg:text-left lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center"
+          >
+            {/* Content */}
+            <div class="space-y-6">
+              {/* Badge */}
+              <div
+                class="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white"
+              >
+                <span class="mr-2">✨</span>
+                NEW FEATURE
+              </div>
+
+              {/* Heading */}
+              <div class="space-y-4">
+                <h2
+                  class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                >
+                  World-Class Medical Care in Colombia
+                </h2>
+                <p class="text-lg sm:text-xl text-blue-100 leading-relaxed">
+                  Combine your Colombian adventure with premium medical
+                  treatments. Save up to 70% on procedures while experiencing
+                  world-renowned healthcare in beautiful Colombian cities.
+                </p>
+              </div>
+
+              {/* Features */}
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🏥</span>
+                  </div>
+                  <span class="text-sm font-medium"
+                    >JCI-Accredited Hospitals</span
+                  >
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">👨‍⚕️</span>
+                  </div>
+                  <span class="text-sm font-medium"
+                    >Board-Certified Specialists</span
+                  >
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">💰</span>
+                  </div>
+                  <span class="text-sm font-medium">Up to 70% Cost Savings</span
+                  >
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🌟</span>
+                  </div>
+                  <span class="text-sm font-medium">Complete Care Packages</span
+                  >
+                </div>
+              </div>
+
+              {/* CTA Button */}
+              <div class="pt-4">
+                <Button
+                  href="/medical/specialists/1"
+                  color="white"
+                  class:list={"inline-flex items-center text-lg px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"}
+                >
+                  <span class="mr-2">🔍</span>
+                  Find Medical Specialists
+                  <svg
+                    class="ml-2 w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                  </svg>
+                </Button>
+              </div>
+            </div>
+
+            {/* Stats/Visual Element */}
+            <div class="mt-12 lg:mt-0">
+              <div
+                class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20"
+              >
+                <h3 class="text-xl font-semibold text-white mb-6 text-center">
+                  Why Choose Colombia for Medical Tourism?
+                </h3>
+
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">50+</div>
+                    <div class="text-sm text-blue-100">
+                      Verified Specialists
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">8</div>
+                    <div class="text-sm text-blue-100">Medical Specialties</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">5</div>
+                    <div class="text-sm text-blue-100">Major Cities</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">24/7</div>
+                    <div class="text-sm text-blue-100">Patient Support</div>
+                  </div>
+                </div>
+
+                {/* Popular Procedures */}
+                <div class="mt-6 pt-6 border-t border-white/20">
+                  <h4 class="text-sm font-medium text-white mb-3">
+                    Popular Procedures:
+                  </h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Cosmetic Surgery
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Dental Care
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Bariatric Surgery
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Orthopedics
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </Container>
   </Section>
 
-  {/* Hero - desktop only */}
-  <Section class:list={"hidden lg:block"}>
+  {/* Tours Feature Section */}
+  <Section
+    class:list={"bg-gradient-to-br from-green-50 via-white to-yellow-50"}
+  >
     <Container>
-      <Hero>
-        <div slot="hero-left" class="prose lg:max-w-2xl">
-          <h2>Your Gateway to Authentic Colombian Adventures</h2>
-          <p>
-            Colombia is a land of extraordinary contrasts - from the snow-capped
-            peaks of the Andes to the pristine beaches of the Caribbean, from
-            vibrant colonial cities to untouched Amazon wilderness. As a
-            locally-owned and operated company, we're passionate about sharing
-            Colombia's hidden gems while ensuring your safety and supporting
-            local communities.
-          </p>
-          <p>
-            <strong>Why choose us?</strong> We're not just tour operators - we're
-            your Colombian friends who know every corner of this incredible country.
-            Our licensed guides, vetted accommodations, and 24/7 support ensure you
-            experience the real Colombia with complete peace of mind.
-          </p>
-
-          <Button href="/tours/1" class:list={"mt-4"}
-            >Explore Colombia Tours</Button
+      <div
+        class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-600 to-yellow-500 shadow-2xl"
+      >
+        {/* Background Pattern */}
+        <div class="absolute inset-0 opacity-10">
+          <div
+            class="absolute inset-0 bg-white/5 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.15)_1px,transparent_0)] bg-[length:20px_20px]"
           >
+          </div>
         </div>
-        <div slot="hero-right">
-          <Image src={ImageTravelAgent} alt="Travel agent" />
-        </div>
-      </Hero>
-    </Container>
-  </Section>
 
-  {/* Grid */}
-  <Section class:list={"bg-gray-50"}>
-    <Container>
-      <Grid>
-        <GridItem
-          image={ImageOne}
-          imageAlt="Travel destinations"
-          span={2}
-          link="/tours/1"
-          As="a"
-          xl
-        >
-          <h2>Colombia's Crown Jewels</h2>
-          <p>
-            From the mystical Lost City (Ciudad Perdida) hidden in the Sierra
-            Nevada mountains to the colorful colonial streets of Cartagena,
-            Colombia offers experiences you won't find anywhere else.
-          </p>
-          <Button
-            As="button"
-            type="button"
-            color="white-outline"
-            class:list={"mt-4 group-hover:bg-white/10"}
-            >Discover Colombia</Button
+        <div class="relative px-6 py-12 sm:px-12 sm:py-16 lg:px-16 lg:py-20">
+          <div
+            class="mx-auto max-w-4xl text-center lg:text-left lg:grid lg:grid-cols-2 lg:gap-12 lg:items-center"
           >
-        </GridItem>
+            {/* Content */}
+            <div class="space-y-6">
+              {/* Badge */}
+              <div
+                class="inline-flex items-center rounded-full bg-white/20 backdrop-blur-sm px-4 py-2 text-sm font-medium text-white"
+              >
+                <span class="mr-2">🌟</span>
+                FEATURED TOURS
+              </div>
 
-        <GridItem
-          image={ImageTwo}
-          imageAlt="Travel experiences"
-          link="/tours/1?tourType=Adventure"
-          As="a"
-        >
-          <h3>Adventure & Nature</h3>
-          <p>
-            Experience Colombia's incredible biodiversity in our carefully
-            planned eco-adventures. Trek through cloud forests, spot exotic
-            wildlife in national parks, or dive into crystal-clear Caribbean
-            waters.
-          </p>
-          <Button
-            As="button"
-            type="button"
-            color="white-outline"
-            class:list={"mt-4 group-hover:bg-white/10"}>Nature Tours</Button
-          >
-        </GridItem>
+              {/* Heading */}
+              <div class="space-y-4">
+                <h2
+                  class="text-3xl sm:text-4xl lg:text-5xl font-bold text-white leading-tight"
+                >
+                  Authentic Colombian Adventures
+                </h2>
+                <p class="text-lg sm:text-xl text-green-100 leading-relaxed">
+                  Discover Colombia's breathtaking diversity through our
+                  carefully crafted travel packages. From Caribbean beaches to
+                  Amazon rainforest, experience the real Colombia with local
+                  experts.
+                </p>
+              </div>
 
-        <GridItem link="/tours/1?tourType=Cultural" As="a">
-          <h3>Cultural Immersion</h3>
-          <p>
-            Connect with Colombia's rich cultural heritage through authentic
-            experiences with local communities. Learn traditional crafts,
-            participate in coffee harvesting, or dance salsa in its birthplace.
-          </p>
-          <Button
-            As="button"
-            type="button"
-            color="secondary"
-            class:list={"mt-4"}>Cultural Tours</Button
-          >
-        </GridItem>
-      </Grid>
-    </Container>
-  </Section>
+              {/* Features */}
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-white">
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🏔️</span>
+                  </div>
+                  <span class="text-sm font-medium">Adventure Tours</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🏛️</span>
+                  </div>
+                  <span class="text-sm font-medium">Cultural Experiences</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🌿</span>
+                  </div>
+                  <span class="text-sm font-medium">Nature & Wildlife</span>
+                </div>
+                <div class="flex items-center space-x-3">
+                  <div
+                    class="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center"
+                  >
+                    <span class="text-sm">🏖️</span>
+                  </div>
+                  <span class="text-sm font-medium">Beach & Relaxation</span>
+                </div>
+              </div>
 
-  {/* Hero */}
-  <Section class:list={"bg-gray-50"}>
-    <Container>
-      <Hero invert>
-        <div slot="hero-left" class="prose lg:max-w-2xl">
-          <h2>Safety & Trust You Can Count On</h2>
-          <p>
-            Your safety is our top priority. We're a fully licensed Colombian
-            tour operator with comprehensive insurance coverage, emergency
-            response protocols, and partnerships with trusted local providers.
-            Our team includes certified wilderness first aid responders, and we
-            maintain 24/7 communication during all tours.
-          </p>
+              {/* CTA Button */}
+              <div class="pt-4">
+                <Button
+                  href="/tours/1"
+                  color="white"
+                  class:list={"inline-flex items-center text-lg px-8 py-4 shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"}
+                >
+                  <span class="mr-2">🗺️</span>
+                  Explore All Tours
+                  <svg
+                    class="ml-2 w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+                  </svg>
+                </Button>
+              </div>
+            </div>
+
+            {/* Stats/Visual Element */}
+            <div class="mt-12 lg:mt-0">
+              <div
+                class="bg-white/10 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/20"
+              >
+                <h3 class="text-xl font-semibold text-white mb-6 text-center">
+                  Why Choose Our Colombia Tours?
+                </h3>
+
+                <div class="grid grid-cols-2 gap-6">
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">50+</div>
+                    <div class="text-sm text-green-100">Tour Destinations</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">5,000+</div>
+                    <div class="text-sm text-green-100">Happy Travelers</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">100%</div>
+                    <div class="text-sm text-green-100">Safety Record</div>
+                  </div>
+                  <div class="text-center">
+                    <div class="text-3xl font-bold text-white mb-1">24/7</div>
+                    <div class="text-sm text-green-100">Expert Support</div>
+                  </div>
+                </div>
+
+                {/* Popular Tour Types */}
+                <div class="mt-6 pt-6 border-t border-white/20">
+                  <h4 class="text-sm font-medium text-white mb-3">
+                    Popular Tour Types:
+                  </h4>
+                  <div class="flex flex-wrap gap-2">
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Adventure
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Cultural
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Nature
+                    </span>
+                    <span
+                      class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-white/20 text-white"
+                    >
+                      Beach
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div slot="hero-right">
-          <Image src={ImageTravelAgent} alt="Travel consultant" />
-        </div>
-      </Hero>
-    </Container>
-  </Section>
-
-  {/* Stats */}
-  <Section>
-    <Container>
-      <Heading class:list={"text-center mx-auto"}>
-        <h2 slot="heading-title" class="text-balance">
-          Colombia Experts You Can Trust
-        </h2>
-        <p slot="heading-content">
-          As Colombia's premier responsible tourism company, we've been sharing
-          our country's wonders with international visitors for over a decade.
-        </p>
-      </Heading>
-
-      <Stats
-        items={[
-          {
-            title: "Colombian Destinations",
-            value: "50+",
-            animateNumber: false,
-          },
-          {
-            title: "Happy Travelers",
-            value: "5,000+",
-            animateNumber: true,
-            animateFrom: 4000,
-          },
-          {
-            title: "Safety Record",
-            value: "100%",
-            animateNumber: false,
-          },
-        ]}
-      />
-    </Container>
-  </Section>
-
-  {/* CTA */}
-  <Section class:list={"bg-gradient-to-br from-gray-900 to-gray-700"}>
-    <Container>
-      <Heading class:list={"mb-0 lg:mb-0 prose-invert text-center mx-auto"}>
-        <h2 slot="heading-title">Ready to Discover Colombia?</h2>
-
-        <p slot="heading-content" class="text-sm lg:text-base">
-          Let our Colombian travel experts design your perfect adventure.
-          Whether you're dreaming of Caribbean beaches, Andean peaks, Amazon
-          rainforest, or colonial cities, we'll create a personalized itinerary
-          that matches your interests, budget, and travel style.
-        </p>
-
-        <Button href="/contact" color="white" class:list={"mt-4 lg:mt-8"}
-          >Plan My Colombia Trip</Button
-        >
-      </Heading>
+      </div>
     </Container>
   </Section>
 
@@ -278,45 +418,6 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
       </Heading>
 
       <ShowPosts />
-    </Container>
-  </Section>
-
-  {/* FAQ */}
-  <Section class:list={"bg-gray-50"}>
-    <Container>
-      <Heading class:list={"max-w-3xl mx-auto lg:text-center"}>
-        <h2 slot="heading-title">Frequently Asked Questions</h2>
-
-        <p slot="heading-content" class="text-sm lg:text-base">
-          Planning your first trip to Colombia? We understand you may have
-          questions about safety, logistics, and what to expect.
-        </p>
-      </Heading>
-
-      <Faq
-        items={[
-          {
-            question: "Is it safe to travel to Colombia?",
-            answer:
-              "Absolutely! Colombia has transformed dramatically and is now one of South America's top tourist destinations. We work only with vetted local partners, maintain 24/7 communication during tours, and our guides are trained in safety protocols. Millions of international visitors explore Colombia safely each year.",
-          },
-          {
-            question: "What makes your Colombia tours different?",
-            answer:
-              "As a locally-owned Colombian company, we offer authentic insider access you won't find elsewhere. Our tours support local communities, use certified guides, and include unique experiences like staying with indigenous families or accessing private nature reserves. Plus, we're available 24/7 throughout your journey.",
-          },
-          {
-            question: "What's included in your Colombia travel packages?",
-            answer:
-              "Our comprehensive packages include accommodation (carefully selected for comfort and location), all transportation, expert bilingual guides, entrance fees, most meals, and 24/7 support. We also provide detailed pre-trip information and can arrange travel insurance.",
-          },
-          {
-            question: "Do you offer custom Colombia itineraries?",
-            answer:
-              "Yes! We specialize in creating personalized Colombian adventures. Whether you want to focus on nature, culture, adventure, or relaxation, we'll design an itinerary that matches your interests, fitness level, and budget. Contact us for a free consultation.",
-          },
-        ]}
-      />
     </Container>
   </Section>
 </Layout>
