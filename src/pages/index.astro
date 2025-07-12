@@ -34,30 +34,37 @@ import ImageTwo from "~/assets/images/pexels-zenzazione-2922140.webp";
     </div>
     <Container class:list={"relative z-10"}>
       <div
-        class="flex flex-col lg:grid lg:grid-cols-2 gap-4 lg:gap-12 items-center"
+        class="flex flex-col items-center text-center lg:text-left lg:grid lg:grid-cols-2 gap-6 lg:gap-12 lg:items-center"
       >
-        <div>
+        <!-- Hero Content -->
+        <div class="order-2 lg:order-1">
           <Heading class:list={"prose-invert"}>
             <h1
               slot="heading-title"
-              class="mb-0 text-4xl lg:text-6xl text-balance"
+              class="mb-0 text-3xl sm:text-4xl lg:text-6xl text-balance leading-tight"
             >
               Discover the Magic of Colombia
             </h1>
-            <p slot="heading-content" class="hidden lg:block">
+            <p slot="heading-content" class="hidden lg:block mt-4">
               Experience Colombia's breathtaking diversity through our carefully
               crafted travel packages. From the Caribbean coast to the Amazon
               rainforest, we offer authentic, safe, and responsible tourism
               experiences that showcase the best of our beautiful country.
             </p>
           </Heading>
+
+          <!-- Mobile description -->
+          <p
+            class="text-white/90 text-sm sm:text-base lg:hidden mt-4 max-w-md mx-auto"
+          >
+            Find your perfect Colombian adventure with our local experts
+          </p>
         </div>
-        <div class="w-full lg:flex lg:justify-end">
+
+        <!-- Search Widget -->
+        <div class="order-1 lg:order-2 w-full lg:flex lg:justify-end">
           <WidgetSearch />
         </div>
-        <p class="text-white text-sm lg:hidden text-center">
-          Find your perfect Colombian adventure with our local experts
-        </p>
       </div>
     </Container>
   </Section>

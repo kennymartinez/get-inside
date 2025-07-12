@@ -2,6 +2,39 @@
 import FormSearch from "./forms/Search.astro";
 ---
 
-<div class="p-6 lg:p-8 bg-white rounded-lg max-w-3xl">
-  <FormSearch />
+<div class="w-full max-w-2xl mx-auto">
+  <div
+    class="bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-white/20 p-4 sm:p-6 lg:p-8"
+  >
+    <!-- Header -->
+    <div class="text-center mb-4 sm:mb-6">
+      <h2 class="text-lg sm:text-xl font-semibold text-gray-900 mb-1">
+        🔍 Find Your Perfect Tour
+      </h2>
+      <p class="text-sm text-gray-600">
+        Discover authentic Colombian adventures
+      </p>
+    </div>
+
+    <!-- Search Form -->
+    <FormSearch />
+
+    <!-- Quick Stats -->
+    <div class="mt-4 pt-4 border-t border-gray-100">
+      <div class="flex justify-center items-center gap-4 text-xs text-gray-500">
+        <span class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-green-400 rounded-full"></span>
+          50+ Tours
+        </span>
+        <span class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-blue-400 rounded-full"></span>
+          Expert Guides
+        </span>
+        <span class="flex items-center gap-1">
+          <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
+          Safe Travel
+        </span>
+      </div>
+    </div>
+  </div>
 </div>
